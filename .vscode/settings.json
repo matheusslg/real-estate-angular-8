@@ -1,0 +1,7 @@
+{
+    "appService.zipIgnorePattern": [
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/00999448-3dca-4622-8bfb-70a3a4c6f4d7/resourceGroups/WEB/providers/Microsoft.Web/sites/cavalliniweb",
+    "appService.deploySubpath": ""
+}
