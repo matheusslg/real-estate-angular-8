@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PropertyService } from '../services/property.service';
+import { PropertyService } from '../property.service';
 
 @Component({
   selector: 'app-properties-list',

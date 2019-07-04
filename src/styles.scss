@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+$directions:(top, right, bottom, left);
+@for $i from 0 to 100{
+    @each $direction in $directions{
+		.mg-#{$direction}#{$i}{ margin-#{$direction}:#{$i}px; }
+		.mg-#{$i}{ margin:#{$i}px; }
+		.pd-#{$direction}#{$i}{ padding-#{$direction}:#{$i}px; }
+		.pd-#{$i}{ padding:#{$i}px; }
+
+        @media screen and (max-width:770px){
+			.mg-mbl-#{$direction}#{$i}{ margin-#{$direction}:#{$i}px; }
+			.mg-mbl-#{$i}{ margin:#{$i}px; }
+			.pd-mbl-#{$direction}#{$i}{ padding-#{$direction}:#{$i}px; }
+			.pd-mbl-#{$i}{ padding:#{$i}px; }
+		}
+		
+		@media print {
+			.mg-pr-#{$direction}#{$i}{ margin-#{$direction}:#{$i}px; }
+			.mg-pr-#{$i}{ margin:#{$i}px; }
+			.pd-pr-#{$direction}#{$i}{ padding-#{$direction}:#{$i}px; }
+			.pd-pr-#{$i}{ padding:#{$i}px; }
+		}
+    }
+}

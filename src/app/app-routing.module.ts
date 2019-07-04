@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PropertiesListComponent } from './properties-list/properties-list.component';
+import { PropertiesListComponent } from './home/properties/properties-list/properties-list.component';
+import { HomeComponent } from './home/home/home.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'propriedades' },
+  { path: '', pathMatch: 'full', component: HomeComponent },
   { path: 'propriedades', component: PropertiesListComponent }
 ];
 @NgModule({
