@@ -75,8 +75,8 @@ html body{
 			color:$black-2;
 			font:400 13px/3rem $main;
 			tr:not(:last-child){border-bottom:solid 1px $grey-5 !important;}
-			td:not([colspan]):not([class*="text--"]):last-child{text-align: right;}
-			tr:hover{background:$grey-4;}
+			//td:not([colspan]):not([class*="text--"]):last-child{text-align: right;}
+			tr:hover{background:$grey-2 !important;}
 			.data{width:8%;}
 		}
 

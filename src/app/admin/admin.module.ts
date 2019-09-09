@@ -9,6 +9,8 @@ import { SidebarAdminComponent } from './components/sidebar-admin/sidebar-admin.
 import { NavbarAdminComponent } from './components/navbar-admin/navbar-admin.component';
 import { LoginComponent } from './components/login/login.component';
 import { PropertiesComponent } from './components/properties/properties.component';
+import { PropertiesPostComponent } from './components/properties/properties-post/properties-post.component';
+import { PropertiesListComponent } from './components/properties/properties-list/properties-list.component';
 
 @NgModule({
   imports: [
@@ -25,7 +27,9 @@ import { PropertiesComponent } from './components/properties/properties.componen
     SidebarAdminComponent,
     NavbarAdminComponent,
     LoginComponent,
-    PropertiesComponent
+    PropertiesComponent,
+    PropertiesPostComponent,
+    PropertiesListComponent
   ]
 })
 
