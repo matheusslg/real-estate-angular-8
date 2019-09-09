@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   baseUri: {
-    mongo: 'http://cavalliniimoveis.com.br/rest-api'
+    mongo: 'http://localhost:21026'
   }
 };
 

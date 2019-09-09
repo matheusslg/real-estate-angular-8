@@ -1,16 +1,41 @@
-<div class="row">
-  <div *ngFor="let property of propertyList" class="col-lg-4 col-md-6 mb-4">
+<div class="row mg-top20">
+  <div *ngFor="let property of propertyList; let index = index" class="col-lg-3 col-md-3 col-sm-12 mb-4">
     <div class="card h-100">
-      <a href="#"><img class="card-img-top" [src]="property.images[0].url" [alt]="property.images[0].description"></a>
+      <mdb-carousel class="carousel slide carousel-fade" [animation]="'fade'">
+        <mdb-carousel-item *ngFor="let image of property.images; let first = first; let indexImage = index">
+          <div class="view w-100">
+            <img class="card-img-top d-block w-100" [src]="image.url" [alt]="image.description">
+            <div class="mask waves-light" mdbWavesEffect></div>
+          </div>
+        </mdb-carousel-item>
+      </mdb-carousel>
       <div class="card-body">
         <h4 class="card-title">
-          <a href="#">{{ property.title }}</a>
+          <p>{{ property.title }}</p>
         </h4>
-        <h5>{{ property.priceNumber ? (property.priceNumber | currency:'BRL') : property.priceCustom }}</h5>
-        <p class="card-text">{{ property.description }}</p>
+        <h5>{{ property.priceNumber ? (property.priceNumber | currency:'BRL') : 'Valor: ' + property.priceCustom }}</h5>
+        <p class="card-text" [innerHTML]="property.description"></p>
       </div>
       <div class="card-footer">
-        <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+        <ng-container *ngFor="let location of property.locations; let last = last; let first = first">
+          <strong *ngIf="first">{{ property.locations.length === 1 ? 'Localização' : 'Localizações' }}:</strong>
+          {{ property.locations.length === 1 ? location.description : (!last ? location.description + ', ' : location.description) }}
+        </ng-container>
+        <br />
+        <ng-container *ngFor="let category of property.categories; let last = last; let first = first">
+          <strong *ngIf="first">{{ property.locations.length === 1 ? 'Categoria' : 'Categorias' }}:</strong>
+          {{ property.categories.length === 1 ? category.description : (!last ? category.description + ', ' : category.description) }}
+        </ng-container>
+        <br />
+        <ng-container *ngFor="let type of property.types; let last = last; let first = first">
+          <strong *ngIf="first">{{ property.locations.length === 1 ? 'Modalidade' : 'Modalidades' }}:</strong>
+          {{ property.types.length === 1 ? type.description : (!last ? type.description + ', ' : type.description) }}
+        </ng-container>
+        <br />
+        <ng-container *ngFor="let tag of property.tags; let last = last; let first = first">
+          <strong *ngIf="first">Tags:</strong>
+          {{ property.tags.length === 1 ? tag.description : (!last ? tag.description + ', ' : tag.description) }}
+        </ng-container>
       </div>
     </div>
   </div>

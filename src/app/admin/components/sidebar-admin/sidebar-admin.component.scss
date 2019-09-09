@@ -1,0 +1,13 @@
+@import '../../../../assets/scss/shared.scss';
+
+.sidebar-heading {
+    span, a { color: $primary; }
+    font: 500 18px/20px $main;
+}
+
+.nav-link {
+    padding: .5rem 0 !important;
+    color: $black-3;
+    &:hover { color: $primary !important; }
+    svg { margin-right: 5px; }
+}

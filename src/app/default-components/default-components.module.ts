@@ -1,9 +1,12 @@
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CurrencyMaskModule } from "ng2-currency-mask";
 import { CurrencyMaskConfig, CURRENCY_MASK_CONFIG } from "ng2-currency-mask/src/currency-mask.config";
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { BsDropdownModule } from 'ngx-bootstrap';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     align: "right",
@@ -20,17 +23,22 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    CurrencyMaskModule
+    CurrencyMaskModule,
+    MDBBootstrapModule.forRoot(),
+    BsDropdownModule.forRoot()
   ],
   providers: [
     { provide: CURRENCY_MASK_CONFIG, useValue: CustomCurrencyMaskConfig }
   ],
-  declarations: [],
+  declarations: [PageNotFoundComponent],
+  schemas: [ NO_ERRORS_SCHEMA ],
   exports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    CurrencyMaskModule
+    CurrencyMaskModule,
+    MDBBootstrapModule,
+    BsDropdownModule
   ],
 })
 export class DefaultComponentsModule { }

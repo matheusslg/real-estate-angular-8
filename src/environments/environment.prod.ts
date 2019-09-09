@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
   baseUri: {
-    mongo: 'http://cavalliniimoveis.com.br/rest-api'
+    mongo: 'http://cavalliniimoveis.com.br:21026'
   }
 };
