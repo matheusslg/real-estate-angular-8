@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Property } from './models/property';
-import { Observable, throwError } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Property } from "../models/Property";
+import { Observable } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../environments/environment';
 import { UsefullService } from 'src/app/services/usefull.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PropertyService {
-  // Define API
+
   apiURL = environment.baseUri.mongo;
+
   constructor(
     private http: HttpClient,
     private usefullService: UsefullService

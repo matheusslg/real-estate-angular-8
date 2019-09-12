@@ -4,6 +4,7 @@ export class Property {
 }
 
 class Data {
+    _id: string;
     title: string;
     description: string;
     address: string;
@@ -18,4 +19,5 @@ class Data {
     priceCustom: string;
     active: boolean;
     createdBy: string;
+    updatedAt: string;
 }

@@ -1,0 +1,15 @@
+@import 'shared';
+
+.ng-select-custom.form-control {
+    padding: 0;
+    border: none;
+    &.is-invalid {
+        & > .ng-select-container {
+            border-color: #dc3545;
+        }
+    }
+}
+
+.ng-select .ng-select-container:hover {
+    box-shadow: none !important;
+}

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
 
 @Injectable({
@@ -16,16 +16,20 @@ export class UsefullService {
   }
 
   handleError(error) {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      // Get client-side error
-      errorMessage = error.error.message;
+    let errorRes = {};
+    if (error instanceof HttpErrorResponse || error instanceof ErrorEvent) {
+      errorRes = {
+        'message': error.error.message,
+        'type': error.error.error.errors.description.kind
+      }
     } else {
-      // Get server-side error
-      errorMessage = 'Error Code: ${error.status}\nMessage: ${error.message}';
+      errorRes = {
+        'message': error.message,
+        'status': error.status
+      }
     }
-    console.log(errorMessage);
-    return throwError(errorMessage);
+    console.log(errorRes);
+    return throwError(errorRes);
   }
 
 }

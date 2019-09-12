@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'area-logada', component: DashboardComponent, canActivateChild: [AdminGuard], 
     children: [
         { path: 'painel', component: HomeAdminComponent },
-        { path: 'propriedades', component: PropertiesComponent, 
+        { path: 'propriedades', component: PropertiesComponent,
           children: [
             { path: 'listagem', component: PropertiesListComponent },
             { path: 'cadastrar', component: PropertiesPostComponent },

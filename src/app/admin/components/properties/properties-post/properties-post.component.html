@@ -1,30 +1,127 @@
-<form>
+<app-loading *ngIf="loading"></app-loading>
+<form *ngIf="!loading" [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
   <div class="form-group">
-    <label for="exampleFormControlInput1">Email address</label>
-    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+    <label for="titleText">Título *</label>
+    <input formControlName="title" name="title" type="text" class="form-control" id="titleText"
+      placeholder="Ex: Fazenda completa com 400ha" [ngClass]="{ 'is-invalid': submitted && f.title.errors }" />
+    <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
+      <div *ngIf="f.title.errors.required">Este campo é obrigatório</div>
+    </div>
   </div>
   <div class="form-group">
-    <label for="exampleFormControlSelect1">Example select</label>
-    <select class="form-control" id="exampleFormControlSelect1">
+    <label for="descriptionText">Descrição *</label>
+    <textarea formControlName="description" name="description" class="form-control" id="descriptionText" rows="5"
+      [ngClass]="{ 'is-invalid': submitted && f.description.errors }"></textarea>
+    <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+      <div *ngIf="f.description.errors.required">Este campo é obrigatório</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="addressText">Endereço</label>
+    <input name="address" type="text" class="form-control" id="addressText" placeholder="Ex: Rua Silva Jardim, 100">
+  </div>
+  <div class="form-row">
+    <div class="form-group col-4">
+      <label for="categoryMultiselect">Categoria *</label>
+      <ng-select formControlName="categories" [items]="categoryList" [addTag]="addCategory" [loading]="loadingCategory"
+        [multiple]="true" [closeOnSelect]="false" [searchable]="true" bindLabel="description"
+        placeholder="Selecione uma ou mais categorias" name="categories" class="ng-select-custom form-control"
+        [ngClass]="{ 'is-invalid': submitted && f.categories.errors }">
+        <ng-template ng-tag-tmp let-search="searchTerm">
+          <b>Adicionar</b>: {{ search }}
+        </ng-template>
+      </ng-select>
+      <div *ngIf="submitted && f.categories.errors" class="invalid-feedback">
+        <div *ngIf="f.categories.errors.required">Este campo é obrigatório</div>
+      </div>
+    </div>
+    <div class="form-group col-4">
+      <label for="locationMultiselect">Localização *</label>
+      <ng-select formControlName="locations" [items]="locationList" [addTag]="addLocation" [loading]="loadingLocation"
+        [multiple]="true" [closeOnSelect]="false" [searchable]="true" bindLabel="description"
+        placeholder="Selecione uma ou mais localizações" name="locations" class="ng-select-custom form-control"
+        [ngClass]="{ 'is-invalid': submitted && f.locations.errors }">
+        <ng-template ng-tag-tmp let-search="searchTerm">
+          <b>Adicionar</b>: {{ search }}
+        </ng-template>
+      </ng-select>
+      <div *ngIf="submitted && f.locations.errors" class="invalid-feedback">
+        <div *ngIf="f.locations.errors.required">Este campo é obrigatório</div>
+      </div>
+    </div>
+    <div class="form-group col-4">
+      <label for="typeMultiselect">Tipo *</label>
+      <ng-select formControlName="types" [items]="typeList" [addTag]="addType" [loading]="loadingType" [multiple]="true"
+        [closeOnSelect]="false" [searchable]="true" bindLabel="description" placeholder="Selecione um ou mais tipos"
+        name="types" class="ng-select-custom form-control" [ngClass]="{ 'is-invalid': submitted && f.types.errors }">
+        <ng-template ng-tag-tmp let-search="searchTerm">
+          <b>Adicionar</b>: {{ search }}
+        </ng-template>
+      </ng-select>
+      <div *ngIf="submitted && f.types.errors" class="invalid-feedback">
+        <div *ngIf="f.types.errors.required">Este campo é obrigatório</div>
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-6">
+      <label for="cityText">Cidade *</label>
+      <input formControlName="city" name="city" type="text" class="form-control" id="cityText"
+        placeholder="Ex: São Luiz Gonzaga" [ngClass]="{ 'is-invalid': submitted && f.city.errors }">
+      <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+        <div *ngIf="f.city.errors.required">Este campo é obrigatório</div>
+      </div>
+    </div>
+    <div class="form-group col-6">
+      <label for="geolocationText">Geolocalização</label>
+      <input name="geolocation" type="text" class="form-control" id="geolocationText"
+        placeholder="Ex: -28.409122, -54.961752">
+    </div>
+  </div>
+
+  <!-- TODO -->
+  <!-- <div class="form-group">
+    <label for="tagsMultiselect">Tags</label>
+    <select multiple class="form-control" id="tagsMultiselect">
       <option>1</option>
       <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
     </select>
+  </div> -->
+
+  <div class="form-row">
+    <div class="form-group col-6">
+      <label for="priceNumber">Preço numérico</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text">
+            <input (ngModelChange)="priceRadioChanged()" formControlName="priceRadio" type="radio" name="priceRadio"
+              id="priceNumerical" value="1" aria-label="Preço numérico">
+          </div>
+        </div>
+        <input currencyMask formControlName="priceNumber" type="text" class="form-control" id="priceNumberText"
+          placeholder="Ex: R$300.000,00" [ngClass]="{ 'is-invalid': submitted && f.priceNumber.errors }">
+      </div>
+      <div *ngIf="submitted && f.priceNumber.errors" class="invalid-feedback">
+        <div *ngIf="f.priceNumber.errors.required">Este campo é obrigatório</div>
+      </div>
+    </div>
+    <div class="form-group col-6">
+      <label for="priceCustom">Preço customizado</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text">
+            <input (ngModelChange)="priceRadioChanged()" formControlName="priceRadio" type="radio" name="priceRadio"
+              id="priceCustom" value="2" aria-label="Preço customizado">
+          </div>
+        </div>
+        <input formControlName="priceCustom" type="text" class="form-control" id="priceCustomText"
+          placeholder="Ex: 300 sacas de soja/ha" [ngClass]="{ 'is-invalid': submitted && f.priceCustom.errors }">
+      </div>
+      <div *ngIf="submitted && f.priceCustom.errors" class="invalid-feedback">
+        <div *ngIf="f.priceCustom.errors.required">Este campo é obrigatório</div>
+      </div>
+    </div>
   </div>
-  <div class="form-group">
-    <label for="exampleFormControlSelect2">Example multiple select</label>
-    <select multiple class="form-control" id="exampleFormControlSelect2">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlTextarea1">Example textarea</label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-  </div>
+
+  <button class="btn btn-success" type="submit">Publicar</button>
 </form>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PropertyService } from 'src/app/home/properties/property.service';
+import { PropertyService } from 'src/app/services/property.service';
 
 @Component({
   selector: 'admin-properties-list',

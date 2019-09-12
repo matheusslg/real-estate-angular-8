@@ -1,4 +1,5 @@
-@import 'assets/scss/shared.scss';
+@import 'assets/scss/utils';
+@import "~@ng-select/ng-select/themes/default.theme.css";
 
 ////////////////
 // Base Classes
@@ -113,6 +114,18 @@ html body{
 	}
 }
 
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+	color: #999 !important;
+	opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+	color: #999 !important;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+	color: #999 !important;
+}
 
 ////////////////
 // Grid Classes
