@@ -28,11 +28,11 @@ $duration: 1.4s;
 }
 
 @keyframes colors {
-	0% { stroke: $primary; }
-	25% { stroke: $primary-light; }
-	50% { stroke: $primary-dark; }
-	75% { stroke: $secondary; }
-  100% { stroke: $primary; }
+	0% { stroke: palette(main); }
+	25% { stroke: palette(terciary, ter2); }
+	50% { stroke: palette(terciary, ter1); }
+	75% { stroke: palette(secondary); }
+  100% { stroke: palette(terciary, ter3); }
 }
 
 @keyframes dash {

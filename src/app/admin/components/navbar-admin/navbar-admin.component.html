@@ -1,8 +1,42 @@
-<nav class="navbar sticky-top flex-md-nowrap p-0">
-  <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Painel Administrativo</a>
-  <ul class="navbar-nav px-3">
-    <li class="nav-item text-nowrap">
-      <a class="nav-link" href="#">Sair</a>
-    </li>
-  </ul>
+<!-- Bootstrap NavBar -->
+<nav class="navbar navbar-expand-md navbar-dark bg-primary">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+    data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Abrir Menu">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="javascript:;" routerLink="/area-logada">
+    <!-- <img src="https://v4-alpha.getbootstrap.com/assets/brand/bootstrap-solid.svg" width="30" height="30"
+      class="d-inline-block align-top" alt=""> -->
+    <span class="menu-collapsed">Painel Administrativo</span>
+  </a>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav mt-2">
+      <li class="nav-item d-sm-block d-md-none">
+        <a class="nav-link" href="javascript:;" routerLink="/area-logada">Painel</a>
+      </li>
+
+      <li class="nav-item dropdown d-sm-block d-md-none">
+        <a class="nav-link dropdown-toggle" href="javascript:;" id="propertiesMenu" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          Propriedades
+        </a>
+        <div class="dropdown-menu" aria-labelledby="propertiesMenu">
+          <a class="dropdown-item" href="javascript:;" routerLink="/area-logada/propriedades/cadastrar">Cadastrar</a>
+          <a class="dropdown-item" href="javascript:;" routerLink="/area-logada/propriedades">Listagem</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown d-sm-block d-md-none">
+        <a class="nav-link dropdown-toggle" href="javascript:;" id="usersMenu" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          Usuários
+        </a>
+        <div class="dropdown-menu" aria-labelledby="usersMenu">
+          <a class="dropdown-item" href="javascript:;">Cadastrar</a>
+          <a class="dropdown-item" href="javascript:;">Listagem</a>
+        </div>
+      </li>
+
+    </ul>
+  </div>
 </nav>

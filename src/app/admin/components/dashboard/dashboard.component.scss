@@ -1,6 +1,13 @@
 @import '../../../../assets/scss/utils';
 
 .sidebar-admin {
-    min-height: 100vh;
-    background-color: $grey-1 !important;
+    @media screen and (min-width: 771px) {
+        min-height: 100vh;
+    }
+    padding: 0;
+    background-color: palette(gray);
+}
+
+.main-content {
+    background-color: $body-bg !important;
 }

@@ -1,0 +1,12 @@
+@import '../../../../assets/scss/utils';
+
+.counter {
+    font: 500 40px/1.2 $font-main;
+    &-text {
+        font: 300 17px/1.2 $font-main;
+    }
+}
+
+.admin-item {
+    cursor: pointer;
+}

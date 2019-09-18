@@ -1,0 +1,73 @@
+<label for="uploader-input" ng2FileDrop [ngClass]="{'another-file-over-class': hasAnotherDropZoneOver}"
+  (fileOver)="fileOver($event)" [uploader]="uploader" multiple class="drop-zone">Arraste os arquivos para cá ou clique aqui</label>
+<input type="file" ng2FileSelect [uploader]="uploader" multiple id="uploader-input" style="display:none" />
+
+<div class="files-table" *ngIf="uploader?.queue?.length > 0">
+
+  <h3>Lista de Arquivos</h3>
+  <p>Quantidade: {{ uploader?.queue?.length }}</p>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Pré-visualização</th>
+        <th width="50%">Nome</th>
+        <th *ngIf="uploader.options.isHTML5">Tamanho</th>
+        <th *ngIf="uploader.options.isHTML5">Progresso</th>
+        <th>Status</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of uploader.queue">
+        <td><img src="" uploadFilesThumbnail [image]="item?._file" /></td>
+        <td><strong>{{ item?.file?.name }}</strong></td>
+        <td *ngIf="uploader.options.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+        <td *ngIf="uploader.options.isHTML5">
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+          </div>
+        </td>
+        <td class="text-center">
+          <span *ngIf="item.isSuccess"><i class="fas fa-check-circle text-success"></i></span>
+          <span *ngIf="item.isCancel"><i class="fas fa-times text-warning"></i></span>
+          <span *ngIf="item.isError"><i class="fas fa-exclamation-circle text-danger"></i></span>
+        </td>
+        <td nowrap>
+          <button type="button" class="btn btn-success btn-sm mr-1" (click)="item.upload()"
+            [disabled]="item.isReady || item.isUploading || item.isSuccess">
+            <i class="fas fa-upload"></i>
+          </button>
+          <button type="button" class="btn btn-warning btn-sm mr-1" (click)="item.cancel()"
+            [disabled]="!item.isUploading">
+            <i class="fas fa-times"></i>
+          </button>
+          <button type="button" class="btn btn-danger btn-sm" (click)="item.remove()">
+            <i class="fas fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div>
+    <div>
+      Progresso Geral:
+      <div class="progress">
+        <div class="progress-bar bg-success" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+      </div>
+    </div>
+    <div class="text-right mt-4 mb-4">
+      <button type="button" class="btn btn-success mr-1" (click)="uploader.uploadAll()"
+        [disabled]="!uploader.getNotUploadedItems().length">
+        <i class="fas fa-upload"></i> Enviar tudo
+      </button>
+      <button type="button" class="btn btn-warning mr-1" (click)="uploader.cancelAll()"
+        [disabled]="!uploader.isUploading">
+        <i class="fas fa-times"></i> Cancelar tudo
+      </button>
+      <button type="button" class="btn btn-danger" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+        <i class="fas fa-trash"></i> Remover tudo
+      </button>
+    </div>
+  </div>
+</div>

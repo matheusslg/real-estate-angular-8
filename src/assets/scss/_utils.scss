@@ -1,15 +1,37 @@
 @import 'shared';
+@import 'bootstrap-theming';
 
 .ng-select-custom.form-control {
-    padding: 0;
-    border: none;
-    &.is-invalid {
-        & > .ng-select-container {
-            border-color: #dc3545;
-        }
+  padding: 0;
+  border: none;
+
+  &.is-invalid {
+    &>.ng-select-container {
+      border-color: palette(terciary, error);
     }
+  }
 }
 
 .ng-select .ng-select-container:hover {
-    box-shadow: none !important;
+  box-shadow: none !important;
+}
+
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-placeholder {
+  top: 8px;
+}
+
+.ngx-editor-app.ng-invalid.is-invalid {
+  & .ngx-editor .ngx-wrapper {
+    border: 1px solid palette(terciary, error);
+  }
+
+  &+.invalid-feedback {
+    display: block;
+  }
+}
+
+.loading-no-margin {
+  &>.loading {
+    margin: 0px !important;
+  }
 }

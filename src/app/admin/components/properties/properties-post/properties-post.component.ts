@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CategoryService } from 'src/app/services/category.service';
 import { Property } from "src/app/models/Property";
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Observable, forkJoin } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { NgSelectConfig } from '@ng-select/ng-select';
 import { Globals } from 'src/app/globals';
 import { LocationService } from 'src/app/services/location.service';
@@ -94,7 +94,7 @@ export class PropertiesPostComponent implements OnInit {
         this.loadingCategory = false;
       }, (error) => {
         if (error.type == 'unique') {
-          this.toastr.error('Não é possível cadastrar um item já existente.');
+          this.toastr.error(this.GLOBALS.STRING_TEXT_DUPLICATE_ITEM);
         } else {
           this.toastr.error(error.message);
         }
@@ -114,7 +114,7 @@ export class PropertiesPostComponent implements OnInit {
         this.loadingLocation = false;
       }, (error) => {
         if (error.type == 'unique') {
-          this.toastr.error('Não é possível cadastrar um item já existente.');
+          this.toastr.error(this.GLOBALS.STRING_TEXT_DUPLICATE_ITEM);
         } else {
           this.toastr.error(error.message);
         }
@@ -134,7 +134,7 @@ export class PropertiesPostComponent implements OnInit {
         this.loadingType = false;
       }, (error) => {
         if (error.type == 'unique') {
-          this.toastr.error('Não é possível cadastrar um item já existente.');
+          this.toastr.error(this.GLOBALS.STRING_TEXT_DUPLICATE_ITEM);
         } else {
           this.toastr.error(error.message);
         }

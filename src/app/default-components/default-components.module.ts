@@ -12,15 +12,20 @@ import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { UploadFilesComponent } from './upload-files/upload-files.component';
+import { FileUploadModule } from 'ng2-file-upload';
+import { UploadFilesThumbnailDirective } from '../directives/upload-files-thumbnail.directive';
+import { DataTablesModule } from 'angular-datatables';
+import { NgxEditorModule } from 'ngx-editor';
 
 export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
-    align: "left",
-    allowNegative: true,
-    decimal: ",",
-    precision: 2,
-    prefix: "R$ ",
-    suffix: "",
-    thousands: "."
+  align: "left",
+  allowNegative: true,
+  decimal: ",",
+  precision: 2,
+  prefix: "R$ ",
+  suffix: "",
+  thousands: "."
 };
 
 export const ngxMaskModuleOptions: Partial<IConfig> | (() => Partial<IConfig>) = {};
@@ -43,16 +48,21 @@ export const toastrOptions = {
     MDBBootstrapModule.forRoot(),
     BsDropdownModule.forRoot(),
     BrowserAnimationsModule,
-    ToastrModule.forRoot(toastrOptions)
+    ToastrModule.forRoot(toastrOptions),
+    FileUploadModule,
+    DataTablesModule,
+    NgxEditorModule
   ],
   providers: [
     { provide: CURRENCY_MASK_CONFIG, useValue: CustomCurrencyMaskConfig }
   ],
   declarations: [
-    PageNotFoundComponent, 
-    LoadingComponent
+    PageNotFoundComponent,
+    LoadingComponent,
+    UploadFilesComponent,
+    UploadFilesThumbnailDirective
   ],
-  schemas: [ NO_ERRORS_SCHEMA ],
+  schemas: [NO_ERRORS_SCHEMA],
   exports: [
     BrowserModule,
     HttpClientModule,
@@ -64,8 +74,12 @@ export const toastrOptions = {
     MDBBootstrapModule,
     BsDropdownModule,
     LoadingComponent,
+    UploadFilesComponent,
     BrowserAnimationsModule,
-    ToastrModule
+    ToastrModule,
+    FileUploadModule,
+    DataTablesModule,
+    NgxEditorModule
   ],
 })
 export class DefaultComponentsModule { }

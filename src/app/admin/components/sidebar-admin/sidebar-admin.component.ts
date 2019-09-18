@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Globals } from 'src/app/globals';
 
 @Component({
   selector: 'app-sidebar-admin',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidebarAdminComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public GLOBALS: Globals
+  ) { }
 
   ngOnInit() {
   }

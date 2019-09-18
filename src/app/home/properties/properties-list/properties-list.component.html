@@ -11,7 +11,7 @@
       </mdb-carousel>
       <div class="card-body">
         <h4 class="card-title">
-          <p>{{ property.title }}</p>
+          {{ property.title }}
         </h4>
         <h5>{{ property.priceNumber ? (property.priceNumber | currency:'BRL') : 'Valor: ' + property.priceCustom }}</h5>
         <p class="card-text" [innerHTML]="property.description"></p>

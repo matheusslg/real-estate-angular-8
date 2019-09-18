@@ -11,6 +11,8 @@ import { LoginComponent } from './components/login/login.component';
 import { PropertiesComponent } from './components/properties/properties.component';
 import { PropertiesPostComponent } from './components/properties/properties-post/properties-post.component';
 import { PropertiesListComponent } from './components/properties/properties-list/properties-list.component';
+import { SidebarAdminMenuDropdownDirective } from './directives/sidebar-admin-menu-dropdown.directive';
+import { SidebarAdminMenuActiveDirective } from './directives/sidebar-admin-menu-active.directive';
 
 @NgModule({
   imports: [
@@ -29,7 +31,9 @@ import { PropertiesListComponent } from './components/properties/properties-list
     LoginComponent,
     PropertiesComponent,
     PropertiesPostComponent,
-    PropertiesListComponent
+    PropertiesListComponent,
+    SidebarAdminMenuDropdownDirective,
+    SidebarAdminMenuActiveDirective
   ]
 })
 

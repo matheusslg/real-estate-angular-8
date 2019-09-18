@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PropertyService } from 'src/app/services/property.service';
 
 @Component({
   selector: 'app-home-admin',
@@ -7,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeAdminComponent implements OnInit {
 
-  constructor() { }
+  loadingProperties
+
+  propertyCount
+
+  constructor(
+    private propertyService: PropertyService
+  ) { }
 
   ngOnInit() {
+    this.loadingProperties = true;
+    this.propertyService.getProperties().subscribe(res => {
+      this.propertyCount = res.count;
+      this.loadingProperties = false;
+    });
   }
 
 }

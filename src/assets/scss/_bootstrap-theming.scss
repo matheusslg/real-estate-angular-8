@@ -1,0 +1,35 @@
+@import 'shared';
+
+// Theming Bootstrap
+
+$theme-colors: ("primary": palette(main),
+  "danger": palette(terciary, error),
+  "success": palette(terciary, success),
+  "warning": palette(terciary, warning),
+  "info": palette(terciary, info));
+$body-bg: palette(white, dark1);
+
+$enable-rounded: true;
+$enable-shadows: true;
+$enable-gradients: true;
+$enable-grid-classes: true;
+$enable-print-styles: true;
+
+.form-control {
+  background-color: #fff !important;
+  font-size: 13px !important;
+
+  &:disabled {
+    background-color: #e9ecef !important;
+  }
+}
+
+.invalid-feedback {
+  font-size: 90% !important;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, 0.03) !important;
+}
+
+@import "node_modules/bootstrap/scss/bootstrap";

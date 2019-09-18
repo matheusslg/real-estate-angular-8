@@ -9,9 +9,10 @@ import { AppComponent } from './app.component';
 import { AdminModule } from './admin/admin.module';
 import { HomeModule } from './home/home.module';
 
+
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
