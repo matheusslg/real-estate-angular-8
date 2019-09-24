@@ -11,6 +11,7 @@ import { Category } from 'src/app/models/category';
 import { Location } from 'src/app/models/location';
 import { Type } from 'src/app/models/type';
 import { ToastrService } from 'ngx-toastr';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-properties-post',
@@ -35,12 +36,14 @@ export class PropertiesPostComponent implements OnInit {
 
   constructor(
     private GLOBALS: Globals,
+    private titleService: Title,
     private toastr: ToastrService,
     private config: NgSelectConfig,
     private categoryService: CategoryService,
     private locationService: LocationService,
     private typeService: TypeService
   ) {
+    this.titleService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - Cadastrar Propriedade');
     this.config.notFoundText = this.GLOBALS.STRING_TEXT_NOT_FOUND;
     this.property = new Property();
   }
@@ -80,6 +83,7 @@ export class PropertiesPostComponent implements OnInit {
       'priceRadio': new FormControl(this.priceRadioValue),
       'priceNumber': new FormControl({ 'value': this.property.data.priceNumber, 'disabled': this.priceRadioValue == '2' }, [Validators.required]),
       'priceCustom': new FormControl({ 'value': this.property.data.priceCustom, 'disabled': this.priceRadioValue == '1' }, [Validators.required]),
+      'active': new FormControl(this.property.data.active)
     });
   }
 

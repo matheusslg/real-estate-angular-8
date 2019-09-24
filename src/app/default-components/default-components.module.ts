@@ -17,6 +17,7 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { UploadFilesThumbnailDirective } from '../directives/upload-files-thumbnail.directive';
 import { DataTablesModule } from 'angular-datatables';
 import { NgxEditorModule } from 'ngx-editor';
+import { SwitchComponent } from './switch/switch.component';
 
 export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
   align: "left",
@@ -60,7 +61,8 @@ export const toastrOptions = {
     PageNotFoundComponent,
     LoadingComponent,
     UploadFilesComponent,
-    UploadFilesThumbnailDirective
+    UploadFilesThumbnailDirective,
+    SwitchComponent
   ],
   schemas: [NO_ERRORS_SCHEMA],
   exports: [
@@ -79,7 +81,8 @@ export const toastrOptions = {
     ToastrModule,
     FileUploadModule,
     DataTablesModule,
-    NgxEditorModule
+    NgxEditorModule,
+    SwitchComponent
   ],
 })
 export class DefaultComponentsModule { }

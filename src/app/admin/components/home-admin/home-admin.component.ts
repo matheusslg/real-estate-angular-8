@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PropertyService } from 'src/app/services/property.service';
+import { Globals } from 'src/app/globals';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home-admin',
@@ -13,8 +15,12 @@ export class HomeAdminComponent implements OnInit {
   propertyCount
 
   constructor(
+    private GLOBALS: Globals,
+    private titleService: Title,
     private propertyService: PropertyService
-  ) { }
+  ) { 
+    this.titleService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - Painel Administrativo');
+  }
 
   ngOnInit() {
     this.loadingProperties = true;

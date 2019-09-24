@@ -18,9 +18,13 @@ export class UsefullService {
   handleError(error) {
     let errorRes = {};
     if (error instanceof HttpErrorResponse || error instanceof ErrorEvent) {
-      errorRes = {
-        'message': error.error.message,
-        'type': error.error.error.errors.description.kind
+      if (error.error.error) {
+        errorRes = {
+          'message': error.error.message,
+          'type': error.error.error.errors.description.kind
+        }
+      } else {
+        errorRes = error.error
       }
     } else {
       errorRes = {

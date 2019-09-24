@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PropertyService } from 'src/app/services/property.service';
 import { Globals } from 'src/app/globals';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'admin-properties-list',
@@ -15,8 +16,11 @@ export class PropertiesListComponent implements OnInit {
 
   constructor(
     private GLOBALS: Globals,
+    private titleService: Title,
     private propertyService: PropertyService
-  ) { }
+  ) { 
+    this.titleService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - Listagem de Propriedades');
+  }
 
   ngOnInit() {
     this.dtOptions = this.GLOBALS.DATATABLES_OPTIONS('Listagem de propriedades cadastradas no sistema');

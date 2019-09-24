@@ -115,6 +115,15 @@
         </a>
       </div>
 
+      <!-- Sair -->
+      <a appSidebarAdminMenuActive href="javascript:;" routerLink="/sair"
+        class="main-item main-item-single list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span class="fas fa-sign-out-alt fa-fw mr-3"></span>
+          <span class="menu-collapsed">Sair</span>
+        </div>
+      </a>
+
       <!-- <a appSidebarAdminMenuActive href="javascript:;" data-toggle="sidebar-colapse" adminMenuDropdown
         class="list-group-item list-group-item-action d-flex align-items-center">
         <div class="d-flex w-100 justify-content-start align-items-center">
@@ -135,6 +144,7 @@
 
       <!-- Logo -->
       <li class="text-light list-group-item logo-separator d-flex justify-content-center align-items-center">
+        <img src="../../../../assets/images/logo.png" alt="Logotipo" height="30" width="30" class="mr-2">
         Copyright @ 2019 - {{ GLOBALS.SYSTEM_TITLE }}
       </li>
     </ul>

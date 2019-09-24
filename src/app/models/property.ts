@@ -17,7 +17,7 @@ class Data {
     images: string[] = [];
     priceNumber: number;
     priceCustom: string;
-    active: boolean;
+    active: boolean = true;
     createdBy: string;
     updatedAt: string;
 }
