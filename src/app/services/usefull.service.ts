@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
 
 @Injectable({
@@ -8,12 +8,6 @@ import { throwError } from 'rxjs';
 export class UsefullService {
 
   constructor() { }
-
-  public httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-  }
 
   handleError(error) {
     let errorRes = {};

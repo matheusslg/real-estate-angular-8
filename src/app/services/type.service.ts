@@ -35,7 +35,7 @@ export class TypeService {
   }
 
   createType(type): Observable<Type> {
-    return this.http.post<Type>(this.apiURL + '/types/create', JSON.stringify(type), this.usefullService.httpOptions)
+    return this.http.post<Type>(this.apiURL + '/types/create', JSON.stringify(type))
       .pipe(
         retry(1),
         catchError(this.usefullService.handleError)
@@ -43,7 +43,7 @@ export class TypeService {
   }
 
   updateType(id, type): Observable<Type> {
-    return this.http.post<Type>(this.apiURL + '/types/' + id + '/update', JSON.stringify(type), this.usefullService.httpOptions)
+    return this.http.post<Type>(this.apiURL + '/types/' + id + '/update', JSON.stringify(type))
       .pipe(
         retry(1),
         catchError(this.usefullService.handleError)
@@ -51,7 +51,7 @@ export class TypeService {
   }
 
   disableType(id) {
-    return this.http.post<Type>(this.apiURL + '/types/' + id + '/disable', this.usefullService.httpOptions)
+    return this.http.post<Type>(this.apiURL + '/types/' + id + '/disable', null)
       .pipe(
         retry(1),
         catchError(this.usefullService.handleError)
@@ -59,7 +59,7 @@ export class TypeService {
   }
 
   enableType(id) {
-    return this.http.post<Type>(this.apiURL + '/types/' + id + '/enable', this.usefullService.httpOptions)
+    return this.http.post<Type>(this.apiURL + '/types/' + id + '/enable', null)
       .pipe(
         retry(1),
         catchError(this.usefullService.handleError)

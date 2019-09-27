@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+import { UsefullService } from 'src/app/services/usefull.service';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +12,46 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  loginData
+  loginForm
+
+  constructor(
+    private authService: AuthService,
+    private usefullService: UsefullService,
+    private toastr: ToastrService,
+    private router: Router
+  ) { 
+    this.loginData = { email: undefined, password: undefined }
+  }
 
   ngOnInit() {
+    if (!this.authService.isTokenExpired()) {
+      this.router.navigate(['/area-logada']);
+      return;
+    }
+    this.setValidationForm();
+  }
+
+  setValidationForm() {
+    this.loginForm = new FormGroup({
+      'email': new FormControl(this.loginData.email, [Validators.required]),
+      'password': new FormControl(this.loginData.password, [Validators.required])
+    });
+  }
+
+  onSubmit() {
+    if (this.loginForm.invalid) {
+      return;
+    }
+    this.loginData = this.loginForm.value;
+    this.authService.login(this.loginData).subscribe((res: any) => {
+      this.usefullService.setToken(res.token);
+      window.localStorage.setItem('userData', JSON.stringify(res.data));
+      this.toastr.success('Usuário logado com sucesso!');
+      this.router.navigate(['/area-logada']);
+    }, (error) => {
+        this.toastr.error(error.message);
+    });
   }
 
 }

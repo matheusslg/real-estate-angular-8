@@ -8,6 +8,7 @@ import { HomeAdminComponent } from './components/home-admin/home-admin.component
 import { PropertiesComponent } from './components/properties/properties.component';
 import { PropertiesPostComponent } from './components/properties/properties-post/properties-post.component';
 import { PropertiesListComponent } from './components/properties/properties-list/properties-list.component';
+import { LogoutComponent } from './components/logout/logout.component';
 
 const routes: Routes = [
   { path: 'login', pathMatch: 'full', component: LoginComponent },
@@ -24,7 +25,8 @@ const routes: Routes = [
         { path: 'usuarios', component: UsersAdminComponent },
         { path: '', redirectTo: 'painel', pathMatch: 'full' }
     ]
-  }
+  },
+  { path: 'sair', pathMatch: 'full', component: LogoutComponent }
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

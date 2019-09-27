@@ -35,7 +35,7 @@ export class LocationService {
   }
 
   createLocation(location): Observable<Location> {
-    return this.http.post<Location>(this.apiURL + '/locations/create', JSON.stringify(location), this.usefullService.httpOptions)
+    return this.http.post<Location>(this.apiURL + '/locations/create', JSON.stringify(location))
       .pipe(
         retry(1),
         catchError(this.usefullService.handleError)
@@ -43,7 +43,7 @@ export class LocationService {
   }
 
   updateLocation(id, location): Observable<Location> {
-    return this.http.post<Location>(this.apiURL + '/locations/' + id + '/update', JSON.stringify(location), this.usefullService.httpOptions)
+    return this.http.post<Location>(this.apiURL + '/locations/' + id + '/update', JSON.stringify(location))
       .pipe(
         retry(1),
         catchError(this.usefullService.handleError)
@@ -51,7 +51,7 @@ export class LocationService {
   }
 
   disableLocation(id) {
-    return this.http.post<Location>(this.apiURL + '/locations/' + id + '/disable', this.usefullService.httpOptions)
+    return this.http.post<Location>(this.apiURL + '/locations/' + id + '/disable', null)
       .pipe(
         retry(1),
         catchError(this.usefullService.handleError)
@@ -59,7 +59,7 @@ export class LocationService {
   }
 
   enableLocation(id) {
-    return this.http.post<Location>(this.apiURL + '/locations/' + id + '/enable', this.usefullService.httpOptions)
+    return this.http.post<Location>(this.apiURL + '/locations/' + id + '/enable', null)
       .pipe(
         retry(1),
         catchError(this.usefullService.handleError)

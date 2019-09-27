@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Globals } from 'src/app/globals';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-sidebar-admin',

@@ -54,7 +54,7 @@ export class CategoryService {
   }
 
   createCategory(category): Observable<Category> {
-    return this.http.post<Category>(this.apiURL + '/categories/create', JSON.stringify(category), this.usefullService.httpOptions)
+    return this.http.post<Category>(this.apiURL + '/categories/create', JSON.stringify(category))
       .pipe(
         retry(1),
         catchError(this.usefullService.handleError)
@@ -62,7 +62,7 @@ export class CategoryService {
   }
 
   updateCategory(id, category): Observable<Category> {
-    return this.http.post<Category>(this.apiURL + '/categories/' + id + '/update', JSON.stringify(category), this.usefullService.httpOptions)
+    return this.http.post<Category>(this.apiURL + '/categories/' + id + '/update', JSON.stringify(category))
       .pipe(
         retry(1),
         catchError(this.usefullService.handleError)
@@ -70,7 +70,7 @@ export class CategoryService {
   }
 
   disableCategory(id) {
-    return this.http.post<Category>(this.apiURL + '/categories/' + id + '/disable', this.usefullService.httpOptions)
+    return this.http.post<Category>(this.apiURL + '/categories/' + id + '/disable', null)
       .pipe(
         retry(1),
         catchError(this.usefullService.handleError)
@@ -78,7 +78,7 @@ export class CategoryService {
   }
 
   enableCategory(id) {
-    return this.http.post<Category>(this.apiURL + '/categories/' + id + '/enable', this.usefullService.httpOptions)
+    return this.http.post<Category>(this.apiURL + '/categories/' + id + '/enable', null)
       .pipe(
         retry(1),
         catchError(this.usefullService.handleError)

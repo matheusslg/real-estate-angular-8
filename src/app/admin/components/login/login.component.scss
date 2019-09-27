@@ -58,22 +58,25 @@ input[type=reset] {
   display: inline-block;
   text-transform: uppercase;
   font-size: 13px;
-  -webkit-box-shadow: 0 10px 30px 0 rgba(50, 205, 50, 0.4);
-  box-shadow: 0 10px 30px 0 rgba(50, 205, 50, 0.4);
+  //-webkit-box-shadow: 0 10px 30px 0 rgba(50, 205, 50, 0.4);
+  //box-shadow: 0 10px 30px 0 rgba(50, 205, 50, 0.4);
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
-  margin: 5px 20px 40px 20px;
+  margin: 20px 20px 40px 20px;
   -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;
   -ms-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
+  &:disabled, &:disabled:hover {
+    background-color: palette(gray);
+  }
 }
 
 input[type=button]:hover,
 input[type=submit]:hover,
 input[type=reset]:hover {
-  background-color: palette(main);
+  background-color: palette(main, dark);
 }
 
 input[type=button]:active,
@@ -86,7 +89,8 @@ input[type=reset]:active {
   transform: scale(0.95);
 }
 
-input[type=text] {
+input[type=text],
+input[type=password] {
   background-color: #f6f6f6;
   border: none;
   color: #0d0d0d;
@@ -107,12 +111,14 @@ input[type=text] {
   border-radius: 5px 5px 5px 5px;
 }
 
-input[type=text]:focus {
+input[type=text]:focus,
+input[type=password]:focus {
   background-color: #fff;
   border-bottom: 2px solid palette(main);
 }
 
-input[type=text]:placeholder {
+input[type=text]:placeholder,
+input[type=password]:placeholder {
   color: #cccccc;
 }
 
@@ -241,14 +247,12 @@ input[type=text]:placeholder {
 }
 
 .underlineHover:hover {
-  color: #0d0d0d;
+  text-decoration: none;
 }
 
 .underlineHover:hover:after {
   width: 100%;
 }
-
-
 
 /* OTHERS */
 
@@ -257,5 +261,30 @@ input[type=text]:placeholder {
 }
 
 #icon {
-  width: 60%;
+  width: 30%;
+  margin: 30px;
+}
+
+.show-password {
+  position: absolute;
+  right: 12%;
+  top: 35%;
+  i {
+    cursor: pointer;
+    font-size: 15px;
+    &.fa-eye {
+      color: palette(main);
+    }
+    &.fa-eye-slash {
+      color: palette(gray);
+    }
+  }
+}
+
+// ignore autocomplete background color
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px #f6f6f6 inset !important;
 }

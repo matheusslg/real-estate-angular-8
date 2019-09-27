@@ -9,12 +9,15 @@ import { AppComponent } from './app.component';
 import { AdminModule } from './admin/admin.module';
 import { HomeModule } from './home/home.module';
 
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthInterceptor } from './admin/auth.interceptor';
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
+    HttpClientModule,
     MDBBootstrapModule.forRoot(),
     BsDropdownModule.forRoot(),
     AdminModule,
@@ -24,7 +27,12 @@ import { HomeModule } from './home/home.module';
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
   providers: [
-    Globals
+    Globals,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent]
 })

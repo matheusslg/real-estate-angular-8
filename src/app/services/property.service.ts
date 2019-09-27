@@ -35,7 +35,7 @@ export class PropertyService {
   }
 
   createProperty(property): Observable<Property> {
-    return this.http.post<Property>(this.apiURL + '/properties/create', JSON.stringify(property), this.usefullService.httpOptions)
+    return this.http.post<Property>(this.apiURL + '/properties/create', JSON.stringify(property))
       .pipe(
         retry(1),
         catchError(this.usefullService.handleError)
@@ -43,7 +43,7 @@ export class PropertyService {
   }
 
   updateProperty(id, property): Observable<Property> {
-    return this.http.post<Property>(this.apiURL + '/properties/' + id + '/update', JSON.stringify(property), this.usefullService.httpOptions)
+    return this.http.post<Property>(this.apiURL + '/properties/' + id + '/update', JSON.stringify(property))
       .pipe(
         retry(1),
         catchError(this.usefullService.handleError)
@@ -51,7 +51,7 @@ export class PropertyService {
   }
 
   disableProperty(id) {
-    return this.http.post<Property>(this.apiURL + '/properties/' + id + '/disable', this.usefullService.httpOptions)
+    return this.http.post<Property>(this.apiURL + '/properties/' + id + '/disable', null)
       .pipe(
         retry(1),
         catchError(this.usefullService.handleError)
@@ -59,7 +59,7 @@ export class PropertyService {
   }
 
   enableProperty(id) {
-    return this.http.post<Property>(this.apiURL + '/properties/' + id + '/enable', this.usefullService.httpOptions)
+    return this.http.post<Property>(this.apiURL + '/properties/' + id + '/enable', null)
       .pipe(
         retry(1),
         catchError(this.usefullService.handleError)

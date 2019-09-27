@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanActivateChild, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { CanActivateChild, Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
 
 @Injectable({
@@ -14,7 +13,7 @@ export class AdminGuard implements CanActivateChild {
     ) {}
 
   canActivateChild() {
-    if (this.authService.isAuthenticated() && this.authService.isAdmin()) {
+    if (!this.authService.isTokenExpired(this.authService.getToken()) && this.authService.isAdmin(this.authService.getToken())) {
       return true;  
     } else {
       this.router.navigate(['/login']);
