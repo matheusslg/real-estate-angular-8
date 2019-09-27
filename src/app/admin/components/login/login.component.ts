@@ -3,7 +3,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-import { UsefullService } from 'src/app/services/usefull.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +16,6 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private usefullService: UsefullService,
     private toastr: ToastrService,
     private router: Router
   ) { 
@@ -45,7 +43,7 @@ export class LoginComponent implements OnInit {
     }
     this.loginData = this.loginForm.value;
     this.authService.login(this.loginData).subscribe((res: any) => {
-      this.usefullService.setToken(res.token);
+      this.authService.setToken(res.token);
       window.localStorage.setItem('userData', JSON.stringify(res.data));
       this.toastr.success('Usuário logado com sucesso!');
       this.router.navigate(['/area-logada']);
