@@ -35,6 +35,9 @@ export class PropertyService {
   }
 
   createProperty(property): Observable<Property> {
+    property.categories = property.categories.map(function(item) { return item._id; });
+    property.locations = property.locations.map(function(item) { return item._id; });
+    property.types = property.types.map(function(item) { return item._id; });
     return this.http.post<Property>(this.apiURL + '/properties/create', JSON.stringify(property))
       .pipe(
         retry(1),
@@ -44,6 +47,14 @@ export class PropertyService {
 
   updateProperty(id, property): Observable<Property> {
     return this.http.post<Property>(this.apiURL + '/properties/' + id + '/update', JSON.stringify(property))
+      .pipe(
+        retry(1),
+        catchError(this.usefullService.handleError)
+      )
+  }
+
+  updatePropertyImages(id, images): Observable<Property> {
+    return this.http.post<Property>(this.apiURL + '/properties/' + id + '/updateImages', JSON.stringify({ images: images }))
       .pipe(
         retry(1),
         catchError(this.usefullService.handleError)

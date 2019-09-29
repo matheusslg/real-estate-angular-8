@@ -34,15 +34,15 @@
           <span *ngIf="item.isError"><i class="fas fa-exclamation-circle text-danger"></i></span>
         </td>
         <td nowrap>
-          <button type="button" class="btn btn-success btn-sm mr-1" (click)="item.upload()"
+          <!-- <button type="button" class="btn btn-success btn-sm mr-1" (click)="item.upload()"
             [disabled]="item.isReady || item.isUploading || item.isSuccess">
             <i class="fas fa-upload"></i>
-          </button>
-          <button type="button" class="btn btn-warning btn-sm mr-1" (click)="item.cancel()"
+          </button> -->
+          <!-- <button type="button" class="btn btn-warning btn-sm mr-1" (click)="item.cancel()"
             [disabled]="!item.isUploading">
             <i class="fas fa-times"></i>
-          </button>
-          <button type="button" class="btn btn-danger btn-sm" (click)="item.remove()">
+          </button> -->
+          <button type="button" class="btn btn-danger btn-sm" [disabled]="uploader.isUploading || blockDelete" (click)="item.remove()">
             <i class="fas fa-trash"></i>
           </button>
         </td>
@@ -56,7 +56,7 @@
         <div class="progress-bar bg-success" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
       </div>
     </div>
-    <div class="text-right mt-4 mb-4">
+    <!-- <div class="text-right mt-4 mb-4">
       <button type="button" class="btn btn-success mr-1" (click)="uploader.uploadAll()"
         [disabled]="!uploader.getNotUploadedItems().length">
         <i class="fas fa-upload"></i> Enviar tudo
@@ -68,6 +68,6 @@
       <button type="button" class="btn btn-danger" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
         <i class="fas fa-trash"></i> Remover tudo
       </button>
-    </div>
+    </div> -->
   </div>
 </div>

@@ -46,7 +46,12 @@
               </div>
               <div class="form-group">
                 <label for="imagesText">Imagens</label>
-                <app-upload-files [type]="'image'"></app-upload-files>
+                <app-upload-files 
+                  [type]="'image'" 
+                  [blockDelete]="blockDeleteImages"
+                  (uploadResData)="addImage($event)"
+                  [callUpload]="uploadImages">
+                </app-upload-files>
               </div>
             </div>
           </div>
@@ -143,7 +148,7 @@
                   <div *ngIf="f.priceCustom.errors.required">Este campo é obrigatório</div>
                 </div>
               </div>
-              <button class="btn btn-info" type="submit">Salvar Dados</button>
+              <button class="btn btn-secondary" type="submit">Publicar Propriedade</button>
             </div>
           </div>
         </div>

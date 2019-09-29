@@ -1,4 +1,6 @@
-import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA, LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localePT from '@angular/common/locales/pt';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -18,6 +20,8 @@ import { UploadFilesThumbnailDirective } from '../directives/upload-files-thumbn
 import { DataTablesModule } from 'angular-datatables';
 import { NgxEditorModule } from 'ngx-editor';
 import { SwitchComponent } from './switch/switch.component';
+
+registerLocaleData(localePT);
 
 export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
   align: "left",
@@ -55,6 +59,7 @@ export const toastrOptions = {
     NgxEditorModule
   ],
   providers: [
+    { provide: LOCALE_ID, useValue: "pt" },
     { provide: CURRENCY_MASK_CONFIG, useValue: CustomCurrencyMaskConfig }
   ],
   declarations: [

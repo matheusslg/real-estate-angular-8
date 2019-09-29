@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CategoryService } from 'src/app/services/category.service';
 import { Property } from "src/app/models/Property";
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { forkJoin } from 'rxjs';
+import { forkJoin, BehaviorSubject } from 'rxjs';
 import { NgSelectConfig } from '@ng-select/ng-select';
 import { Globals } from 'src/app/globals';
 import { LocationService } from 'src/app/services/location.service';
@@ -12,6 +12,9 @@ import { Location } from 'src/app/models/location';
 import { Type } from 'src/app/models/type';
 import { ToastrService } from 'ngx-toastr';
 import { Title } from '@angular/platform-browser';
+import { PropertyService } from 'src/app/services/property.service';
+import { AuthService } from 'src/app/admin/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-properties-post',
@@ -33,15 +36,27 @@ export class PropertiesPostComponent implements OnInit {
   priceRadioValue = '1'
   submitted = false
   property
+  propertyData
+  propertyImages = []
+  propertySaved
+
+  resetUploadComponent: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  uploadImages: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  uploadImagesCounter = 0
+  allImagesOk = true
+  blockDeleteImages = false
 
   constructor(
     private GLOBALS: Globals,
     private titleService: Title,
     private toastr: ToastrService,
     private config: NgSelectConfig,
+    private router: Router,
+    private authService: AuthService,
+    private propertyService: PropertyService,
     private categoryService: CategoryService,
     private locationService: LocationService,
-    private typeService: TypeService
+    private typeService: TypeService,
   ) {
     this.titleService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - Cadastrar Propriedade');
     this.config.notFoundText = this.GLOBALS.STRING_TEXT_NOT_FOUND;
@@ -147,6 +162,16 @@ export class PropertiesPostComponent implements OnInit {
     })
   }
 
+  addImage(data) {
+    console.log('uploadDataRes', data);
+    if (data.success) {
+      this.propertyImages.push(data.result._id);
+      this.addImageToProperty();
+    } else {
+      this.allImagesOk = false;
+    }
+  }
+
   priceRadioChanged() {
     if (this.propertyForm.controls.priceRadio.value == '1') {
       this.propertyForm.get('priceCustom').disable();
@@ -162,7 +187,45 @@ export class PropertiesPostComponent implements OnInit {
     if (this.propertyForm.invalid) {
       return;
     }
-    console.log('Submited!', this.propertyForm.value);
+    this.propertyData = this.propertyForm.value;
+    this.propertyData.user = this.authService.getUserId(this.authService.getToken());
+    this.propertyService.createProperty(this.propertyData).subscribe((res: any) => {
+      if (res.success) {
+        this.propertySaved = res.result;
+        this.blockDeleteImages = true;
+        this.uploadImages.next(true);
+      }
+    }, (error) => {
+      console.log('error', error);
+      this.toastr.error('Ocorreu um erro ao cadastrar a propriedade!');
+    });
+  }
+
+  addImageToProperty() {
+    this.propertyService.updatePropertyImages(this.propertySaved._id, this.propertyImages).subscribe((res: any) => {
+      if (res.success) {
+        this.uploadImagesCounter++;
+        this.allImagesOk = true;
+      }
+    }, (error) => {
+      console.log('error', error);
+      this.allImagesOk = false;
+      this.toastr.error('Ocorreu um erro ao cadastrar as imagens!');
+    }, () => {
+      if (this.allImagesOk && this.uploadImagesCounter === this.propertyImages.length) {
+        this.toastr.success('Propriedade cadastrada com sucesso!');
+        this.reset();
+        this.router.navigate(['/area-logada/propriedades']);
+      }
+    });
+  }
+
+  reset() {
+    this.uploadImagesCounter = 0;
+    this.propertySaved = {};
+    this.propertyForm.reset();
+    this.allImagesOk = true;
+    this.blockDeleteImages = false;
   }
 
 }

@@ -53,6 +53,12 @@ export class AuthService {
     return decoded.isAdmin;
   }
 
+  getUserId(token: string) {
+    const decoded = jwt_decode(token);
+    if (decoded.exp === undefined) return null;
+    return decoded.id;
+  }
+
   login(loginData): Observable<null> {
     return this.http.post<null>(this.apiURL + '/auth/login', JSON.stringify(loginData))
       .pipe(
