@@ -69,6 +69,14 @@ export class PropertyService {
       )
   }
 
+  removeProperty(id) {
+    return this.http.post<Property>(this.apiURL + '/properties/' + id + '/remove', null)
+      .pipe(
+        retry(1),
+        catchError(this.usefullService.handleError)
+      )
+  }
+
   enableProperty(id) {
     return this.http.post<Property>(this.apiURL + '/properties/' + id + '/enable', null)
       .pipe(

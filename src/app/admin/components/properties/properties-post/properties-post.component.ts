@@ -15,6 +15,7 @@ import { Title } from '@angular/platform-browser';
 import { PropertyService } from 'src/app/services/property.service';
 import { AuthService } from 'src/app/admin/services/auth.service';
 import { Router } from '@angular/router';
+import { ImageService } from 'src/app/services/image.service';
 
 @Component({
   selector: 'app-properties-post',
@@ -40,11 +41,12 @@ export class PropertiesPostComponent implements OnInit {
   propertyImages = []
   propertySaved
 
-  resetUploadComponent: BehaviorSubject<boolean> = new BehaviorSubject(false);
   uploadImages: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  retryUpload: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  propertySavedId: BehaviorSubject<string> = new BehaviorSubject('undefined');
   uploadImagesCounter = 0
+  uploadedImages
   allImagesOk = true
-  blockDeleteImages = false
 
   constructor(
     private GLOBALS: Globals,
@@ -56,11 +58,13 @@ export class PropertiesPostComponent implements OnInit {
     private propertyService: PropertyService,
     private categoryService: CategoryService,
     private locationService: LocationService,
+    private imageService: ImageService,
     private typeService: TypeService,
   ) {
     this.titleService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - Cadastrar Propriedade');
     this.config.notFoundText = this.GLOBALS.STRING_TEXT_NOT_FOUND;
     this.property = new Property();
+    this.uploadedImages = [];
   }
 
   get f() { return this.propertyForm.controls; }
@@ -82,7 +86,7 @@ export class PropertiesPostComponent implements OnInit {
       this.typeList = resolvedPromises[2].data;
     }, (error) => {
       console.log(error);
-    }, ()=> {
+    }, () => {
       this.loading = false;
     });
   }
@@ -163,12 +167,12 @@ export class PropertiesPostComponent implements OnInit {
   }
 
   addImage(data) {
-    console.log('uploadDataRes', data);
     if (data.success) {
       this.propertyImages.push(data.result._id);
       this.addImageToProperty();
     } else {
       this.allImagesOk = false;
+      this.toastr.error('Ocorreu um erro ao enviar uma imagem!');
     }
   }
 
@@ -183,28 +187,36 @@ export class PropertiesPostComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true;
     if (this.propertyForm.invalid) {
       return;
     }
     this.propertyData = this.propertyForm.value;
     this.propertyData.user = this.authService.getUserId(this.authService.getToken());
-    this.propertyService.createProperty(this.propertyData).subscribe((res: any) => {
-      if (res.success) {
-        this.propertySaved = res.result;
-        this.blockDeleteImages = true;
-        this.uploadImages.next(true);
-      }
-    }, (error) => {
-      console.log('error', error);
-      this.toastr.error('Ocorreu um erro ao cadastrar a propriedade!');
-    });
+    if (this.allImagesOk && !this.submitted) {
+      this.propertyService.createProperty(this.propertyData).subscribe((res: any) => {
+        if (res.success) {
+          this.submitted = true;
+          this.propertySaved = res.result;
+          this.propertySavedId.next(this.propertySaved._id);
+          this.uploadImages.next(true);
+        }
+      }, (error) => {
+        console.log('error', error);
+        this.toastr.error('Ocorreu um erro ao cadastrar a propriedade!');
+      });
+    } else {
+      this.retryUpload.next(true);
+    }
+  }
+
+  uploaderData(data) {
+    this.uploadImagesCounter = data.queue.length;
   }
 
   addImageToProperty() {
     this.propertyService.updatePropertyImages(this.propertySaved._id, this.propertyImages).subscribe((res: any) => {
       if (res.success) {
-        this.uploadImagesCounter++;
+        this.uploadedImages.push(res.result);
         this.allImagesOk = true;
       }
     }, (error) => {
@@ -214,18 +226,9 @@ export class PropertiesPostComponent implements OnInit {
     }, () => {
       if (this.allImagesOk && this.uploadImagesCounter === this.propertyImages.length) {
         this.toastr.success('Propriedade cadastrada com sucesso!');
-        this.reset();
         this.router.navigate(['/area-logada/propriedades']);
       }
     });
-  }
-
-  reset() {
-    this.uploadImagesCounter = 0;
-    this.propertySaved = {};
-    this.propertyForm.reset();
-    this.allImagesOk = true;
-    this.blockDeleteImages = false;
   }
 
 }

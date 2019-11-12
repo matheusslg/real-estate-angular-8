@@ -1,6 +1,8 @@
 <label for="uploader-input" ng2FileDrop [ngClass]="{'another-file-over-class': hasAnotherDropZoneOver}"
-  (fileOver)="fileOver($event)" [uploader]="uploader" multiple class="drop-zone">Arraste os arquivos para cá ou clique aqui</label>
-<input type="file" ng2FileSelect [uploader]="uploader" multiple id="uploader-input" style="display:none" />
+  (fileOver)="fileOver($event);uploadData.emit(uploader)" [uploader]="uploader" multiple class="drop-zone">Arraste os
+  arquivos para cá ou clique aqui</label>
+<input type="file" ng2FileSelect [uploader]="uploader" (change)="uploadData.emit(uploader)" multiple id="uploader-input"
+  style="display:none" />
 
 <div class="files-table" *ngIf="uploader?.queue?.length > 0">
 
@@ -42,7 +44,8 @@
             [disabled]="!item.isUploading">
             <i class="fas fa-times"></i>
           </button> -->
-          <button type="button" class="btn btn-danger btn-sm" [disabled]="uploader.isUploading || blockDelete" (click)="item.remove()">
+          <button type="button" class="btn btn-danger btn-sm" [disabled]="uploader.isUploading || (item.isUploading && !item.isError)"
+            (click)="item.remove()">
             <i class="fas fa-trash"></i>
           </button>
         </td>

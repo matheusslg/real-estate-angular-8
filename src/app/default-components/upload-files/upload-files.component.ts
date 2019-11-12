@@ -15,9 +15,11 @@ export class UploadFilesComponent implements OnInit {
   @Input() type
   @Input() typeAllowed
   @Input() maxFileSize
-  @Input() blockDelete
   @Input() callUpload: Subject<boolean>
+  @Input() callRetry: Subject<boolean>
+  @Input() parentId: Subject<string>
   @Output() uploadResData = new EventEmitter<any>();
+  @Output() uploadData = new EventEmitter<any>();
 
   public uploader: FileUploader;
   public hasAnotherDropZoneOver: boolean = false;
@@ -33,6 +35,13 @@ export class UploadFilesComponent implements OnInit {
         this.uploader.uploadAll();
       }
     });
+
+    this.callRetry.subscribe((call: any) => {
+      if (call) {
+        this.retry();
+      }
+    });
+
     if (this.type) {
       if (this.type == 'image') {
         this.uploadUrl = environment.baseUri.uploadImage;
@@ -45,7 +54,6 @@ export class UploadFilesComponent implements OnInit {
 
   public fileOver(e: any): void {
     this.hasAnotherDropZoneOver = e;
-    console.log(this.uploader);
   }
 
   startUploader() {
@@ -57,6 +65,13 @@ export class UploadFilesComponent implements OnInit {
     });
     this.uploader.onErrorItem = (item, response, status, headers) => this.onErrorItem(item, response, status, headers);
     this.uploader.onSuccessItem = (item, response, status, headers) => this.onSuccessItem(item, response, status, headers);
+    this.uploader.onBeforeUploadItem = (item: FileItem) => {
+      let parentId;
+      this.parentId.subscribe((id: any) => { parentId = id })
+      this.uploader.options.additionalParameter = {
+        id: parentId
+      }
+    };
   }
 
   onSuccessItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
@@ -67,6 +82,15 @@ export class UploadFilesComponent implements OnInit {
   onErrorItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
     let error = JSON.parse(response);
     this.uploadResData.emit(error);
+  }
+
+  retry() {
+    this.uploader.queue.forEach(file => {
+      if (file.isError) {
+        file.isUploaded = false;
+      }
+    });
+    this.uploader.uploadAll();
   }
 
 }

@@ -47,10 +47,12 @@
               <div class="form-group">
                 <label for="imagesText">Imagens</label>
                 <app-upload-files 
-                  [type]="'image'" 
-                  [blockDelete]="blockDeleteImages"
+                  [type]="'image'"
+                  (uploadData)="uploaderData($event)"
                   (uploadResData)="addImage($event)"
-                  [callUpload]="uploadImages">
+                  [callUpload]="uploadImages"
+                  [callRetry]="retryUpload"
+                  [parentId]="propertySavedId">
                 </app-upload-files>
               </div>
             </div>
