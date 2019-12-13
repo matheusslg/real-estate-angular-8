@@ -12,12 +12,12 @@ export class SidebarAdminMenuActiveDirective {
       if (this._el.nativeElement.classList.contains('main-item-single')) {
         (<any>$('.sidebar-submenu')).collapse('hide');
       }
-      $('.main-item').removeClass('active');
-      $('.sub-item').removeClass('active');
-      this._ren.addClass(this._el.nativeElement, 'active');
+      //$('.main-item').removeClass('active');
+      //$('.sub-item').removeClass('active');
+      //this._ren.addClass(this._el.nativeElement, 'active');
     } else {
-      $('.sub-item').removeClass('active');
-      this._ren.addClass(this._el.nativeElement, 'active');
+      //$('.sub-item').removeClass('active');
+      //this._ren.addClass(this._el.nativeElement, 'active');
     }
   }
 }

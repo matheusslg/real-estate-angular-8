@@ -7,15 +7,19 @@ import { NgSelectConfig } from '@ng-select/ng-select';
 import { Globals } from 'src/app/globals';
 import { LocationService } from 'src/app/services/location.service';
 import { TypeService } from 'src/app/services/type.service';
+import { TagService } from 'src/app/services/tag.service';
 import { Category } from 'src/app/models/category';
 import { Location } from 'src/app/models/location';
 import { Type } from 'src/app/models/type';
+import { Tag } from 'src/app/models/tag';
 import { ToastrService } from 'ngx-toastr';
-import { Title } from '@angular/platform-browser';
+import { Title, DomSanitizer } from '@angular/platform-browser';
 import { PropertyService } from 'src/app/services/property.service';
 import { AuthService } from 'src/app/admin/services/auth.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ImageService } from 'src/app/services/image.service';
+import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-properties-post',
@@ -27,11 +31,13 @@ export class PropertiesPostComponent implements OnInit {
   categoryList
   locationList
   typeList
+  tagList
 
   loading
   loadingCategory
   loadingLocation
   loadingType
+  loadingTag
 
   propertyForm
   priceRadioValue = '1'
@@ -41,12 +47,18 @@ export class PropertiesPostComponent implements OnInit {
   propertyImages = []
   propertySaved
 
+  isChange
+  propertyChangeData
+
   uploadImages: BehaviorSubject<boolean> = new BehaviorSubject(false);
   retryUpload: BehaviorSubject<boolean> = new BehaviorSubject(false);
   propertySavedId: BehaviorSubject<string> = new BehaviorSubject('undefined');
   uploadImagesCounter = 0
   uploadedImages
+  uploaderProgress
   allImagesOk = true
+
+  url
 
   constructor(
     private GLOBALS: Globals,
@@ -60,10 +72,14 @@ export class PropertiesPostComponent implements OnInit {
     private locationService: LocationService,
     private imageService: ImageService,
     private typeService: TypeService,
+    private tagService: TagService,
+    private activatedRoute: ActivatedRoute,
+    private sanitizer: DomSanitizer
   ) {
     this.titleService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - Cadastrar Propriedade');
-    this.config.notFoundText = this.GLOBALS.STRING_TEXT_NOT_FOUND;
     this.property = new Property();
+    this.propertyChangeData = new Property();
+    this.url = environment.baseUri.mongo;
     this.uploadedImages = [];
   }
 
@@ -72,6 +88,41 @@ export class PropertiesPostComponent implements OnInit {
   ngOnInit() {
     this.getData();
     this.setValidationForm();
+    this.checkIfIsChange();
+  }
+
+  checkIfIsChange() {
+    this.activatedRoute.params.subscribe(params => {
+      if (params['id']) {
+        this.loading = true;
+        this.isChange = true;
+        this.propertyChangeData.images = [];
+        this.titleService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - Editar Propriedade');
+        this.propertyService.getProperty(params['id']).subscribe(resolvedPromise => {
+          this.propertyChangeData = resolvedPromise.data;
+          this.propertyChangeData._id = params['id'];
+          this.propertyForm.controls['title'].setValue(this.propertyChangeData.title);
+          this.propertyForm.controls['description'].setValue(this.propertyChangeData.description);
+          this.propertyForm.controls['address'].setValue(this.propertyChangeData.address);
+          this.propertyForm.controls['categories'].setValue(this.propertyChangeData.categories);
+          this.propertyForm.controls['locations'].setValue(this.propertyChangeData.locations);
+          this.propertyForm.controls['tags'].setValue(this.propertyChangeData.tags);
+          this.propertyForm.controls['types'].setValue(this.propertyChangeData.types);
+          this.propertyForm.controls['city'].setValue(this.propertyChangeData.city);
+          this.propertyForm.controls['geolocation'].setValue(this.propertyChangeData.geolocation);
+          this.propertyForm.controls['priceRadio'].setValue(this.propertyChangeData.priceNumber ? '1' : '2');
+          this.propertyForm.controls['priceNumber'].setValue(this.propertyChangeData.priceNumber);
+          this.propertyForm.controls['priceCustom'].setValue(this.propertyChangeData.priceCustom);
+          this.propertyForm.controls['active'].setValue(this.propertyChangeData.active);
+          this.propertyChangeData.priceNumber ? this.priceRadioValue = '1' : this.priceRadioValue = '2';
+          this.loading = false;
+        }, (error) => {
+          console.log('error', error);
+          this.toastr.error('Propriedade não encontrada no banco de dados!');
+          this.router.navigate(['/area-logada/propriedades']);
+        });
+      }
+    });
   }
 
   getData() {
@@ -79,11 +130,13 @@ export class PropertiesPostComponent implements OnInit {
     forkJoin([
       this.categoryService.getCategories(),
       this.locationService.getLocations(),
-      this.typeService.getTypes()
+      this.typeService.getTypes(),
+      this.tagService.getTags()
     ]).subscribe(resolvedPromises => {
       this.categoryList = resolvedPromises[0].data;
       this.locationList = resolvedPromises[1].data;
       this.typeList = resolvedPromises[2].data;
+      this.tagList = resolvedPromises[3].data;
     }, (error) => {
       console.log(error);
     }, () => {
@@ -95,10 +148,13 @@ export class PropertiesPostComponent implements OnInit {
     this.propertyForm = new FormGroup({
       'title': new FormControl(this.property.data.title, [Validators.required]),
       'description': new FormControl(this.property.data.description, [Validators.required]),
+      'address': new FormControl(this.property.data.address, null),
       'categories': new FormControl(this.property.data.categories, [Validators.required]),
       'locations': new FormControl(this.property.data.locations, [Validators.required]),
       'types': new FormControl(this.property.data.types, [Validators.required]),
+      'tags': new FormControl(this.property.data.tags, [Validators.required]),
       'city': new FormControl(this.property.data.city, [Validators.required]),
+      'geolocation': new FormControl(this.property.data.geolocation, null),
       'priceRadio': new FormControl(this.priceRadioValue),
       'priceNumber': new FormControl({ 'value': this.property.data.priceNumber, 'disabled': this.priceRadioValue == '2' }, [Validators.required]),
       'priceCustom': new FormControl({ 'value': this.property.data.priceCustom, 'disabled': this.priceRadioValue == '1' }, [Validators.required]),
@@ -166,14 +222,97 @@ export class PropertiesPostComponent implements OnInit {
     })
   }
 
+  addTag = (name) => {
+    return new Promise((resolve) => {
+      this.loadingTag = true;
+      let tag = new Tag();
+      tag.data.description = name;
+      this.typeService.createType(tag.data).subscribe((resolvedPromise: any) => {
+        resolve(resolvedPromise.result);
+        this.toastr.success('Tag adicionada com sucesso!');
+        this.loadingTag = false;
+      }, (error) => {
+        if (error.type == 'unique') {
+          this.toastr.error(this.GLOBALS.STRING_TEXT_DUPLICATE_ITEM);
+        } else {
+          this.toastr.error(error.message);
+        }
+        this.loadingTag = false;
+      })
+    })
+  }
+
   addImage(data) {
     if (data.success) {
       this.propertyImages.push(data.result._id);
-      this.addImageToProperty();
+      if (this.uploaderProgress === 100) {
+        this.updatePropertyImages();
+      }
     } else {
       this.allImagesOk = false;
       this.toastr.error('Ocorreu um erro ao enviar uma imagem!');
     }
+  }
+
+  removeImage(image) {
+    this.imageService.removeImage(image).then((res: any) => {
+      if (res.success) {
+        this.removeImageFromProperty(image);
+      }
+    }).catch((error) => {
+      this.toastr.error('Ocorreu um erro ao excluir a imagem selecionada!');
+    })
+  }
+
+  uploaderData(data) {
+    if (data.queue) {
+      this.uploadImagesCounter = data.queue.length;
+    } else {
+      this.uploaderProgress = data;
+    }
+  }
+
+  updatePropertyImages() {
+    if (this.isChange) {
+      this.propertyImages = this.propertyImages.concat(this.propertyChangeData.images);
+    }
+    this.propertyService.updatePropertyImages(this.propertySaved._id, this.propertyImages).subscribe((res: any) => {
+      if (res.success) {
+        this.allImagesOk = true;
+      }
+    }, (error) => {
+      console.log('error', error);
+      this.allImagesOk = false;
+      this.toastr.error('Ocorreu um erro ao cadastrar as imagens!');
+    }, () => {
+      if (!this.isChange && (this.allImagesOk && this.uploadImagesCounter === this.propertyImages.length)) {
+        this.toastr.success('Propriedade cadastrada com sucesso!');
+        this.router.navigate(['/area-logada/propriedades']);
+      } else if (this.isChange && (this.allImagesOk && this.uploadImagesCounter === (this.propertyImages.length - this.propertyChangeData.images.length))) {
+        this.toastr.success('Propriedade atualizada com sucesso!');
+        this.router.navigate(['/area-logada/propriedades']);
+      }
+    });
+  }
+
+  removeImageFromProperty(image) {
+    let index = this.propertyChangeData.images.indexOf(image);
+    if (index > -1) {
+      this.propertyChangeData.images.splice(index, 1);
+    }
+    this.propertyService.updatePropertyImages(this.propertyChangeData._id, this.propertyChangeData.images).subscribe((res: any) => {
+    }, (error) => {
+      console.log('error', error);
+      this.toastr.error('Ocorreu um erro ao excluir a imagem!');
+    });
+  }
+
+  getBackgroundImage(image) {
+    return this.sanitizer.bypassSecurityTrustStyle(`url(${this.url + '/' + image})`);
+  }
+
+  openImage(image) {
+    window.open(this.url + '/' + image, "_blank");
   }
 
   priceRadioChanged() {
@@ -192,43 +331,46 @@ export class PropertiesPostComponent implements OnInit {
     }
     this.propertyData = this.propertyForm.value;
     this.propertyData.user = this.authService.getUserId(this.authService.getToken());
-    if (this.allImagesOk && !this.submitted) {
-      this.propertyService.createProperty(this.propertyData).subscribe((res: any) => {
-        if (res.success) {
-          this.submitted = true;
-          this.propertySaved = res.result;
-          this.propertySavedId.next(this.propertySaved._id);
-          this.uploadImages.next(true);
-        }
-      }, (error) => {
-        console.log('error', error);
-        this.toastr.error('Ocorreu um erro ao cadastrar a propriedade!');
-      });
+    if (!this.isChange) {
+      if (this.allImagesOk && !this.submitted) {
+        this.propertyService.createProperty(this.propertyData).subscribe((res: any) => {
+          if (res.success) {
+            this.submitted = true;
+            this.propertySaved = res.result;
+            this.propertySavedId.next(this.propertySaved._id);
+            this.uploadImages.next(true);
+          }
+        }, (error) => {
+          console.log('error', error);
+          this.toastr.error('Ocorreu um erro ao cadastrar a propriedade!');
+        });
+      } else {
+        this.retryUpload.next(true);
+      }
     } else {
-      this.retryUpload.next(true);
+      if (this.allImagesOk && !this.submitted) {
+        this.propertyData.images = this.propertyImages.concat(this.propertyChangeData.images);
+        console.log(this.propertyData);
+        this.propertyService.updateProperty(this.propertyChangeData._id, this.propertyData).subscribe((res: any) => {
+          if (res.success) {
+            this.submitted = true;
+            this.propertySaved = res.result;
+            this.propertySavedId.next(this.propertySaved._id);
+            if (this.uploadImagesCounter > 0) {
+              this.uploadImages.next(true);
+            } else {
+              this.toastr.success('Propriedade atualizada com sucesso!');
+              this.router.navigate(['/area-logada/propriedades']);
+            }
+          }
+        }, (error) => {
+          console.log('error', error);
+          this.toastr.error('Ocorreu um erro ao atualizar a propriedade!');
+        });
+      } else {
+        this.retryUpload.next(true);
+      }
     }
-  }
-
-  uploaderData(data) {
-    this.uploadImagesCounter = data.queue.length;
-  }
-
-  addImageToProperty() {
-    this.propertyService.updatePropertyImages(this.propertySaved._id, this.propertyImages).subscribe((res: any) => {
-      if (res.success) {
-        this.uploadedImages.push(res.result);
-        this.allImagesOk = true;
-      }
-    }, (error) => {
-      console.log('error', error);
-      this.allImagesOk = false;
-      this.toastr.error('Ocorreu um erro ao cadastrar as imagens!');
-    }, () => {
-      if (this.allImagesOk && this.uploadImagesCounter === this.propertyImages.length) {
-        this.toastr.success('Propriedade cadastrada com sucesso!');
-        this.router.navigate(['/area-logada/propriedades']);
-      }
-    });
   }
 
 }

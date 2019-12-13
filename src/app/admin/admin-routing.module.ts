@@ -19,6 +19,7 @@ const routes: Routes = [
           children: [
             { path: 'listagem', component: PropertiesListComponent },
             { path: 'cadastrar', component: PropertiesPostComponent },
+            { path: 'editar/:id', component: PropertiesPostComponent },
             { path: '', redirectTo: 'listagem', pathMatch: 'full' }
           ]
         },

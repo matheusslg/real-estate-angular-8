@@ -26,7 +26,7 @@
               </div>
               <div class="form-group">
                 <label for="addressText">Endereço</label>
-                <input name="address" type="text" class="form-control" id="addressText"
+                <input formControlName="address" name="address" type="text" class="form-control" id="addressText"
                   placeholder="Ex: Rua Silva Jardim, 100">
               </div>
               <div class="form-row">
@@ -40,7 +40,7 @@
                 </div>
                 <div class="form-group col-6">
                   <label for="geolocationText">Geolocalização</label>
-                  <input name="geolocation" type="text" class="form-control" id="geolocationText"
+                  <input formControlName="geolocation" name="geolocation" type="text" class="form-control" id="geolocationText"
                     placeholder="Ex: -28.409122, -54.961752">
                 </div>
               </div>
@@ -54,6 +54,21 @@
                   [callRetry]="retryUpload"
                   [parentId]="propertySavedId">
                 </app-upload-files>
+                <ng-container *ngIf="isChange">
+                  <h4 class="mt-4">Arquivos Existentes</h4>
+                  <p>Quantidade: {{ propertyChangeData?.images?.length }}</p>
+                  <div class="files-box">
+                      <div class="files-box-item" *ngFor="let image of propertyChangeData?.images" [style.background]="getBackgroundImage(image?.filePath)">
+                        <button type="button" class="btn btn-danger btn-sm" (click)="removeImage(image)">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                        <div class="files-box-overlay" (click)="openImage(image?.filePath)">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <img [src]="url + '/' + image?.filePath" />
+                      </div>
+                  </div>
+                </ng-container>
               </div>
             </div>
           </div>
@@ -117,6 +132,20 @@
                 </div>
               </div>
               <div class="form-group">
+                <label for="tagMultiselect">Tags *</label>
+                <ng-select formControlName="tags" [items]="tagList" [addTag]="addTag" [loading]="loadingTag"
+                  [multiple]="true" [closeOnSelect]="false" [searchable]="true" bindLabel="description"
+                  placeholder="Selecione uma ou mais tags" name="tags" class="ng-select-custom form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f.tags.errors }">
+                  <ng-template ng-tag-tmp let-search="searchTerm">
+                    <b>Adicionar</b>: {{ search }}
+                  </ng-template>
+                </ng-select>
+                <div *ngIf="submitted && f.types.errors" class="invalid-feedback">
+                  <div *ngIf="f.types.errors.required">Este campo é obrigatório</div>
+                </div>
+              </div>
+              <div class="form-group">
                 <label for="priceNumber">Preço numérico</label>
                 <div class="input-group">
                   <div class="input-group-prepend">
@@ -150,7 +179,8 @@
                   <div *ngIf="f.priceCustom.errors.required">Este campo é obrigatório</div>
                 </div>
               </div>
-              <button class="btn btn-secondary" type="submit">Publicar Propriedade</button>
+              <button *ngIf="!isChange" class="btn btn-primary" type="submit">Publicar Propriedade</button>
+              <button *ngIf="isChange" class="btn btn-primary" type="submit">Editar Propriedade</button>
             </div>
           </div>
         </div>

@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { UsefullService } from 'src/app/services/usefull.service';
+import { ImageService } from './image.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +17,9 @@ export class PropertyService {
 
   constructor(
     private http: HttpClient,
-    private usefullService: UsefullService
+    private usefullService: UsefullService,
+    private imageService: ImageService,
+    private toastr: ToastrService
   ) { }
 
   getProperties(): Observable<Property> {
@@ -35,9 +39,9 @@ export class PropertyService {
   }
 
   createProperty(property): Observable<Property> {
-    property.categories = property.categories.map(function(item) { return item._id; });
-    property.locations = property.locations.map(function(item) { return item._id; });
-    property.types = property.types.map(function(item) { return item._id; });
+    property.categories = property.categories.map(function (item) { return item._id; });
+    property.locations = property.locations.map(function (item) { return item._id; });
+    property.types = property.types.map(function (item) { return item._id; });
     return this.http.post<Property>(this.apiURL + '/properties/create', JSON.stringify(property))
       .pipe(
         retry(1),
@@ -61,7 +65,7 @@ export class PropertyService {
       )
   }
 
-  disableProperty(id) {
+  async disableProperty(id) {
     return this.http.post<Property>(this.apiURL + '/properties/' + id + '/disable', null)
       .pipe(
         retry(1),
@@ -69,12 +73,25 @@ export class PropertyService {
       )
   }
 
-  removeProperty(id) {
-    return this.http.post<Property>(this.apiURL + '/properties/' + id + '/remove', null)
-      .pipe(
-        retry(1),
-        catchError(this.usefullService.handleError)
-      )
+  async removeProperty(property) {
+    await this.http.post<Property>(this.apiURL + '/properties/' + property._id + '/remove', null).toPromise().then((resolvedPromise) => {
+      let allImagesRemoved = true;
+      property.images.forEach(image => {
+        this.imageService.removeImage(image).then((resolvedPromise) => {
+          console.log(resolvedPromise);
+        }).catch((error) => {
+          catchError(this.usefullService.handleError)
+          allImagesRemoved = false;
+        })
+      })
+      if (allImagesRemoved) {
+        return this.http.post<Property>(this.apiURL + '/properties/' + property._id + '/remove', null).toPromise();
+      } else {
+        this.toastr.error('Não foi possível remover todas as imagens.');
+      }
+    }).catch((error) => {
+      catchError(this.usefullService.handleError)
+    })
   }
 
   enableProperty(id) {

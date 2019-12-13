@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Image } from '../models/image';
+import { Tag } from '../models/tag';
 import { Observable } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
@@ -9,7 +9,7 @@ import { UsefullService } from 'src/app/services/usefull.service';
 @Injectable({
   providedIn: 'root'
 })
-export class ImageService {
+export class TagService {
 
   apiURL = environment.baseUri.mongo;
   
@@ -18,39 +18,51 @@ export class ImageService {
     private usefullService: UsefullService
   ) { }
 
-  getImages(): Observable<Image> {
-    return this.http.get<Image>(this.apiURL + '/images')
+  getTags(): Observable<Tag> {
+    return this.http.get<Tag>(this.apiURL + '/tags')
       .pipe(
         retry(1),
         catchError(this.usefullService.handleError)
       )
   }
 
-  getImage(id): Observable<Image> {
-    return this.http.get<Image>(this.apiURL + '/images/' + id)
+  getTag(id): Observable<Tag> {
+    return this.http.get<Tag>(this.apiURL + '/tags/' + id)
       .pipe(
         retry(1),
         catchError(this.usefullService.handleError)
       )
   }
 
-  createImage(image): Observable<Image> {
-    return this.http.post<Image>(this.apiURL + '/images/create', JSON.stringify(image))
+  createTag(tag): Observable<Tag> {
+    return this.http.post<Tag>(this.apiURL + '/tags/create', JSON.stringify(tag))
       .pipe(
         retry(1),
         catchError(this.usefullService.handleError)
       )
   }
 
-  updateImage(id, image): Observable<Image> {
-    return this.http.post<Image>(this.apiURL + '/images/' + id + '/update', JSON.stringify(image))
+  updateTag(id, tag): Observable<Tag> {
+    return this.http.post<Tag>(this.apiURL + '/tags/' + id + '/update', JSON.stringify(tag))
       .pipe(
         retry(1),
         catchError(this.usefullService.handleError)
       )
   }
 
-  async removeImage(image) {
-    return await this.http.post<Image>(this.apiURL + '/images/' + image._id + '/remove', JSON.stringify(image)).toPromise();
+  disableTag(id) {
+    return this.http.post<Tag>(this.apiURL + '/tags/' + id + '/disable', null)
+      .pipe(
+        retry(1),
+        catchError(this.usefullService.handleError)
+      )
+  }
+
+  enableTag(id) {
+    return this.http.post<Tag>(this.apiURL + '/tags/' + id + '/enable', null)
+      .pipe(
+        retry(1),
+        catchError(this.usefullService.handleError)
+      )
   }
 }

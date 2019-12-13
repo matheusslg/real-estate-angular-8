@@ -63,15 +63,20 @@ export class UploadFilesComponent implements OnInit {
       allowedMimeType: !this.typeAllowed ? ['image/png', 'image/jpg', 'image/jpeg'] : this.typeAllowed,
       maxFileSize: !this.maxFileSize ? 5 * 1024 * 1024 : this.maxFileSize
     });
+    this.uploader.onProgressAll = (progress) => this.onProgressAll(progress);
     this.uploader.onErrorItem = (item, response, status, headers) => this.onErrorItem(item, response, status, headers);
     this.uploader.onSuccessItem = (item, response, status, headers) => this.onSuccessItem(item, response, status, headers);
-    this.uploader.onBeforeUploadItem = (item: FileItem) => {
+    this.uploader.onBuildItemForm = (fileItem, form) => {
       let parentId;
       this.parentId.subscribe((id: any) => { parentId = id })
-      this.uploader.options.additionalParameter = {
-        id: parentId
-      }
+      form.append('parentId', parentId);
+      return { fileItem, form };
     };
+  }
+
+  onProgressAll(progress: any): any {
+    let data = JSON.parse(progress);
+    this.uploadData.emit(data);
   }
 
   onSuccessItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {

@@ -8,18 +8,17 @@
           <tr>
             <th>#</th>
             <th>Título</th>
-            <th>Endereço</th>
             <th>Categorias</th>
             <th>Localizações</th>
             <th>Valor</th>
             <th>Ativa</th>
+            <th>Opções</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let property of propertyList; let i = index">
             <td>{{ i + 1 }}</td>
             <td>{{ property.title }}</td>
-            <td>{{ property.address }}</td>
             <td>
               <ng-container *ngFor="let category of property.categories; let last = last">
                 <span *ngIf="category.active">{{ category.description }}{{ !last ? ', ' : '' }}</span>
@@ -30,8 +29,12 @@
                 <span *ngIf="location.active">{{ location.description }}{{ !last ? ', ' : '' }}</span>
               </ng-container>
             </td>
-            <td>{{ property.priceCustom ? property.priceCustom : property.priceNumber }}</td>
+            <td>{{ property.priceCustom ? property.priceCustom : (property.priceNumber | currency:'BRL') }}</td>
             <td>{{ property.active ? 'Sim' : 'Não' }}</td>
+            <td>
+              <button [routerLink]="['/area-logada/propriedades/editar', property._id]" class="btn btn-sm btn-primary mr-2"><i class="fas fa-pencil-alt"></i></button>
+              <button (click)="removeProperty(property)" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+            </td>
           </tr>
         </tbody>
       </table>

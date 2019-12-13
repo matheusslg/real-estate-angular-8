@@ -69,30 +69,34 @@
   padding-left: 10px;
 }
 
+.list-group-item-action:focus {
+  background-color: initial;
+}
+
 .main-item {
   background: palette(gray);
 
   &:hover {
-    background: palette(gray, light1);
+    background: palette(main);
   }
 
-  &:active,
+  /*&:active,
   &.active,
   &:focus {
     background: palette(main);
-  }
+  }*/
 }
 
 .sub-item {
   background: palette(gray);
 
   &:hover {
-    background: palette(gray, light1);
+    background: palette(main);
   }
 
-  &:active,
+  /*&:active,
   &.active,
   &:focus {
     background: palette(main, dark);
-  }
+  }*/
 }
