@@ -40,7 +40,6 @@ export class PropertiesSingleComponent implements OnInit {
           this.loading = false;
           this.property = resolvedPromise.data;
           this.titleService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - ' + this.property.title);
-          console.log('property', this.property);
         }, (error) => {
           console.log('error', error);
           this.toastr.error('Propriedade não encontrada no banco de dados!');

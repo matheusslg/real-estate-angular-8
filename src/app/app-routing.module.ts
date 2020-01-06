@@ -7,9 +7,9 @@ import { PropertiesListComponent } from './b2c/components/properties/properties-
 import { PropertiesSingleComponent } from './b2c/components/properties/properties-single/properties-single.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'b2c' },
+  { path: '', pathMatch: 'full', redirectTo: '' },
   {
-    path: 'b2c', component: HomeComponent,
+    path: '', component: HomeComponent,
     children: [
       { path: 'propriedades', component: PropertiesListComponent },
       { path: 'propriedades/:id/detalhes', component: PropertiesSingleComponent },

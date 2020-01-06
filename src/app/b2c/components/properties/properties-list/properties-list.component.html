@@ -1,8 +1,16 @@
 <app-loading *ngIf="loading"></app-loading>
-<div *ngIf="!loading" class="row mg-top20">
+<div *ngIf="!loading" class="row mg-top20" 
+      infiniteScroll
+      [infiniteScrollDistance]="0.1"
+      [infiniteScrollThrottle]="50"
+      (scrolled)="onScroll()"
+>
   <div *ngFor="let property of propertyList; let index = index" class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4">
     <div *ngIf="property.active" class="card h-100">
-      <img *ngIf="property.images.length > 0" class="card-img-top" [src]="preUrlImages + '/' + property.images[0].filePath" [alt]="property.images[0].description">
+      <a [routerLink]="['/propriedades', property._id, 'detalhes']">
+        <img *ngIf="property.images.length > 0" class="card-img-top"
+          [src]="preUrlImages + '/' + property.images[0].filePath">
+      </a>
       <div class="carousel-square">
         <div class="carousel-square-location"
           *ngFor="let location of property.locations; let last = last; let first = first">
@@ -16,22 +24,22 @@
           <a href="javascript:;">{{ type.description }}</a>
         </div>
       </div>
-      <div class="card-body">
-        <a [routerLink]="['/b2c/propriedades', property._id, 'detalhes']">
+      <div class="card-body pb-0">
+        <a [routerLink]="['/propriedades', property._id, 'detalhes']">
           <p class="card-title">{{ property.title }}</p>
         </a>
-        <div class="row d-flex align-items-center">
-          <div class="property-indicator-value col col-lg-6 col-md-12 col-sm-6">
+        <div class="row">
+          <div class="property-indicator-value col col-lg-12 col-md-12 col-sm-12">
             <div class="property-indicator">
               <i class="fas fa-dollar-sign"></i>
               <p class="mb-0 ml-2">
                 {{ property.priceNumber ? (property.priceNumber | currency:'BRL') : property.priceCustom }}</p>
             </div>
           </div>
-          <div class="property-indicator-address col col-lg-6 col-md-12 col-sm-6">
+          <div class="property-indicator-address col col-lg-12 col-md-12 col-sm-12">
             <div class="property-indicator property-indicator-small">
               <i class="fas fa-map-marker-alt"></i>
-              <p class="mb-0 ml-3">{{ property.address ? property.address : property.city }}</p>
+              <p class="mb-0 ml-2 mt-2">{{ property.address ? property.address : property.city }}</p>
             </div>
           </div>
         </div>

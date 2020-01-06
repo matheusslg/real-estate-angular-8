@@ -21,6 +21,7 @@ import { DataTablesModule } from 'angular-datatables';
 import { NgxEditorModule } from 'ngx-editor';
 import { SwitchComponent } from './switch/switch.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 registerLocaleData(localePT);
 
@@ -57,7 +58,8 @@ export const toastrOptions = {
     FileUploadModule,
     DataTablesModule,
     NgxEditorModule,
-    DragDropModule
+    DragDropModule,
+    InfiniteScrollModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: "pt" },
@@ -90,7 +92,8 @@ export const toastrOptions = {
     NgxEditorModule,
     SwitchComponent,
     DragDropModule,
-    TruncatePipe
+    TruncatePipe,
+    InfiniteScrollModule
   ],
 })
 export class DefaultComponentsModule { }

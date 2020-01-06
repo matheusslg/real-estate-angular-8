@@ -30,9 +30,8 @@ export class PropertiesListComponent implements OnInit {
     })
   }
 
-  test(param) {
-    console.log(param);
-    this.router.navigate(['/propriedades', param, 'detalhes']);
+  onScroll() {
+    console.log('scroll');
   }
 
 }
