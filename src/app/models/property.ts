@@ -13,6 +13,10 @@ class Data {
     types: string[] = [];
     city: string;
     geolocation: string;
+    bedrooms: number = 0;
+    toilets: number = 0;
+    garage: number = 0;
+    size: string;
     tags: string[] = [];
     images: string[] = [];
     priceNumber: number;

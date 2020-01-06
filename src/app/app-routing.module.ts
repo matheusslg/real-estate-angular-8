@@ -1,14 +1,22 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { HomeComponent } from './home/home/home.component';
-import { PropertiesListComponent } from './home/properties/properties-list/properties-list.component';
+import { HomeComponent } from './b2c/components/home/home.component';
 import { PageNotFoundComponent } from './default-components/page-not-found/page-not-found.component';
+import { PropertiesListComponent } from './b2c/components/properties/properties-list/properties-list.component';
+import { PropertiesSingleComponent } from './b2c/components/properties/properties-single/properties-single.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', component: HomeComponent },
-  { path: '**', component: PageNotFoundComponent },
-  { path: 'propriedades', component: PropertiesListComponent }
+  { path: '', pathMatch: 'full', redirectTo: 'b2c' },
+  {
+    path: 'b2c', component: HomeComponent,
+    children: [
+      { path: 'propriedades', component: PropertiesListComponent },
+      { path: 'propriedades/:id/detalhes', component: PropertiesSingleComponent },
+      { path: '', pathMatch: 'full', redirectTo: 'propriedades' },
+    ]
+  },
+  { path: '**', component: PageNotFoundComponent }
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

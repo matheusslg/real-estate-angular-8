@@ -1,15 +1,20 @@
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { DefaultComponentsModule } from '../default-components/default-components.module';
 import { BsDropdownModule } from 'ngx-bootstrap';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
-import { HomeComponent } from './home/home.component';
-import { PropertiesListComponent } from './properties/properties-list/properties-list.component';
-import { TopSidebarComponent } from './top-sidebar/top-sidebar.component';
+import { B2cRoutingModule } from './b2c-routing.module';
+import { HomeComponent } from './components/home/home.component';
+import { PropertiesListComponent } from './components/properties/properties-list/properties-list.component';
+import { TopSidebarComponent } from './components/top-sidebar/top-sidebar.component';
+import { PropertiesSingleComponent } from './components/properties/properties-single/properties-single.component';
 
 @NgModule({
   imports: [
+    CommonModule,
     DefaultComponentsModule,
+    B2cRoutingModule,
     MDBBootstrapModule.forRoot(),
     BsDropdownModule.forRoot()
   ],
@@ -17,6 +22,7 @@ import { TopSidebarComponent } from './top-sidebar/top-sidebar.component';
   declarations: [
     HomeComponent,
     PropertiesListComponent,
+    PropertiesSingleComponent,
     TopSidebarComponent
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
@@ -26,4 +32,4 @@ import { TopSidebarComponent } from './top-sidebar/top-sidebar.component';
   ]
 })
 
-export class HomeModule { }
+export class B2cModule { }

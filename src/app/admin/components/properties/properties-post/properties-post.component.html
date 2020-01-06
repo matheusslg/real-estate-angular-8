@@ -30,6 +30,25 @@
                   placeholder="Ex: Rua Silva Jardim, 100">
               </div>
               <div class="form-row">
+                <div class="form-group col-3">
+                  <label for="bedroomsNumber">Quartos</label>
+                  <input formControlName="bedrooms" name="bedrooms" type="number" class="form-control" id="bedroomsNumber">
+                </div>
+                <div class="form-group col-3">
+                  <label for="toiletsNumber">Banheiros</label>
+                  <input formControlName="toilets" name="toilets" type="number" class="form-control" id="toiletsNumber">
+                </div>
+                <div class="form-group col-3">
+                  <label for="garageNumber">Garagem</label>
+                  <input formControlName="garage" name="garage" type="number" class="form-control" id="garageNumber">
+                </div>
+                <div class="form-group col-3">
+                  <label for="sizeText">Tamanho</label>
+                  <input formControlName="size" name="size" type="text" class="form-control" id="sizeText"
+                    placeholder="Ex: 10x60m ou 100m²">
+                </div>
+              </div>
+              <div class="form-row">
                 <div class="form-group col-6">
                   <label for="cityText">Cidade *</label>
                   <input formControlName="city" name="city" type="text" class="form-control" id="cityText"
@@ -57,8 +76,8 @@
                 <ng-container *ngIf="isChange">
                   <h4 class="mt-4">Arquivos Existentes</h4>
                   <p>Quantidade: {{ propertyChangeData?.images?.length }}</p>
-                  <div class="files-box">
-                      <div class="files-box-item" *ngFor="let image of propertyChangeData?.images" [style.background]="getBackgroundImage(image?.filePath)">
+                  <div cdkDropList (cdkDropListDropped)="droppedFile($event)" class="files-box">
+                      <div cdkDrag class="files-box-item" *ngFor="let image of propertyChangeData?.images" [style.background]="getBackgroundImage(image?.filePath)">
                         <button type="button" class="btn btn-danger btn-sm" (click)="removeImage(image)">
                           <i class="fas fa-trash"></i>
                         </button>

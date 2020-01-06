@@ -12,19 +12,21 @@ import { LogoutComponent } from './components/logout/logout.component';
 
 const routes: Routes = [
   { path: 'login', pathMatch: 'full', component: LoginComponent },
-  { path: 'area-logada', component: DashboardComponent, canActivateChild: [AdminGuard], 
+  {
+    path: 'area-logada', component: DashboardComponent, canActivateChild: [AdminGuard],
     children: [
-        { path: 'painel', component: HomeAdminComponent },
-        { path: 'propriedades', component: PropertiesComponent,
-          children: [
-            { path: 'listagem', component: PropertiesListComponent },
-            { path: 'cadastrar', component: PropertiesPostComponent },
-            { path: 'editar/:id', component: PropertiesPostComponent },
-            { path: '', redirectTo: 'listagem', pathMatch: 'full' }
-          ]
-        },
-        { path: 'usuarios', component: UsersAdminComponent },
-        { path: '', redirectTo: 'painel', pathMatch: 'full' }
+      { path: 'painel', component: HomeAdminComponent },
+      {
+        path: 'propriedades', component: PropertiesComponent,
+        children: [
+          { path: 'listagem', component: PropertiesListComponent },
+          { path: 'cadastrar', component: PropertiesPostComponent },
+          { path: 'editar/:id', component: PropertiesPostComponent },
+          { path: '', redirectTo: 'listagem', pathMatch: 'full' }
+        ]
+      },
+      { path: 'usuarios', component: UsersAdminComponent },
+      { path: '', redirectTo: 'painel', pathMatch: 'full' }
     ]
   },
   { path: 'sair', pathMatch: 'full', component: LogoutComponent }

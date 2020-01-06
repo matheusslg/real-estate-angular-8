@@ -1,0 +1,67 @@
+@import '../../../../../assets/scss/utils';
+
+.property {
+    &-location {
+        padding: 5px;
+        margin: 5px;
+        color: palette(white);
+        background-color: palette(main);
+        border-radius: 3px;
+    }
+    &-category {
+        padding: 5px;
+        margin: 5px;
+        color: palette(white);
+        background-color: palette(main, dark);
+        border-radius: 3px;
+    }
+    &-type {
+        padding: 5px;
+        margin: 5px;
+        color: palette(gray);
+        background-color: palette(main, light);
+        border-radius: 3px;
+    }
+}
+
+.property-indicator {
+    display: flex;
+    align-items: center;
+    i {
+        font-size: 20px;
+        color: palette(gray, light3);
+    }
+    &-text {
+        color: palette(gray);
+        font-weight: 600;
+    }
+    &-small {
+        p {
+            font-size: 13px;
+            font-family: $font-secondary;
+        }
+        i {
+            font-size: 14px;
+            color: palette(gray, light3);
+        }
+    }
+    &-value {
+        p {
+            font: 500 18px/20px $font-main;
+            color: palette(main, dark);
+        }
+    }
+    &-address {
+        @media screen and (min-width: 991px) {
+            display: flex;
+            justify-content: flex-end;
+        }
+        @media screen and (max-width: 767px) {
+            display: flex;
+            justify-content: flex-end;
+        }
+        @media screen and (min-width: 768px) and (max-width: 990px) {
+            margin-top: 0.5rem;
+        }
+    }
+}

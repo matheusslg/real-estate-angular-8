@@ -24,7 +24,6 @@
             "tsConfig": "tsconfig.app.json",
             "aot": false,
             "assets": [
-              "src/icons",
               "src/assets"
             ],
             "styles": [
@@ -76,8 +75,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+                  "maximumWarning": "4mb",
+                  "maximumError": "7mb"
                 }
               ]
             }
@@ -108,7 +107,6 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "assets": [
-              "src/icons",
               "src/assets"
             ],
             "styles": [

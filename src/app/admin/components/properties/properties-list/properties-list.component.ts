@@ -29,7 +29,7 @@ export class PropertiesListComponent implements OnInit {
   ngOnInit() {
     this.dtOptions = this.GLOBALS.DATATABLES_OPTIONS('Listagem de propriedades cadastradas no sistema');
     this.dtOptions.buttons.forEach(element => {
-      element.exportOptions.columns = [0, 1, 2, 3, 4, 5];
+      element.exportOptions.columns = [0, 1, 2, 3, 4];
     });
     this.refreshTable();
   }

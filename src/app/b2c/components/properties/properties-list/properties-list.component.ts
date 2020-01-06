@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { PropertyService } from '../../../services/property.service';
+import { PropertyService } from '../../../../services/property.service';
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-properties-list',
@@ -15,7 +16,8 @@ export class PropertiesListComponent implements OnInit {
   preUrlImages
 
   constructor(
-    private propertyService: PropertyService
+    private propertyService: PropertyService,
+    private router: Router,
   ) { 
     this.preUrlImages = environment.baseUri.mongo;
   }
@@ -26,6 +28,11 @@ export class PropertiesListComponent implements OnInit {
       this.propertyList = resolvedPromise.data;
       this.loading = false;
     })
+  }
+
+  test(param) {
+    console.log(param);
+    this.router.navigate(['/propriedades', param, 'detalhes']);
   }
 
 }

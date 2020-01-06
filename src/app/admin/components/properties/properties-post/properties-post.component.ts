@@ -19,6 +19,7 @@ import { AuthService } from 'src/app/admin/services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ImageService } from 'src/app/services/image.service';
 import { environment } from 'src/environments/environment';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 
 @Component({
@@ -104,6 +105,10 @@ export class PropertiesPostComponent implements OnInit {
           this.propertyForm.controls['title'].setValue(this.propertyChangeData.title);
           this.propertyForm.controls['description'].setValue(this.propertyChangeData.description);
           this.propertyForm.controls['address'].setValue(this.propertyChangeData.address);
+          this.propertyForm.controls['bedrooms'].setValue(this.propertyChangeData.bedrooms);
+          this.propertyForm.controls['toilets'].setValue(this.propertyChangeData.toilets);
+          this.propertyForm.controls['garage'].setValue(this.propertyChangeData.garage);
+          this.propertyForm.controls['size'].setValue(this.propertyChangeData.size);
           this.propertyForm.controls['categories'].setValue(this.propertyChangeData.categories);
           this.propertyForm.controls['locations'].setValue(this.propertyChangeData.locations);
           this.propertyForm.controls['tags'].setValue(this.propertyChangeData.tags);
@@ -149,6 +154,10 @@ export class PropertiesPostComponent implements OnInit {
       'title': new FormControl(this.property.data.title, [Validators.required]),
       'description': new FormControl(this.property.data.description, [Validators.required]),
       'address': new FormControl(this.property.data.address, null),
+      'bedrooms': new FormControl(this.property.data.bedrooms, null),
+      'toilets': new FormControl(this.property.data.toilets, null),
+      'garage': new FormControl(this.property.data.garage, null),
+      'size': new FormControl(this.property.data.size, null),
       'categories': new FormControl(this.property.data.categories, [Validators.required]),
       'locations': new FormControl(this.property.data.locations, [Validators.required]),
       'types': new FormControl(this.property.data.types, [Validators.required]),
@@ -227,7 +236,7 @@ export class PropertiesPostComponent implements OnInit {
       this.loadingTag = true;
       let tag = new Tag();
       tag.data.description = name;
-      this.typeService.createType(tag.data).subscribe((resolvedPromise: any) => {
+      this.tagService.createTag(tag.data).subscribe((resolvedPromise: any) => {
         resolve(resolvedPromise.result);
         this.toastr.success('Tag adicionada com sucesso!');
         this.loadingTag = false;
@@ -285,13 +294,12 @@ export class PropertiesPostComponent implements OnInit {
       this.allImagesOk = false;
       this.toastr.error('Ocorreu um erro ao cadastrar as imagens!');
     }, () => {
-      if (!this.isChange && (this.allImagesOk && this.uploadImagesCounter === this.propertyImages.length)) {
+      if (!this.isChange) {
         this.toastr.success('Propriedade cadastrada com sucesso!');
-        this.router.navigate(['/area-logada/propriedades']);
-      } else if (this.isChange && (this.allImagesOk && this.uploadImagesCounter === (this.propertyImages.length - this.propertyChangeData.images.length))) {
+      } else {
         this.toastr.success('Propriedade atualizada com sucesso!');
-        this.router.navigate(['/area-logada/propriedades']);
       }
+      this.router.navigate(['/area-logada/propriedades']);
     });
   }
 
@@ -301,6 +309,7 @@ export class PropertiesPostComponent implements OnInit {
       this.propertyChangeData.images.splice(index, 1);
     }
     this.propertyService.updatePropertyImages(this.propertyChangeData._id, this.propertyChangeData.images).subscribe((res: any) => {
+      this.toastr.success('Imagem removida com sucesso!');
     }, (error) => {
       console.log('error', error);
       this.toastr.error('Ocorreu um erro ao excluir a imagem!');
@@ -313,6 +322,10 @@ export class PropertiesPostComponent implements OnInit {
 
   openImage(image) {
     window.open(this.url + '/' + image, "_blank");
+  }
+
+  droppedFile(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.propertyChangeData.images, event.previousIndex, event.currentIndex);
   }
 
   priceRadioChanged() {

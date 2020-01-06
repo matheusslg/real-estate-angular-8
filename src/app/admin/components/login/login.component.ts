@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
 
   loginData
   loginForm
+  showPassword
 
   constructor(
     private authService: AuthService,
