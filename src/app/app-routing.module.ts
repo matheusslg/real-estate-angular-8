@@ -7,13 +7,12 @@ import { PropertiesListComponent } from './b2c/components/properties/properties-
 import { PropertiesSingleComponent } from './b2c/components/properties/properties-single/properties-single.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: '' },
   {
     path: '', component: HomeComponent,
     children: [
-      { path: 'propriedades', component: PropertiesListComponent },
+      { path: '', component: PropertiesListComponent },
       { path: 'propriedades/:id/detalhes', component: PropertiesSingleComponent },
-      { path: '', pathMatch: 'full', redirectTo: 'propriedades' },
+      { path: '', pathMatch: 'full', redirectTo: '' },
     ]
   },
   { path: '**', component: PageNotFoundComponent }
