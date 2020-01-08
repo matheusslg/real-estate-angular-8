@@ -17,6 +17,8 @@ import { UploadFilesComponent } from './upload-files/upload-files.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { UploadFilesThumbnailDirective } from '../b2c/directives/upload-files-thumbnail.directive';
 import { TruncatePipe } from '../b2c/pipes/truncate.pipe';
+import { NormalizeStringPipe } from '../b2c/pipes/normalize-string.pipe';
+import { FilterPropertiesPipe } from '../b2c/pipes/filter-properties.pipe';
 import { DataTablesModule } from 'angular-datatables';
 import { NgxEditorModule } from 'ngx-editor';
 import { SwitchComponent } from './switch/switch.component';
@@ -63,7 +65,7 @@ export const toastrOptions = {
   ],
   providers: [
     { provide: LOCALE_ID, useValue: "pt" },
-    { provide: CURRENCY_MASK_CONFIG, useValue: CustomCurrencyMaskConfig }
+    { provide: CURRENCY_MASK_CONFIG, useValue: CustomCurrencyMaskConfig },
   ],
   declarations: [
     PageNotFoundComponent,
@@ -71,6 +73,8 @@ export const toastrOptions = {
     UploadFilesComponent,
     UploadFilesThumbnailDirective,
     TruncatePipe,
+    NormalizeStringPipe,
+    FilterPropertiesPipe,
     SwitchComponent
   ],
   schemas: [NO_ERRORS_SCHEMA],
@@ -93,6 +97,8 @@ export const toastrOptions = {
     SwitchComponent,
     DragDropModule,
     TruncatePipe,
+    NormalizeStringPipe,
+    FilterPropertiesPipe,
     InfiniteScrollModule
   ],
 })

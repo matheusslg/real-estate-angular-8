@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { throwError } from 'rxjs';
+import { throwError, Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsefullService {
-
-  constructor() { }
 
   handleError(error) {
     let errorRes = {};
@@ -28,6 +26,12 @@ export class UsefullService {
     }
     console.log(errorRes);
     return throwError(errorRes);
+  }
+
+  orderByLocale(arr, property) {
+    return arr.sort(function (a, b) {
+      return a[property].localeCompare(b[property]);
+    });
   }
 
 }

@@ -1,32 +1,91 @@
+<div class="topbar d-none d-lg-block">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-6 col-xl-5 col-xxl-5 col-xxxl-4 d-flex align-items-center my-3">
+        <img class="logo" src="../../../../assets/images/logo.png" />
+        <div class="topbar-title ml-3">
+          <h1 class="text-primary font-terciary">Cavallini Imóveis</h1>
+          <h5 class="text-secondary font-terciary">CRECI 51377</h5>
+        </div>
+      </div>
+      <div class="col-lg-6 col-xl-5 col-xxl-4 col-xxxl-4 d-flex align-items-center justify-content-center">
+        <div class="topbar-right text-center">
+          <h4>Especializado em Áreas Rurais</h4>
+          <h6>Mais de 35 anos de experiência no Setor Rural.</h6>
+        </div>
+      </div>
+      <!-- <div class="col-md-4 mx-auto text-right">
+        <h5 class="font-weight-bold text-uppercase mt-3 mb-4"><i class="far fa-envelope mr-2 text-primary"></i>Contato
+        </h5>
+        <h6>(55) 3352-3352</h6>
+        <h6>(55) 9 9922-5333 (WhatsApp)</h6>
+        <h6>contato@cavalliniimoveis.com.br</h6>
+      </div> -->
+    </div>
+  </div>
+</div>
+
 <!--Navbar-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-20">
-  <a class="navbar-brand" href="#">Cavallini Imóveis</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado"
-    aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
+  <a class="navbar-brand d-sm-block d-md-block d-lg-none font-terciary" routerLink="/">Cavallini Imóveis</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop" aria-controls="navbarTop"
+    aria-expanded="false" aria-label="Alternar navegação">
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
+  <div class="collapse navbar-collapse" id="navbarTop">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Página Inicial</a>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/"><i class="fas fa-home mr-2"></i>Página Inicial</a>
       </li>
-      <!-- <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-          Dropdown
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Ação</a>
-          <a class="dropdown-item" href="#">Outra ação</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Algo mais aqui</a>
-        </div>
-      </li> -->
+
+      <ng-container *ngIf="!loading">
+        <!-- Categorias -->
+        <li class="nav-item dropdown" routerLinkActive="active">
+          <a class="nav-link dropdown-toggle" href="javascript:;" id="navbarDropdown" role="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-tags fa-fw mr-1"></i>
+            Categorias
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a *ngFor="let category of categoryList"
+              [routerLink]="['/categoria', (category.description | normalizeString)]" class="dropdown-item"
+              href="javascript:;">{{ category.description }}</a>
+          </div>
+        </li>
+
+        <!-- Localização -->
+        <li class="nav-item dropdown" routerLinkActive="active">
+          <a class="nav-link dropdown-toggle" href="javascript:;" id="navbarDropdown" role="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-map-signs fa-fw mr-1"></i>
+            Localização
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a *ngFor="let location of locationList"
+              [routerLink]="['/localizacao', (location.description | normalizeString)]" class="dropdown-item"
+              href="javascript:;">{{ location.description }}</a>
+          </div>
+        </li>
+
+        <!-- Modalidades -->
+        <li class="nav-item dropdown" routerLinkActive="active">
+          <a class="nav-link dropdown-toggle" href="javascript:;" id="navbarDropdown" role="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-sticky-note fa-fw mr-1"></i>
+            Modalidades
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a *ngFor="let type of typeList" [routerLink]="['/modalidade', (type.description | normalizeString)]"
+              class="dropdown-item" href="javascript:;">{{ type.description }}</a>
+          </div>
+        </li>
+      </ng-container>
+
     </ul>
-    <form *ngIf="false" class="form-inline my-2 my-lg-0">
+    <!-- <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar">
       <button class="btn btn-success my-2 my-sm-0" type="submit">Pesquisar</button>
-    </form>
+    </form> -->
   </div>
 </nav>

@@ -12,7 +12,7 @@ export class AuthInterceptor implements HttpInterceptor {
         req = req.clone({
             setHeaders: {
                 'Content-Type': 'application/json; charset=utf-8',
-                'Authorization': `Bearer ${this.authService.getToken()}`,
+                'Authorization': `Bearer ${this.authService.getToken()}`
             },
         });
         return next.handle(req);

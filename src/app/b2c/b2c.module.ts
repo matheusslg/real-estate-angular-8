@@ -9,6 +9,7 @@ import { HomeComponent } from './components/home/home.component';
 import { PropertiesListComponent } from './components/properties/properties-list/properties-list.component';
 import { TopSidebarComponent } from './components/top-sidebar/top-sidebar.component';
 import { PropertiesSingleComponent } from './components/properties/properties-single/properties-single.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { PropertiesSingleComponent } from './components/properties/properties-si
     HomeComponent,
     PropertiesListComponent,
     PropertiesSingleComponent,
-    TopSidebarComponent
+    TopSidebarComponent,
+    FooterComponent
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
   exports: [

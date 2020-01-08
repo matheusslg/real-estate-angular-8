@@ -12,6 +12,9 @@ const routes: Routes = [
     children: [
       { path: '', component: PropertiesListComponent },
       { path: 'propriedades/:id/detalhes', component: PropertiesSingleComponent },
+      { path: 'categoria/:description', component: PropertiesListComponent },
+      { path: 'localizacao/:description', component: PropertiesListComponent },
+      { path: 'modalidade/:description', component: PropertiesListComponent },
       { path: '', pathMatch: 'full', redirectTo: '' },
     ]
   },

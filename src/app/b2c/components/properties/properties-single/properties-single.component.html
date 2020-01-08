@@ -2,16 +2,27 @@
 <ng-container *ngIf="!loading">
   <div class="row d-flex">
     <div class="col-xxxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
-      <mdb-carousel class="carousel slide carousel-fade" [animation]="'slide'" [interval]="'3000'">
-        <mdb-carousel-item class="justify-content-center"
-          *ngFor="let image of property.images; let first = first; let indexImage = index">
-          <div class="carousel-item-div view" [style.background]="'url(' + preUrlImages + '/' + image.filePath + ')'">
-            <img class="card-img-top d-block w-100" [src]="preUrlImages + '/' + image.filePath"
-              [alt]="image.description">
-            <div class="mask waves-light" mdbWavesEffect></div>
-          </div>
-        </mdb-carousel-item>
-      </mdb-carousel>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="mb-3"><i class="fas fa-images mr-2"></i>Fotos do imóvel</h5>
+          <mdb-carousel class="carousel slide carousel-fade" [animation]="'slide'" [interval]="'3000'">
+            <mdb-carousel-item class="justify-content-center"
+              *ngFor="let image of property.images; let first = first; let indexImage = index">
+              <div class="carousel-item-div view"
+                [style.background]="'url(' + preUrlImages + '/' + image.filePath + ')'">
+                <img class="card-img-top d-block w-100" [src]="preUrlImages + '/' + image.filePath"
+                  [alt]="image.description">
+                <div class="mask waves-light" mdbWavesEffect></div>
+              </div>
+            </mdb-carousel-item>
+          </mdb-carousel>
+          <!-- <mdb-carousel class="carousel slide carousel-fade" [type]="'carousel-thumbnails'" [animation]="'fade'">
+            <mdb-carousel-item *ngFor="let image of property.images; let first = first; let indexImage = index">
+              <img class="d-block w-100" [src]="preUrlImages + '/' + image.filePath">
+            </mdb-carousel-item>
+          </mdb-carousel> -->
+        </div>
+      </div>
     </div>
     <div class="col-xxxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
       <div class="card">
@@ -52,6 +63,18 @@
                 <i class="fas fa-pencil-ruler"></i>
                 <p class="mb-0 ml-2">{{ property.size }}</p>
               </div>
+            </div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-md-6 col-xs-12">
+              <h6>Valor:</h6>
+              <h3 class="text-primary font-terciary">
+                {{ property.priceNumber ? (property.priceNumber | currency:'BRL') : property.priceCustom }}</h3>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6 d-sm-flex d-lg-flex align-items-center justify-content-end">
+              <a href="https://wa.me/5555999225333?text=Ol%C3%A1%2C%20tenho%20interesse%20em%20um%20im%C3%B3vel%20que%20vi%20no%20site."
+                class="btn btn-primary btn-lg"><i class="fab fa-whatsapp mr-2"></i>Tenho Interesse</a>
             </div>
           </div>
           <hr />

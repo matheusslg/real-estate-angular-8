@@ -12,6 +12,8 @@ $cTerciary5:#962d74 !default;
 $cTerciary6:#0ABF7B !default;
 $cTerciary7:#623283 !default;
 $cTerciary8:#729993 !default;
+$cTerciary9:#fbf8c4 !default;
+
 
 $cError:#ff002a;// error (red)
 $cSuccess:#639d31;// success (green)
@@ -31,39 +33,43 @@ $palettes:(
 		dark:darken($cSecondary, 4%)
 	),
 	terciary:( // misc
-		ter1light: lighten($cTerciary1, 43%),//#f7f8ea
-		ter1:$cTerciary1,//#b5c542
-		ter1dark:darken($cTerciary1, 4%),//#aaba39
+		ter1light: lighten($cTerciary1, 43%),
+		ter1:$cTerciary1,
+		ter1dark:darken($cTerciary1, 4%),
 
-		ter2light: lighten($cTerciary2, 44%),//#edeff9
-		ter2:$cTerciary2,//#475abf
-		ter2dark:darken($cTerciary2, 4%),//#3e51b3
+		ter2light: lighten($cTerciary2, 44%),
+		ter2:$cTerciary2,
+		ter2dark:darken($cTerciary2, 4%),
 
-		ter3light: lighten($cTerciary3, 60%),//#e6fcfc
-		ter3:$cTerciary3,//#119c9f
-		ter3dark:darken($cTerciary3, 4%),//#0f8a8d
+		ter3light: lighten($cTerciary3, 60%),
+		ter3:$cTerciary3,
+		ter3dark:darken($cTerciary3, 4%),
 
-		ter4light: lighten($cTerciary4, 63%),//edeef8
-		ter4:$cTerciary4,//#2e357b
-		ter4dark:darken($cTerciary4, 4%),//#282f6c
+		ter4light: lighten($cTerciary4, 63%),
+		ter4:$cTerciary4,
+		ter4dark:darken($cTerciary4, 4%),
 
-		ter5light: lighten($cTerciary5, 59%),//#f9ecf5
-		ter5:$cTerciary5,//#962D74
-		ter5dark:darken($cTerciary5, 4%),//#004089
+		ter5light: lighten($cTerciary5, 59%),
+		ter5:$cTerciary5,
+		ter5dark:darken($cTerciary5, 4%),
 
-		ter6light: lighten($cTerciary6, 50%),//#f7fffc
-		ter6light2: lighten($cTerciary6, 57%),//#eefef8
-		ter6:$cTerciary6,//#0ABF7B
-		ter6dark:darken($cTerciary6, 4%),//#09ac6f
+		ter6light: lighten($cTerciary6, 50%),
+		ter6light2: lighten($cTerciary6, 57%),
+		ter6:$cTerciary6,
+		ter6dark:darken($cTerciary6, 4%),
 
         ter7light: lighten($cTerciary7, 60%),
 		ter7light2: lighten($cTerciary7, 67%),
-		ter7: $cTerciary7,//#623283
+		ter7: $cTerciary7,
 		ter7dark:darken($cTerciary7, 4%),
 
-        ter8light: lighten($cTerciary8, 42%),//#eef3f2 (#eff5f4 on invision)
-		ter8:$cTerciary8,//#729993
-		ter8dark:darken($cTerciary8, 10%),//#648b85
+        ter8light: lighten($cTerciary8, 42%),
+		ter8:$cTerciary8,
+		ter8dark:darken($cTerciary8, 10%),
+
+		ter9light: lighten($cTerciary9, 7%),
+		ter9:$cTerciary9,
+		ter9dark:darken($cTerciary9, 22%),
 
 		errorlight: lighten($cError, 47%),
 		error: $cError,
@@ -102,5 +108,19 @@ $palettes:(
 ////////////////
 // Default Fonts
 ///////////////
+
+@font-face {
+	font-family: "Coolvetica";
+	src: url('/assets/fonts/coolvetica_rg-webfont.woff') format("woff"),
+	url('/assets/fonts/coolvetica_rg-webfont.woff2') format("woff2")
+}
+
 $font-main: 'Roboto',sans-serif;
 $font-secondary: 'Open Sans',sans-serif;
+$font-terciary: 'Coolvetica',sans-serif;
+
+.font {
+	&-primary { font-family: $font-main !important; }
+	&-secondary { font-family: $font-secondary !important; }
+	&-terciary { font-family: $font-terciary !important; }
+}
