@@ -14,14 +14,17 @@
           <div class="carousel-square">
             <div class="carousel-square-location"
               *ngFor="let location of property.locations; let last = last; let first = first">
-              <a href="javascript:;">{{ location.description }}</a>
+              <a href="javascript:;"
+                [routerLink]="['/localizacao', (location.description | normalizeString)]">{{ location.description }}</a>
             </div>
             <div class="carousel-square-category"
               *ngFor="let category of property.categories; let last = last; let first = first">
-              <a href="javascript:;">{{ category.description }}</a>
+              <a href="javascript:;"
+                [routerLink]="['/categoria', (category.description | normalizeString)]">{{ category.description }}</a>
             </div>
             <div class="carousel-square-type" *ngFor="let type of property.types; let last = last; let first = first">
-              <a href="javascript:;">{{ type.description }}</a>
+              <a href="javascript:;"
+                [routerLink]="['/modalidade', (type.description | normalizeString)]">{{ type.description }}</a>
             </div>
           </div>
           <div class="card-body pb-0">

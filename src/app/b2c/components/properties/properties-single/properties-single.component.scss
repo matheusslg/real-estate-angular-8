@@ -24,26 +24,33 @@
 }
 
 .property {
-    &-location {
-        padding: 5px;
-        margin: 5px;
-        color: palette(white);
-        background-color: palette(main);
-        border-radius: 3px;
-    }
-    &-category {
-        padding: 5px;
-        margin: 5px;
-        color: palette(white);
-        background-color: palette(main, dark);
-        border-radius: 3px;
-    }
-    &-type {
-        padding: 5px;
-        margin: 5px;
-        color: palette(gray);
-        background-color: palette(main, light);
-        border-radius: 3px;
+    &-square {
+        font: 500 14px/16px $font-main, sans-serif;
+        display: flex;
+        flex-wrap: wrap;
+        z-index: 1;
+        a { color: inherit; }
+        &-location {
+            padding: 5px;
+            margin: 5px;
+            color: palette(white);
+            background-color: palette(main);
+            border-radius: 3px;
+        }
+        &-category {
+            padding: 5px;
+            margin: 5px;
+            color: palette(white);
+            background-color: palette(main, dark);
+            border-radius: 3px;
+        }
+        &-type {
+            padding: 5px;
+            margin: 5px;
+            color: palette(gray);
+            background-color: palette(main, light);
+            border-radius: 3px;
+        }
     }
 }
 
