@@ -10,6 +10,7 @@ import { PropertiesListComponent } from './components/properties/properties-list
 import { TopSidebarComponent } from './components/top-sidebar/top-sidebar.component';
 import { PropertiesSingleComponent } from './components/properties/properties-single/properties-single.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { CloseMobileMenuDirective } from './directives/close-mobile-menu.directive';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { FooterComponent } from './components/footer/footer.component';
     PropertiesListComponent,
     PropertiesSingleComponent,
     TopSidebarComponent,
-    FooterComponent
+    FooterComponent,
+    CloseMobileMenuDirective
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
   exports: [
