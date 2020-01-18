@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { UsefullService } from 'src/app/services/usefull.service';
+import { Locations } from '../models/locations';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +19,8 @@ export class LocationService {
     private usefullService: UsefullService
   ) { }
 
-  getLocations(): Observable<Location> {
-    return this.http.get<Location>(this.apiURL + '/locations')
+  getLocations(): Observable<Locations> {
+    return this.http.get<Locations>(this.apiURL + '/locations')
       .pipe(
         retry(1),
         catchError(this.usefullService.handleError)

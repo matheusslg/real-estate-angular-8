@@ -66,6 +66,8 @@ export const toastrOptions = {
   providers: [
     { provide: LOCALE_ID, useValue: "pt" },
     { provide: CURRENCY_MASK_CONFIG, useValue: CustomCurrencyMaskConfig },
+    NormalizeStringPipe,
+    FilterPropertiesPipe
   ],
   declarations: [
     PageNotFoundComponent,

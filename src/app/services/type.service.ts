@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { UsefullService } from 'src/app/services/usefull.service';
+import { Types } from '../models/types';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +19,8 @@ export class TypeService {
     private usefullService: UsefullService
   ) { }
 
-  getTypes(): Observable<Type> {
-    return this.http.get<Type>(this.apiURL + '/types')
+  getTypes(): Observable<Types> {
+    return this.http.get<Types>(this.apiURL + '/types')
       .pipe(
         retry(1),
         catchError(this.usefullService.handleError)

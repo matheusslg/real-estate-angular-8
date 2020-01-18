@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { retry, catchError, map, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { UsefullService } from 'src/app/services/usefull.service';
+import { Categories } from '../models/categories';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +19,8 @@ export class CategoryService {
     private usefullService: UsefullService
   ) { }
 
-  getCategories(): Observable<Category> {
-    return this.http.get<Category>(this.apiURL + '/categories')
+  getCategories(): Observable<Categories> {
+    return this.http.get<Categories>(this.apiURL + '/categories')
       .pipe(
         retry(1),
         catchError(this.usefullService.handleError)
