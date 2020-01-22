@@ -1,16 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Category } from '../models/category';
-import { Observable } from 'rxjs';
-import { retry, catchError, map, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { UsefullService } from 'src/app/services/usefull.service';
 import { Categories } from '../models/categories';
+import { Subject } from 'rxjs/internal/Subject';
+import { Observable } from 'rxjs/internal/Observable';
+import { retry } from 'rxjs/internal/operators/retry';
+import { catchError } from 'rxjs/internal/operators/catchError';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
+
+  categorySubject: Subject<any> = new Subject();
+  categoryList
 
   apiURL = environment.baseUri.mongo;
 

@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FileUploader, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { environment } from '../../../environments/environment';
 import { AuthService } from 'src/app/admin/services/auth.service';
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/internal/Subject';
 
 @Component({
   selector: 'app-upload-files',

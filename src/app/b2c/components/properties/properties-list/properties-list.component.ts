@@ -5,11 +5,10 @@ import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Globals } from 'src/app/globals';
 import { NormalizeStringPipe } from 'src/app/b2c/pipes/normalize-string.pipe';
-import { FilterPropertiesPipe } from 'src/app/b2c/pipes/filter-properties.pipe';
-import { forkJoin } from 'rxjs';
 import { CategoryService } from 'src/app/services/category.service';
 import { LocationService } from 'src/app/services/location.service';
 import { TypeService } from 'src/app/services/type.service';
+import { forkJoin } from 'rxjs/internal/observable/forkJoin';
 
 @Component({
   selector: 'app-properties-list',
@@ -20,11 +19,26 @@ export class PropertiesListComponent implements OnInit {
 
   loading
   propertyList
-  filterValue
+  filterValue = []
   cardTitle
-  selectedFilter
+  selectedFilter = {
+    data: null,
+    type: null
+  }
 
   preUrlImages
+
+  propertiesListNumber = 8
+  propertiesLimitNumber
+  propertiesSkipNumber
+  scrollCounter = 0
+  noMoreProperties = false
+
+  categoryList
+  locationList
+  typeList
+
+  routerParams
 
   constructor(
     private propertyService: PropertyService,
@@ -34,8 +48,7 @@ export class PropertiesListComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private titleService: Title,
     private GLOBALS: Globals,
-    private normalizeString: NormalizeStringPipe,
-    private filterProperties: FilterPropertiesPipe
+    private normalizeString: NormalizeStringPipe
   ) {
     this.preUrlImages = environment.baseUri.mongo;
     this.cardTitle = 'Todos os imóveis';
@@ -43,78 +56,212 @@ export class PropertiesListComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle(this.GLOBALS.SYSTEM_TITLE);
-    this.loading = true;
-    this.propertyService.getProperties().subscribe((resolvedPromise) => {
-      this.propertyList = resolvedPromise.data;
-      this.checkIfIsFilter();
-      this.loading = false;
-    })
-  }
+    this.propertiesLimitNumber = this.propertiesListNumber;
+    this.propertiesSkipNumber = 0;
 
-  checkIfIsFilter() {
+    // When route changes
     this.activatedRoute.params.subscribe(params => {
-      this.filterValue = [];
-      let description = params['description'];
-      if (description) {
-        this.filterValue.push(description);
-        this.propertyList.forEach(_property => {
-          _property.categories.forEach(_category => {
-            if (this.normalizeString.transform(_category.description) == description) {
-              this.selectedFilter = _category;
-            }
-          });
-          _property.locations.forEach(_location => {
-            if (this.normalizeString.transform(_location.description) == description) {
-              this.selectedFilter = _location;
-            }
-          });
-          _property.types.forEach(_types => {
-            if (this.normalizeString.transform(_types.description) == description) {
-              this.selectedFilter = _types;
-            }
-          });
+      this.routerParams = params['description'];
+      // Executes every time that user goes back to Home Page to reset propertyList
+      if (!this.routerParams) {
+        this.propertyService.getProperties(this.propertiesLimitNumber, this.propertiesSkipNumber).subscribe((resolvedPromise) => {
+          this.propertyList = resolvedPromise.data;
+        }, (error) => {
+          console.log(error);
+        }, () => {
+          this.loading = false;
         });
-        if (this.filterProperties.transform(this.propertyList, this.filterValue).length == 0) {
-          this.loading = true;
-          forkJoin([
-            this.categoryService.getCategories(),
-            this.locationService.getLocations(),
-            this.typeService.getTypes()
-          ]).subscribe(resolvedPromises => {
-            let categoryList = resolvedPromises[0].data;
-            let locationList = resolvedPromises[1].data;
-            let typeList = resolvedPromises[2].data;
-            categoryList.forEach(_category => {
-              if (this.normalizeString.transform(_category.description) == description) {
-                this.selectedFilter = _category;
-              }
-            });
-            locationList.forEach(_location => {
-              if (this.normalizeString.transform(_location.description) == description) {
-                this.selectedFilter = _location;
-              }
-            });
-            typeList.forEach(_type => {
-              if (this.normalizeString.transform(_type.description) == description) {
-                this.selectedFilter = _type;
-              }
-            });
-            this.cardTitle = 'Filtrando por: ' +this.selectedFilter.description;
-          }, (error) => {
-            console.log(error);
-          }, () => {
-            this.loading = false;
-          });
-          // this.cardTitle = 'Filtrando por: ' + description.charAt(0).toUpperCase() + description.slice(1);
-        } else {
-          this.cardTitle = 'Filtrando por: ' + this.selectedFilter.description;
-        }
+      } else {
+        this.executeFiltering();
       }
+    });
+
+    // Executes only when load first time Home Page
+    this.loading = true;
+    forkJoin([
+      this.categoryService.categorySubject,
+      this.locationService.locationSubject,
+      this.typeService.typeSubject
+    ]).subscribe(resolvedPromises => {
+      this.categoryService.categoryList = resolvedPromises[0].data;
+      this.locationService.locationList = resolvedPromises[1].data;
+      this.typeService.typeList = resolvedPromises[2].data;
+
+      this.categoryList = this.categoryService.categoryList;
+      this.locationList = this.locationService.locationList;
+      this.typeList = this.typeService.typeList;
+
+      this.activatedRoute.params.subscribe(params => {
+        this.routerParams = params['description'];
+        if (this.routerParams) {
+          this.executeFiltering();
+        }
+      });
+
+    }, (error) => {
+      console.log(error);
+    }, () => {
+      this.loading = false;
     });
   }
 
+  executeFiltering() {
+    this.filterValue = [];
+    this.filterValue.push(this.routerParams);
+
+    this.categoryList = this.categoryService.categoryList;
+    this.locationList = this.locationService.locationList;
+    this.typeList = this.typeService.typeList;
+
+    if (this.categoryList && this.locationList && this.typeList) {
+
+      this.categoryList.forEach(_category => {
+        if (this.normalizeString.transform(_category.description) == this.routerParams) {
+          this.selectedFilter.data = _category;
+          this.selectedFilter.type = 'category';
+          this.resetInfinityScrollData();
+          this.loading = true;
+          this.propertyService.getPropertiesByCategory(_category._id, this.propertiesLimitNumber, this.propertiesSkipNumber).subscribe((resolvedPromise) => {
+            this.propertyList = resolvedPromise.data;
+            this.loading = false;
+          });
+        }
+      });
+
+      this.locationList.forEach(_location => {
+        if (this.normalizeString.transform(_location.description) == this.routerParams) {
+          this.selectedFilter.data = _location;
+          this.selectedFilter.type = 'location';
+          this.resetInfinityScrollData();
+          this.loading = true;
+          this.propertyService.getPropertiesByLocation(_location._id, this.propertiesLimitNumber, this.propertiesSkipNumber).subscribe((resolvedPromise) => {
+            this.propertyList = resolvedPromise.data;
+            this.loading = false;
+          });
+        }
+      });
+
+      this.typeList.forEach(_type => {
+        if (this.normalizeString.transform(_type.description) == this.routerParams) {
+          this.selectedFilter.data = _type;
+          this.selectedFilter.type = 'type';
+          this.resetInfinityScrollData();
+          this.loading = true;
+          this.propertyService.getPropertiesByType(_type._id, this.propertiesLimitNumber, this.propertiesSkipNumber).subscribe((resolvedPromise) => {
+            this.propertyList = resolvedPromise.data;
+            this.loading = false;
+          });
+        }
+      });
+
+      this.cardTitle = 'Filtrando por: ' + this.selectedFilter.data.description;
+
+    }
+  }
+
+  resetInfinityScrollData() {
+    this.propertiesSkipNumber = 0;
+    this.scrollCounter = 0;
+    this.noMoreProperties = false;
+  }
+
   onScroll() {
-    console.log('scroll');
+    console.log('Scroll Triggered');
+    if (!this.routerParams) {
+      this.scrollCounter++;
+      if (this.scrollCounter != 1) {
+        this.propertiesSkipNumber = this.propertiesLimitNumber + this.propertiesSkipNumber;
+      } else {
+        this.propertiesSkipNumber = this.propertiesLimitNumber;
+      }
+      if (!this.noMoreProperties) {
+        this.loading = true;
+        this.propertyService.getProperties(this.propertiesLimitNumber, this.propertiesSkipNumber).subscribe((resolvedPromise: any) => {
+          let newProperties = resolvedPromise.data;
+          if (newProperties.length == 0) {
+            this.noMoreProperties = true;
+          } else {
+            newProperties.forEach(_property => {
+              this.propertyList.push(_property);
+            });
+          }
+          this.loading = false;
+        })
+      }
+    } else {
+      switch (this.selectedFilter.type) {
+        case 'category':
+          this.scrollCounter++;
+          if (this.scrollCounter != 1) {
+            this.propertiesSkipNumber = this.propertiesLimitNumber + this.propertiesSkipNumber;
+          } else {
+            this.propertiesSkipNumber = this.propertiesLimitNumber;
+          }
+          if (!this.noMoreProperties) {
+            this.loading = true;
+            this.propertyService.getPropertiesByCategory(this.selectedFilter.data._id, this.propertiesLimitNumber, this.propertiesSkipNumber).subscribe((resolvedPromise: any) => {
+              let newProperties = resolvedPromise.data;
+              if (newProperties.length == 0) {
+                this.noMoreProperties = true;
+              } else {
+                newProperties.forEach(_property => {
+                  this.propertyList.push(_property);
+                });
+              }
+              this.loading = false;
+            })
+          }
+          break;
+        case 'location':
+          this.scrollCounter++;
+          if (this.scrollCounter != 1) {
+            this.propertiesSkipNumber = this.propertiesLimitNumber + this.propertiesSkipNumber;
+          } else {
+            this.propertiesSkipNumber = this.propertiesLimitNumber;
+          }
+          if (!this.noMoreProperties) {
+            this.loading = true;
+            this.propertyService.getPropertiesByLocation(this.selectedFilter.data._id, this.propertiesLimitNumber, this.propertiesSkipNumber).subscribe((resolvedPromise: any) => {
+              let newProperties = resolvedPromise.data;
+              if (newProperties.length == 0) {
+                this.noMoreProperties = true;
+              } else {
+                newProperties.forEach(_property => {
+                  this.propertyList.push(_property);
+                });
+              }
+              this.loading = false;
+            })
+          }
+          break;
+        case 'type':
+          this.scrollCounter++;
+          if (this.scrollCounter != 1) {
+            this.propertiesSkipNumber = this.propertiesLimitNumber + this.propertiesSkipNumber;
+          } else {
+            this.propertiesSkipNumber = this.propertiesLimitNumber;
+          }
+          if (!this.noMoreProperties) {
+            this.loading = true;
+            this.propertyService.getPropertiesByType(this.selectedFilter.data._id, this.propertiesLimitNumber, this.propertiesSkipNumber).subscribe((resolvedPromise: any) => {
+              let newProperties = resolvedPromise.data;
+              if (newProperties.length == 0) {
+                this.noMoreProperties = true;
+              } else {
+                newProperties.forEach(_property => {
+                  this.propertyList.push(_property);
+                });
+              }
+              this.loading = false;
+            })
+          }
+          break;
+      }
+    }
+  }
+
+  goTop() {
+    window.scroll(0,0);
   }
 
 }

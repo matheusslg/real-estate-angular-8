@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { UsefullService } from 'src/app/services/usefull.service';
-import { Observable } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import * as jwt_decode from 'jwt-decode';
+import { Observable } from 'rxjs/internal/Observable';
 
 export const TOKEN_NAME: string = 'token';
 

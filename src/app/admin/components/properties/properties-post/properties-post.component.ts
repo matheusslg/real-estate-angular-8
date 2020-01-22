@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CategoryService } from 'src/app/services/category.service';
 import { Property } from "src/app/models/Property";
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { forkJoin, BehaviorSubject } from 'rxjs';
 import { NgSelectConfig } from '@ng-select/ng-select';
 import { Globals } from 'src/app/globals';
 import { LocationService } from 'src/app/services/location.service';
@@ -20,6 +19,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ImageService } from 'src/app/services/image.service';
 import { environment } from 'src/environments/environment';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { forkJoin } from 'rxjs/internal/observable/forkJoin';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 
 
 @Component({
@@ -39,6 +40,8 @@ export class PropertiesPostComponent implements OnInit {
   loadingLocation
   loadingType
   loadingTag
+  loadingImages
+  loadingFullscreen
 
   propertyForm
   priceRadioValue = '1'
@@ -131,7 +134,6 @@ export class PropertiesPostComponent implements OnInit {
   }
 
   getData() {
-    this.loading = true;
     forkJoin([
       this.categoryService.getCategories(),
       this.locationService.getLocations(),
@@ -144,8 +146,6 @@ export class PropertiesPostComponent implements OnInit {
       this.tagList = resolvedPromises[3].data;
     }, (error) => {
       console.log(error);
-    }, () => {
-      this.loading = false;
     });
   }
 
@@ -255,11 +255,13 @@ export class PropertiesPostComponent implements OnInit {
     if (data.success) {
       this.propertyImages.push(data.result._id);
       if (this.uploaderProgress === 100) {
+        this.loadingImages = false;
         this.updatePropertyImages();
       }
     } else {
       this.allImagesOk = false;
-      this.toastr.error('Ocorreu um erro ao enviar uma imagem!');
+      this.loadingImages = false;
+      this.toastr.error('Ocorreu um erro no envio de uma imagem!');
     }
   }
 
@@ -339,38 +341,48 @@ export class PropertiesPostComponent implements OnInit {
   }
 
   onSubmit() {
+    this.submitted = true;
     if (this.propertyForm.invalid) {
       return;
     }
     this.propertyData = this.propertyForm.value;
     this.propertyData.user = this.authService.getUserId(this.authService.getToken());
     if (!this.isChange) {
-      if (this.allImagesOk && !this.submitted) {
+      if (this.allImagesOk) {
+        this.loadingFullscreen = true;
         this.propertyService.createProperty(this.propertyData).subscribe((res: any) => {
           if (res.success) {
-            this.submitted = true;
             this.propertySaved = res.result;
             this.propertySavedId.next(this.propertySaved._id);
-            this.uploadImages.next(true);
+            if (this.uploadImagesCounter > 0) {
+              this.uploadImages.next(true);
+              this.loadingImages = true;
+            } else {
+              this.toastr.success('Propriedade cadastrada com sucesso!');
+              this.router.navigate(['/area-logada/propriedades']);
+            }
           }
         }, (error) => {
           console.log('error', error);
           this.toastr.error('Ocorreu um erro ao cadastrar a propriedade!');
+        }, () => {
+          this.loadingFullscreen = false;
         });
       } else {
         this.retryUpload.next(true);
       }
     } else {
-      if (this.allImagesOk && !this.submitted) {
+      if (this.allImagesOk) {
         this.propertyData.images = this.propertyImages.concat(this.propertyChangeData.images);
         console.log(this.propertyData);
+        this.loadingFullscreen = true;
         this.propertyService.updateProperty(this.propertyChangeData._id, this.propertyData).subscribe((res: any) => {
           if (res.success) {
-            this.submitted = true;
             this.propertySaved = res.result;
             this.propertySavedId.next(this.propertySaved._id);
             if (this.uploadImagesCounter > 0) {
               this.uploadImages.next(true);
+              this.loadingImages = true;
             } else {
               this.toastr.success('Propriedade atualizada com sucesso!');
               this.router.navigate(['/area-logada/propriedades']);
@@ -379,6 +391,8 @@ export class PropertiesPostComponent implements OnInit {
         }, (error) => {
           console.log('error', error);
           this.toastr.error('Ocorreu um erro ao atualizar a propriedade!');
+        }, () => {
+          this.loadingFullscreen = false;
         });
       } else {
         this.retryUpload.next(true);

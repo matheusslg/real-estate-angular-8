@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryService } from 'src/app/services/category.service';
-import { forkJoin } from 'rxjs';
 import { LocationService } from 'src/app/services/location.service';
 import { TypeService } from 'src/app/services/type.service';
 import { UsefullService } from 'src/app/services/usefull.service';
+import { forkJoin } from 'rxjs/internal/observable/forkJoin';
 
 @Component({
   selector: 'app-top-sidebar',
@@ -28,9 +28,9 @@ export class TopSidebarComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     forkJoin([
-      this.categoryService.getCategories(),
-      this.locationService.getLocations(),
-      this.typeService.getTypes()
+      this.categoryService.categorySubject,
+      this.locationService.locationSubject,
+      this.typeService.typeSubject
     ]).subscribe(resolvedPromises => {
       this.categoryList = this.usefullService.orderByLocale(resolvedPromises[0].data, 'description');
       this.locationList = this.usefullService.orderByLocale(resolvedPromises[1].data, 'description');

@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Property } from "../models/Property";
-import { Observable } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { UsefullService } from 'src/app/services/usefull.service';
-import { ImageService } from './image.service';
-import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs/internal/Observable';
+import { retry } from 'rxjs/internal/operators/retry';
+import { catchError } from 'rxjs/internal/operators/catchError';
 
 @Injectable({
   providedIn: 'root'
@@ -17,13 +16,35 @@ export class PropertyService {
 
   constructor(
     private http: HttpClient,
-    private usefullService: UsefullService,
-    private imageService: ImageService,
-    private toastr: ToastrService
+    private usefullService: UsefullService
   ) { }
 
-  getProperties(): Observable<Property> {
-    return this.http.get<Property>(this.apiURL + '/properties')
+  getProperties(limit?, skip?): Observable<Property> {
+    return this.http.get<Property>(this.apiURL + '/properties' + (limit ? '?limit=' + limit : '') + (skip != null ? '&skip=' + skip : ''))
+      .pipe(
+        retry(1),
+        catchError(this.usefullService.handleError)
+      )
+  }
+
+  getPropertiesByCategory(categoryId, limit?, skip?): Observable<Property> {
+    return this.http.get<Property>(this.apiURL + '/properties/category/' + categoryId + (limit ? '?limit=' + limit : '') + (skip != null ? '&skip=' + skip : ''))
+      .pipe(
+        retry(1),
+        catchError(this.usefullService.handleError)
+      )
+  }
+
+  getPropertiesByLocation(locationId, limit?, skip?): Observable<Property> {
+    return this.http.get<Property>(this.apiURL + '/properties/location/' + locationId + (limit ? '?limit=' + limit : '') + (skip != null ? '&skip=' + skip : ''))
+      .pipe(
+        retry(1),
+        catchError(this.usefullService.handleError)
+      )
+  }
+
+  getPropertiesByType(typeId, limit?, skip?): Observable<Property> {
+    return this.http.get<Property>(this.apiURL + '/properties/type/' + typeId + (limit ? '?limit=' + limit : '') + (skip != null ? '&skip=' + skip : ''))
       .pipe(
         retry(1),
         catchError(this.usefullService.handleError)
@@ -74,24 +95,12 @@ export class PropertyService {
   }
 
   async removeProperty(property) {
-    await this.http.post<Property>(this.apiURL + '/properties/' + property._id + '/remove', null).toPromise().then((resolvedPromise) => {
-      let allImagesRemoved = true;
-      property.images.forEach(image => {
-        this.imageService.removeImage(image).then((resolvedPromise) => {
-          console.log(resolvedPromise);
-        }).catch((error) => {
-          catchError(this.usefullService.handleError)
-          allImagesRemoved = false;
-        })
-      })
-      if (allImagesRemoved) {
-        return this.http.post<Property>(this.apiURL + '/properties/' + property._id + '/remove', null).toPromise();
-      } else {
-        this.toastr.error('Não foi possível remover todas as imagens.');
-      }
-    }).catch((error) => {
-      catchError(this.usefullService.handleError)
-    })
+    return await this.http.post<Property>(this.apiURL + '/properties/' + property._id + '/remove', null)
+      .pipe(
+        retry(1),
+        catchError(this.usefullService.handleError)
+      )
+      .toPromise()
   }
 
   enableProperty(id) {

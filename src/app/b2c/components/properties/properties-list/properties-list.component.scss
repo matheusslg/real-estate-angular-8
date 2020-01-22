@@ -2,7 +2,7 @@
 
 .card-img-top {
     width: 100%;
-    height: 300px;
+    height: 250px;
     object-fit: cover;
 }
 
@@ -89,4 +89,9 @@
         background-color: palette(main, light);
         border-radius: 3px;
     }
+}
+
+.go-top {
+    cursor: pointer;
+    h4:hover { color: palette(main); }
 }

@@ -6,6 +6,7 @@ var printCounter = 0;
 export class Globals {
     // SYSTEM TITLE
     SYSTEM_TITLE: string = 'Cavallini Imóveis';
+    SYSTEM_URL: string = 'http://cavalliniimoveis.com.br/'
 
     // GLOBAL VARIABLES STRINGS
     STRING_TEXT_NOT_FOUND: string = 'Nenhum resultado encontrado.';

@@ -28,6 +28,10 @@
       <div class="card">
         <div class="card-body">
           <h4>{{ property.title }}</h4>
+          <div class="property-indicator property-indicator-small mt-2">
+            <i class="fas fa-map-marker-alt"></i>
+            <p class="mb-0 ml-2">{{ property.address ? property.address : property.city }}</p>
+          </div>
           <div class="property-square my-3">
             <div class="property-square-location"
               *ngFor="let location of property.locations; let last = last; let first = first" [class.ml-0]="first">
@@ -82,7 +86,7 @@
                 {{ property.priceNumber ? (property.priceNumber | currency:'BRL') : property.priceCustom }}</h3>
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6 d-md-flex d-lg-flex align-items-center justify-content-end">
-              <a href="https://wa.me/5555999225333?text=Ol%C3%A1%2C%20tenho%20interesse%20em%20um%20im%C3%B3vel%20que%20vi%20no%20site."
+              <a [href]="'https://wa.me/5555999225333?text=' + whatsAppMessage" target="_blank"
                 class="btn btn-primary btn-lg"><i class="fab fa-whatsapp mr-2"></i>Tenho Interesse</a>
             </div>
           </div>

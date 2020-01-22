@@ -1,11 +1,12 @@
-<form *ngIf="!loading" [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
+<app-loading *ngIf="loadingImages || loadingFullscreen" type="fullscreen"></app-loading>
+<form [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
   <div class="row">
     <div class="col-md-8 col-sm-12">
       <div class="card">
         <div class="card-body">
           <app-loading *ngIf="loading"></app-loading>
           <div class="row">
-            <div class="col-12">
+            <div *ngIf="!loading" class="col-12">
               <div class="form-group">
                 <label for="titleText">Título *</label>
                 <input formControlName="title" name="title" type="text" class="form-control" id="titleText"
@@ -98,8 +99,8 @@
       <div class="card">
         <div class="card-body">
           <app-loading *ngIf="loading"></app-loading>
-          <div *ngIf="!loading" class="row">
-            <div class="col-12">
+          <div class="row">
+            <div *ngIf="!loading" class="col-12">
               <div class="form-check form-check-inline mb-3">
                 <app-switch [value]="property.data.active"
                   (clicked)="property.data.active = !property.data.active; f.active.setValue(this.property.data.active)"

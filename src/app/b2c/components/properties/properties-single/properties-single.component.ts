@@ -19,6 +19,8 @@ export class PropertiesSingleComponent implements OnInit {
   property
   preUrlImages
 
+  whatsAppMessage
+
   constructor(
     private GLOBALS: Globals,
     private titleService: Title,
@@ -27,7 +29,7 @@ export class PropertiesSingleComponent implements OnInit {
     private propertyService: PropertyService,
     private activatedRoute: ActivatedRoute,
     private sanitizer: DomSanitizer
-  ) { 
+  ) {
     this.property = new Property();
     this.preUrlImages = environment.baseUri.mongo;
   }
@@ -37,16 +39,25 @@ export class PropertiesSingleComponent implements OnInit {
       if (params['id']) {
         this.loading = true;
         this.propertyService.getProperty(params['id']).subscribe(resolvedPromise => {
-          this.loading = false;
-          this.property = resolvedPromise.data;
-          this.titleService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - ' + this.property.title);
+          if (!resolvedPromise.data) {
+            this.redirect();
+          } else {
+            this.loading = false;
+            this.property = resolvedPromise.data;
+            this.titleService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - ' + this.property.title);
+            this.whatsAppMessage = encodeURIComponent('Olá, você poderia me passar mais informações sobre o imóvel "' + this.property.title + '" localizado em ' + (this.property.address ? this.property.address : this.property.city) + ' que vi no site? (' + this.GLOBALS.SYSTEM_URL + 'propriedades/' + this.property._id + '/detalhes)');
+          }
         }, (error) => {
           console.log('error', error);
-          this.toastr.error('Propriedade não encontrada no banco de dados!');
-          this.router.navigate(['/propriedades']);
+          this.redirect();
         });
       }
     });
+  }
+
+  redirect() {
+    this.toastr.error('Propriedade não encontrada no banco de dados!');
+    this.router.navigate(['/']);
   }
 
 }

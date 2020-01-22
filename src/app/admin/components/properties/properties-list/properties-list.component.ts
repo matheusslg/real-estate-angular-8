@@ -14,6 +14,7 @@ export class PropertiesListComponent implements OnInit {
 
   propertyList
   loadingPropertyList
+  loadingRemove
   dtOptions
 
   constructor(
@@ -44,12 +45,33 @@ export class PropertiesListComponent implements OnInit {
 
   removeProperty(property) {
     console.log(property);
-    this.propertyService.removeProperty(property).then(resolvedPromise => {
-      this.toastr.success('Propriedade removida com sucesso!');
-      this.refreshTable();
+    this.loadingRemove = true;
+    this.propertyService.removeProperty(property).then((resolvedPromise: any) => {
+      if (resolvedPromise.success) {
+        let allImagesRemoved = true;
+        property.images.forEach(image => {
+          this.imageService.removeImage(image).then((resolvedPromiseImage) => {
+            console.log(resolvedPromiseImage);
+          }).catch((error) => {
+            this.toastr.error(error.message);
+            allImagesRemoved = false;
+          })
+        })
+        if (allImagesRemoved) {
+          console.log(resolvedPromise);
+          this.toastr.success('Propriedade removida com sucesso!');
+          this.refreshTable();
+        } else {
+          this.toastr.error('Não foi possível remover todas as imagens. Contate um administrador para mais informações.');
+        }
+      } else {
+        this.toastr.error('Ocorreu um erro ao remover a propriedade. Contate um administrador para mais informações.');
+      }
     }).catch((error) => {
       this.toastr.error(error.message);
-    })
+    }).finally(() => {
+      this.loadingRemove = false;
+    });
   }
-  
+
 }

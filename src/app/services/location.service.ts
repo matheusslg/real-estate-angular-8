@@ -1,16 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Location } from '../models/location';
-import { Observable } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { UsefullService } from 'src/app/services/usefull.service';
 import { Locations } from '../models/locations';
+import { Observable } from 'rxjs/internal/Observable';
+import { retry } from 'rxjs/internal/operators/retry';
+import { catchError } from 'rxjs/internal/operators/catchError';
+import { Subject } from 'rxjs/internal/Subject';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LocationService {
+
+  locationSubject: Subject<any> = new Subject();
+  locationList
 
   apiURL = environment.baseUri.mongo;
   

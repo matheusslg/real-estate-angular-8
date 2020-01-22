@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Image } from '../models/image';
-import { Observable } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { UsefullService } from 'src/app/services/usefull.service';
+import { Observable } from 'rxjs/internal/Observable';
+import { retry } from 'rxjs/internal/operators/retry';
+import { catchError } from 'rxjs/internal/operators/catchError';
 
 @Injectable({
   providedIn: 'root'

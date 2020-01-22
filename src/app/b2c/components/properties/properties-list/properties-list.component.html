@@ -1,10 +1,9 @@
 <div class="card">
   <div class="card-body">
-    <app-loading *ngIf="loading"></app-loading>
     <h5 *ngIf="!loading"><i class="fas fa-home mr-2"></i>{{ cardTitle }}</h5>
-    <div *ngIf="!loading" class="row mt-20" infiniteScroll [infiniteScrollDistance]="0.1" [infiniteScrollThrottle]="50"
+    <div class="row mt-20" infiniteScroll [infiniteScrollDistance]="0.5" [infiniteScrollThrottle]="500"
       (scrolled)="onScroll()">
-      <div *ngFor="let property of propertyList | filterProperties:filterValue; let index = index"
+      <div *ngFor="let property of propertyList; let index = index"
         class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4">
         <div *ngIf="property.active" class="card h-100">
           <a [routerLink]="['/propriedades', property._id, 'detalhes']">
@@ -85,10 +84,14 @@
           </div>
         </div>
       </div>
-      <div *ngIf="(propertyList | filterProperties:filterValue)?.length == 0"
+      <div *ngIf="propertyList?.length == 0 && !loading"
         class="col d-flex justify-content-center align-items-center my-5">
         <h4 class="text-muted">Nenhum imóvel encontrado. Tente procurar por outra categoria.</h4>
       </div>
     </div>
+    <app-loading *ngIf="loading"></app-loading>
   </div>
+</div>
+<div class="go-top d-flex justify-content-center my-3" (click)="goTop()">
+  <h4><i class="fas fa-arrow-up mr-3"></i>Voltar para o topo</h4>
 </div>
