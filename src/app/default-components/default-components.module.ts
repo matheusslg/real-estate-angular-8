@@ -23,6 +23,7 @@ import { NgxEditorModule } from 'ngx-editor';
 import { SwitchComponent } from './switch/switch.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { NgxGalleryModule } from 'ngx-gallery';
 
 registerLocaleData(localePT);
 
@@ -60,7 +61,8 @@ export const toastrOptions = {
     DataTablesModule,
     NgxEditorModule,
     DragDropModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    NgxGalleryModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: "pt" },
@@ -97,7 +99,8 @@ export const toastrOptions = {
     DragDropModule,
     TruncatePipe,
     NormalizeStringPipe,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    NgxGalleryModule
   ],
 })
 export class DefaultComponentsModule { }

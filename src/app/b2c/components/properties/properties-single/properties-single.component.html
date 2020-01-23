@@ -4,8 +4,8 @@
     <div class="col-xxxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
       <div class="card">
         <div class="card-body">
-          <h5 class="mb-3"><i class="fas fa-images mr-2"></i>Fotos do imóvel</h5>
-          <mdb-carousel class="carousel slide carousel-fade" [animation]="'slide'" [interval]="'3000'">
+          <h5 class="mb-3"><i class="fas fa-images mr-2"></i>Fotos</h5>
+          <!-- <mdb-carousel class="carousel slide carousel-fade" [animation]="'slide'" [interval]="'3000'">
             <mdb-carousel-item class="justify-content-center"
               *ngFor="let image of property.images; let first = first; let indexImage = index">
               <div class="carousel-item-div view"
@@ -15,7 +15,8 @@
                 <div class="mask waves-light" mdbWavesEffect></div>
               </div>
             </mdb-carousel-item>
-          </mdb-carousel>
+          </mdb-carousel> -->
+          <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
           <!-- <mdb-carousel class="carousel slide carousel-fade" [type]="'carousel-thumbnails'" [animation]="'fade'">
             <mdb-carousel-item *ngFor="let image of property.images; let first = first; let indexImage = index">
               <img class="d-block w-100" [src]="preUrlImages + '/' + image.filePath">
