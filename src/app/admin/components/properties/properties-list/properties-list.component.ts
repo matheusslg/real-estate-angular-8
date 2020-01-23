@@ -24,11 +24,11 @@ export class PropertiesListComponent implements OnInit {
     private propertyService: PropertyService,
     private imageService: ImageService
   ) {
-    this.titleService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - Listagem de Propriedades');
+    this.titleService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - Listagem de Imóveis');
   }
 
   ngOnInit() {
-    this.dtOptions = this.GLOBALS.DATATABLES_OPTIONS('Listagem de propriedades cadastradas no sistema');
+    this.dtOptions = this.GLOBALS.DATATABLES_OPTIONS('Listagem de imóveis cadastrados no sistema');
     this.dtOptions.buttons.forEach(element => {
       element.exportOptions.columns = [0, 1, 2, 3, 4];
     });
@@ -59,13 +59,13 @@ export class PropertiesListComponent implements OnInit {
         })
         if (allImagesRemoved) {
           console.log(resolvedPromise);
-          this.toastr.success('Propriedade removida com sucesso!');
+          this.toastr.success('Imóvel removido com sucesso!');
           this.refreshTable();
         } else {
           this.toastr.error('Não foi possível remover todas as imagens. Contate um administrador para mais informações.');
         }
       } else {
-        this.toastr.error('Ocorreu um erro ao remover a propriedade. Contate um administrador para mais informações.');
+        this.toastr.error('Ocorreu um erro ao remover o imóvel. Contate um administrador para mais informações.');
       }
     }).catch((error) => {
       this.toastr.error(error.message);

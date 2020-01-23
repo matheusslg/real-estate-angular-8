@@ -80,7 +80,7 @@ export class PropertiesPostComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private sanitizer: DomSanitizer
   ) {
-    this.titleService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - Cadastrar Propriedade');
+    this.titleService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - Cadastrar Imóvel');
     this.property = new Property();
     this.propertyChangeData = new Property();
     this.url = environment.baseUri.mongo;
@@ -101,7 +101,7 @@ export class PropertiesPostComponent implements OnInit {
         this.loading = true;
         this.isChange = true;
         this.propertyChangeData.images = [];
-        this.titleService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - Editar Propriedade');
+        this.titleService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - Editar Imóvel');
         this.propertyService.getProperty(params['id']).subscribe(resolvedPromise => {
           this.propertyChangeData = resolvedPromise.data;
           this.propertyChangeData._id = params['id'];
@@ -126,8 +126,8 @@ export class PropertiesPostComponent implements OnInit {
           this.loading = false;
         }, (error) => {
           console.log('error', error);
-          this.toastr.error('Propriedade não encontrada no banco de dados!');
-          this.router.navigate(['/area-logada/propriedades']);
+          this.toastr.error('Imóvel não encontrado no banco de dados!');
+          this.router.navigate(['/area-logada/imoveis']);
         });
       }
     });
@@ -297,11 +297,11 @@ export class PropertiesPostComponent implements OnInit {
       this.toastr.error('Ocorreu um erro ao cadastrar as imagens!');
     }, () => {
       if (!this.isChange) {
-        this.toastr.success('Propriedade cadastrada com sucesso!');
+        this.toastr.success('Imóvel cadastrado com sucesso!');
       } else {
-        this.toastr.success('Propriedade atualizada com sucesso!');
+        this.toastr.success('Imóvel atualizado com sucesso!');
       }
-      this.router.navigate(['/area-logada/propriedades']);
+      this.router.navigate(['/area-logada/imoveis']);
     });
   }
 
@@ -358,13 +358,13 @@ export class PropertiesPostComponent implements OnInit {
               this.uploadImages.next(true);
               this.loadingImages = true;
             } else {
-              this.toastr.success('Propriedade cadastrada com sucesso!');
-              this.router.navigate(['/area-logada/propriedades']);
+              this.toastr.success('Imóvel cadastrado com sucesso!');
+              this.router.navigate(['/area-logada/imoveis']);
             }
           }
         }, (error) => {
           console.log('error', error);
-          this.toastr.error('Ocorreu um erro ao cadastrar a propriedade!');
+          this.toastr.error('Ocorreu um erro ao cadastrar o imóvel!');
         }, () => {
           this.loadingFullscreen = false;
         });
@@ -384,13 +384,13 @@ export class PropertiesPostComponent implements OnInit {
               this.uploadImages.next(true);
               this.loadingImages = true;
             } else {
-              this.toastr.success('Propriedade atualizada com sucesso!');
-              this.router.navigate(['/area-logada/propriedades']);
+              this.toastr.success('Imóvel atualizado com sucesso!');
+              this.router.navigate(['/area-logada/imoveis']);
             }
           }
         }, (error) => {
           console.log('error', error);
-          this.toastr.error('Ocorreu um erro ao atualizar a propriedade!');
+          this.toastr.error('Ocorreu um erro ao atualizar o imóvel!');
         }, () => {
           this.loadingFullscreen = false;
         });

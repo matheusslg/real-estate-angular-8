@@ -1,27 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CategoryService } from './services/category.service';
 import { LocationService } from './services/location.service';
 import { TypeService } from './services/type.service';
 import { TagService } from './services/tag.service';
 import { Globals } from './globals';
 import { forkJoin } from 'rxjs/internal/observable/forkJoin';
+import { Router, NavigationEnd, RoutesRecognized, NavigationStart } from '@angular/router';
+import { DeviceDetectorService } from 'ngx-device-detector';
+import { UsefullService } from './services/usefull.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   title = this.GLOBALS.SYSTEM_TITLE;
 
   constructor(
     private GLOBALS: Globals,
+    private router: Router,
     private categoryService: CategoryService,
     private locationService: LocationService,
     private typeService: TypeService,
-    private tagService: TagService
-  ) { }
+    private tagService: TagService,
+    private deviceService: DeviceDetectorService,
+    private usefullService: UsefullService
+  ) {
+    router.events.subscribe((val: RoutesRecognized) => {
+      if ((val.urlAfterRedirects && val.urlAfterRedirects.indexOf('/imoveis') == -1) || this.deviceService.isDesktop()) {
+        this.usefullService.scrollTop();
+      }
+    });
+  }
 
   ngOnInit(): void {
     forkJoin([
@@ -30,10 +42,16 @@ export class AppComponent {
       this.typeService.getTypes(),
       this.tagService.getTags()
     ]).subscribe(resolvedPromises => {
-      this.categoryService.categorySubject.next(resolvedPromises[0]);
-      this.locationService.locationSubject.next(resolvedPromises[1]);
-      this.typeService.typeSubject.next(resolvedPromises[2]);
-      this.tagService.tagSubject.next(resolvedPromises[3]);
+      this.categoryService.categorySubject.next(resolvedPromises[0].data);
+      this.locationService.locationSubject.next(resolvedPromises[1].data);
+      this.typeService.typeSubject.next(resolvedPromises[2].data);
+      this.tagService.tagSubject.next(resolvedPromises[3].data);
+
+      // Store data on service
+      this.categoryService.categoryList = resolvedPromises[0].data;
+      this.locationService.locationList = resolvedPromises[1].data;
+      this.typeService.typeList = resolvedPromises[2].data;
+      this.tagService.tagList = resolvedPromises[3].data;
     }, (error) => {
       console.log(error);
     }, () => {

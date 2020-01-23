@@ -24,6 +24,7 @@ import { SwitchComponent } from './switch/switch.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NgxGalleryModule } from 'ngx-gallery';
+import { DeviceDetectorModule } from 'ngx-device-detector';
 
 registerLocaleData(localePT);
 
@@ -62,7 +63,8 @@ export const toastrOptions = {
     NgxEditorModule,
     DragDropModule,
     InfiniteScrollModule,
-    NgxGalleryModule
+    NgxGalleryModule,
+    DeviceDetectorModule.forRoot()
   ],
   providers: [
     { provide: LOCALE_ID, useValue: "pt" },
@@ -100,7 +102,8 @@ export const toastrOptions = {
     TruncatePipe,
     NormalizeStringPipe,
     InfiniteScrollModule,
-    NgxGalleryModule
+    NgxGalleryModule,
+    DeviceDetectorModule
   ],
 })
 export class DefaultComponentsModule { }

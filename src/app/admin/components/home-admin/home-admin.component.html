@@ -6,13 +6,13 @@
     </h4>
     <div class="row">
       <div class="col-lg-3 col-md-12">
-        <div class="card admin-item bg-primary text-light" routerLink="/area-logada/propriedades">
+        <div class="card admin-item bg-primary text-light" routerLink="/area-logada/imoveis">
           <div class="card-body card-body d-flex align-items-center justify-content-around">
             <app-loading *ngIf="loadingProperties" class="loading-no-margin"></app-loading>
             <ng-container *ngIf="!loadingProperties">
               <i class="fas fa-home fa-5x"></i>
               <span class="counter">{{ propertyCount }}</span>
-              <span class="counter-text text-light">Propriedade{{ propertyCount > 1 ? 's' : '' }}</span>
+              <span class="counter-text text-light">{{ propertyCount > 1 ? 'Imóveis' : 'Imóvel' }}</span>
             </ng-container>
           </div>
         </div>

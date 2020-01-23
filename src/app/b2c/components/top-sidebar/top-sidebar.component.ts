@@ -13,8 +13,7 @@ import { forkJoin } from 'rxjs/internal/observable/forkJoin';
 export class TopSidebarComponent implements OnInit {
 
   loading
-
-  whatsAppAdvise = true
+  whatsAppAdvise
 
   categoryList
   locationList
@@ -25,24 +24,23 @@ export class TopSidebarComponent implements OnInit {
     private locationService: LocationService,
     private typeService: TypeService,
     public usefullService: UsefullService
-  ) { 
-    this.whatsAppAdvise = false;
-  }
+  ) { }
 
   ngOnInit() {
     this.loading = true;
+    this.whatsAppAdvise = false;
     forkJoin([
       this.categoryService.categorySubject,
       this.locationService.locationSubject,
       this.typeService.typeSubject
     ]).subscribe(resolvedPromises => {
-      this.categoryList = this.usefullService.orderByLocale(resolvedPromises[0].data, 'description');
-      this.locationList = this.usefullService.orderByLocale(resolvedPromises[1].data, 'description');
-      this.typeList = this.usefullService.orderByLocale(resolvedPromises[2].data, 'description');
+      this.categoryList = this.usefullService.orderByLocale(resolvedPromises[0], 'description');
+      this.locationList = this.usefullService.orderByLocale(resolvedPromises[1], 'description');
+      this.typeList = this.usefullService.orderByLocale(resolvedPromises[2], 'description');
+      this.whatsAppAdvise = true;
     }, (error) => {
       console.log(error);
     }, () => {
-      this.whatsAppAdvise = true;
       this.loading = false;
     });
   }

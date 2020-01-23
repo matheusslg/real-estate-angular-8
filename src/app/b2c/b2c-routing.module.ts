@@ -6,9 +6,9 @@ import { PropertiesListComponent } from './components/properties/properties-list
 const routes: Routes = [
     /*{ path: 'teste', component: PropertiesSingleComponent },
     {
-        path: 'propriedades', component: PropertiesListComponent,
+        path: 'imoveis', component: PropertiesListComponent,
         children: [
-            { path: ':id/detalhes', component: PropertiesSingleComponent },
+            { path: ':id', component: PropertiesSingleComponent },
             { path: '', redirectTo: '', pathMatch: 'full' }
         ]
     },*/

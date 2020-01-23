@@ -35,4 +35,25 @@ export class UsefullService {
     });
   }
 
+  scrollTo(element?) {
+    if (!element) {
+      $('html, body').animate({
+        scrollTop: $('#top').offset().top - 10
+      }, 500);
+    } else {
+      $('html, body').animate({
+        scrollTop: $(element).offset().top - 10
+      }, 500);
+    }
+  }
+
+  scrollTop(position?) {
+    setTimeout(() => {
+      window.scrollTo({
+        top: position ? position : 0,
+        behavior: 'smooth',
+      })
+    }, 0);
+  }
+
 }

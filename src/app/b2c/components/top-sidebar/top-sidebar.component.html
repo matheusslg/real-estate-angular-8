@@ -1,4 +1,4 @@
-<div class="topbar d-none d-lg-block">
+<div id="top" class="topbar d-none d-lg-block">
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-6 col-xl-5 col-xxl-5 col-xxxl-4 d-flex align-items-center my-3">
@@ -106,10 +106,10 @@
     </form> -->
   </div>
 </nav>
-<div class="whatsapp-call" [class.whatsapp-call-closed]="whatsAppAdvise == false">
+<div class="whatsapp-call" [class.whatsapp-call-opened]="whatsAppAdvise == true">
   <div class="whatsapp-call-area" (click)="openWhatsApp()">
     <i class="fab fa-whatsapp mr-2"></i>
-    <p>Chamar no WhatsApp</p>
+    <p>Conversar no WhatsApp</p>
   </div>
   <div class="whatsapp-call-close justify-content-flex-end">
     <i class="far fa-times-circle" (click)="whatsAppAdvise = false"></i>

@@ -1,3 +1,13 @@
+<div class="row expanded">
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <h3>Seja bem-vindo!</h3>
+        <h6>O nosso site está em construção, mas você já pode navegar e conferir os imóveis disponíveis.</h6>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="card">
   <div class="card-body">
     <h5 *ngIf="!loading"><i class="fas fa-home mr-2"></i>{{ cardTitle }}</h5>
@@ -6,7 +16,7 @@
       <div *ngFor="let property of propertyList; let index = index"
         class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4">
         <div *ngIf="property.active" class="card h-100">
-          <a [routerLink]="['/propriedades', property._id, 'detalhes']">
+          <a [routerLink]="['/imoveis', property._id]">
             <img *ngIf="property.images.length > 0" class="card-img-top"
               [src]="preUrlImages + '/' + property.images[0].filePath">
           </a>
@@ -27,7 +37,7 @@
             </div>
           </div>
           <div class="card-body pb-0">
-            <a [routerLink]="['/propriedades', property._id, 'detalhes']">
+            <a [routerLink]="['/imoveis', property._id]">
               <p class="card-title">{{ property.title }}</p>
             </a>
             <div class="row">
@@ -92,6 +102,8 @@
     <app-loading *ngIf="loading"></app-loading>
   </div>
 </div>
-<div class="go-top d-flex justify-content-center my-3" (click)="goTop()">
-  <h4><i class="fas fa-arrow-up mr-3"></i>Voltar para o topo</h4>
+<div class="d-flex justify-content-center my-3">
+  <div class="go-top" (click)="goTop()">
+    <h4><i class="fas fa-arrow-up mr-3"></i>Voltar para o topo</h4>
+  </div>
 </div>

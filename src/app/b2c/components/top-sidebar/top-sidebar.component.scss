@@ -37,6 +37,7 @@
 }
 
 .dropdown-menu {
+    z-index: 1001;
     @media screen and (min-width: 991px) {
         width: calc(100% + 80px);
     }
@@ -64,9 +65,9 @@
         z-index: -1;
         overflow: hidden;
         transition: all 1s ease-in-out;
-        height: 50px;
-        &-closed {
-            height: 0px;
+        height: 0px;
+        &-opened {
+            height: 50px;
             padding: 0px;
         }
         &-area {

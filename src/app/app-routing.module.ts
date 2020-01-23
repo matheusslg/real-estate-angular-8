@@ -11,7 +11,7 @@ const routes: Routes = [
     path: '', component: HomeComponent,
     children: [
       { path: '', component: PropertiesListComponent },
-      { path: 'propriedades/:id/detalhes', component: PropertiesSingleComponent },
+      { path: 'imoveis/:id', component: PropertiesSingleComponent },
       { path: 'categoria/:description', component: PropertiesListComponent },
       { path: 'localizacao/:description', component: PropertiesListComponent },
       { path: 'modalidade/:description', component: PropertiesListComponent },
@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: '**', component: PageNotFoundComponent }
 ];
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

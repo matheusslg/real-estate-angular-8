@@ -17,7 +17,7 @@ const routes: Routes = [
     children: [
       { path: 'painel', component: HomeAdminComponent },
       {
-        path: 'propriedades', component: PropertiesComponent,
+        path: 'imoveis', component: PropertiesComponent,
         children: [
           { path: 'listagem', component: PropertiesListComponent },
           { path: 'cadastrar', component: PropertiesPostComponent },

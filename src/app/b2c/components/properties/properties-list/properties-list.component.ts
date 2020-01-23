@@ -83,9 +83,9 @@ export class PropertiesListComponent implements OnInit {
       this.locationService.locationSubject,
       this.typeService.typeSubject
     ]).subscribe(resolvedPromises => {
-      this.categoryService.categoryList = resolvedPromises[0].data;
-      this.locationService.locationList = resolvedPromises[1].data;
-      this.typeService.typeList = resolvedPromises[2].data;
+      this.categoryService.categoryList = resolvedPromises[0];
+      this.locationService.locationList = resolvedPromises[1];
+      this.typeService.typeList = resolvedPromises[2];
 
       this.categoryList = this.categoryService.categoryList;
       this.locationList = this.locationService.locationList;

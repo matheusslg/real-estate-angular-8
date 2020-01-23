@@ -1,5 +1,5 @@
 <app-loading *ngIf="loadingRemove" type="fullscreen"></app-loading>
-<p>Listagem de propriedades cadastradas no sistema.</p>
+<p>Listagem de imóveis cadastrados no sistema.</p>
 <div class="card">
   <div class="card-body">
     <app-loading *ngIf="loadingPropertyList"></app-loading>
@@ -33,7 +33,7 @@
             <td>{{ property.priceCustom ? property.priceCustom : (property.priceNumber | currency:'BRL') }}</td>
             <td>{{ property.active ? 'Sim' : 'Não' }}</td>
             <td>
-              <button [routerLink]="['/area-logada/propriedades/editar', property._id]" class="btn btn-sm btn-primary mr-2"><i class="fas fa-pencil-alt"></i></button>
+              <button [routerLink]="['/area-logada/imoveis/editar', property._id]" class="btn btn-sm btn-primary mr-2"><i class="fas fa-pencil-alt"></i></button>
               <button (click)="removeProperty(property)" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
             </td>
           </tr>
