@@ -27,7 +27,7 @@
 </div>
 
 <!--Navbar-->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-20">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <a class="navbar-brand d-sm-block d-md-block d-lg-none font-terciary" routerLink="/">Cavallini Corretor de Imóveis</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop" aria-controls="navbarTop"
     aria-expanded="false" aria-label="Alternar navegação">
@@ -83,6 +83,10 @@
         </li>
       </ng-container>
 
+      <li *ngIf="whatsAppAdvise == false" class="nav-item d-xs-list-item d-sm-list-item d-md-list-item d-lg-none" routerLinkActive="active">
+        <a class="nav-link" href="https://wa.me/5555999225333" target="_blank"><i class="fab fa-whatsapp ml-1 mr-2"></i>Chamar no WhatsApp</a>
+      </li>
+
     </ul>
     <!-- <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar">
@@ -90,3 +94,12 @@
     </form> -->
   </div>
 </nav>
+<div class="whatsapp-call" [class.whatsapp-call-closed]="whatsAppAdvise == false">
+  <div class="whatsapp-call-area" (click)="openWhatsApp()">
+    <i class="fab fa-whatsapp mr-2"></i>
+    <p>Chamar no WhatsApp</p>
+  </div>
+  <div class="whatsapp-call-close justify-content-flex-end">
+    <i class="far fa-times-circle" (click)="whatsAppAdvise = false"></i>
+  </div>
+</div>

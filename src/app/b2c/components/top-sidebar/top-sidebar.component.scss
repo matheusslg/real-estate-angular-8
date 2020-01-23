@@ -36,3 +36,53 @@
         width: calc(100% + 80px);
     }
 }
+
+.navbar {
+    @media screen and (max-width: 990px) {
+        z-index: 3;
+        -webkit-box-shadow: 0px 4px 5px 1px rgba(0,0,0,0.2);
+        -moz-box-shadow: 0px 4px 5px 1px rgba(0,0,0,0.2);
+        box-shadow: 0px 4px 5px 1px rgba(0,0,0,0.2);
+    }
+    @media screen and (min-width: 991px) {
+        margin-bottom: 20px;
+    }
+}
+
+.whatsapp-call {
+    @media screen and (max-width: 990px) {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #075e54;
+        margin-bottom: 20px;
+        z-index: -1;
+        overflow: hidden;
+        transition: all 1s ease-in-out;
+        height: 50px;
+        &-closed {
+            height: 0px;
+            padding: 0px;
+        }
+        &-area {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+        }
+        &-close {
+            padding: 15px;
+        }
+        i {
+            font-size: 20px;
+            color: palette(white); 
+        }
+        p {
+            font: 500 14px/16px $font-main;
+            color: palette(white);
+            margin-bottom: 0px;
+        }
+    }
+    @media screen and (min-width: 991px) {
+        display: none;
+    }
+}

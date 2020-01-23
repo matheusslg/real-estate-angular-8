@@ -14,6 +14,8 @@ export class TopSidebarComponent implements OnInit {
 
   loading
 
+  whatsAppAdvise = true
+
   categoryList
   locationList
   typeList
@@ -23,7 +25,9 @@ export class TopSidebarComponent implements OnInit {
     private locationService: LocationService,
     private typeService: TypeService,
     public usefullService: UsefullService
-  ) { }
+  ) { 
+    this.whatsAppAdvise = false;
+  }
 
   ngOnInit() {
     this.loading = true;
@@ -38,8 +42,13 @@ export class TopSidebarComponent implements OnInit {
     }, (error) => {
       console.log(error);
     }, () => {
+      this.whatsAppAdvise = true;
       this.loading = false;
     });
+  }
+
+  openWhatsApp() {
+    window.open('https://wa.me/5555999225333', '_blank');
   }
 
 }

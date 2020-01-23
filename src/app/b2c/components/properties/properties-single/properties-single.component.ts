@@ -50,28 +50,32 @@ export class PropertiesSingleComponent implements OnInit {
             this.property = resolvedPromise.data;
             this.titleService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - ' + this.property.title);
             this.whatsAppMessage = encodeURIComponent('Olá, você poderia me passar mais informações sobre o imóvel "' + this.property.title + '" localizado em ' + (this.property.address ? this.property.address : this.property.city) + ' que vi no site? (' + this.GLOBALS.SYSTEM_URL + 'propriedades/' + this.property._id + '/detalhes)');
-            
+
             this.galleryOptions = [
               {
                 width: '100%',
-                height: '500px',
+                height: '600px',
                 thumbnailsColumns: 6,
-                imageAnimation: NgxGalleryAnimation.Slide
+                imageAnimation: NgxGalleryAnimation.Slide,
+                previewCloseOnClick: true, 
+                previewCloseOnEsc: true,
+                previewZoom: true
               },
-              // max-width 800
               {
                 breakpoint: 990,
                 width: '100%',
-                height: '400px',
+                height: '450px',
+                thumbnailsColumns: 4,
                 imagePercent: 80,
                 thumbnailsPercent: 20,
                 thumbnailsMargin: 10,
-                thumbnailMargin: 10
-              },
-              // max-width 400
-              {
-                breakpoint: 400,
-                preview: false
+                thumbnailMargin: 5,
+                previewCloseOnClick: false, 
+                previewCloseOnEsc: false,
+                previewZoom: true,
+                imageSwipe: true,
+                thumbnailsSwipe: true, 
+                previewSwipe: true
               }
             ];
 
