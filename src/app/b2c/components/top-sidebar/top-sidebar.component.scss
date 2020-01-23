@@ -4,7 +4,6 @@
     display: flex;
     align-items: center;
     background: palette(terciary, ter9light);
-    background: url(../../../../assets/images/bgtop.png) no-repeat right;
     &-right {
         h4 {
             color: palette(white);
@@ -16,6 +15,12 @@
     }
     .logo {
         height: 150px;
+    }
+    @media screen and (max-width: 990px) {
+        background: url(../../../../assets/images/bgtop.png) no-repeat left;
+    }
+    @media screen and (min-width: 991px) {
+        background: url(../../../../assets/images/bgtop.png) no-repeat right;
     }
 }
 
