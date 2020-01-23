@@ -174,7 +174,7 @@ html body {
     padding:#{$i}px;
   }
 
-  @media screen and (max-width:770px) {
+  @media screen and (max-width:990px) {
     .m-mbl-t-#{$i} {
       margin-top:#{$i}px;
     }

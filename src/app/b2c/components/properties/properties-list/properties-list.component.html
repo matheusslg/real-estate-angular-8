@@ -9,13 +9,13 @@
   </div>
 </div>
 <div class="card">
-  <div class="card-body">
+  <div id="cardBody" class="card-body">
     <h5 *ngIf="!loading"><i class="fas fa-home mr-2"></i>{{ cardTitle }}</h5>
     <div class="row mt-20" infiniteScroll [infiniteScrollDistance]="0.5" [infiniteScrollThrottle]="500"
       (scrolled)="onScroll()">
       <div *ngFor="let property of propertyList; let index = index"
         class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4">
-        <div *ngIf="property.active" class="card h-100">
+        <div *ngIf="property.active" class="card h-100 card-property">
           <a [routerLink]="['/imoveis', property._id]">
             <img *ngIf="property.images.length > 0" class="card-img-top"
               [src]="preUrlImages + '/' + property.images[0].filePath">
@@ -36,7 +36,7 @@
                 [routerLink]="['/modalidade', (type.description | normalizeString)]">{{ type.description }}</a>
             </div>
           </div>
-          <div class="card-body pb-0">
+          <div class="card-body pb-0 pt-1">
             <a [routerLink]="['/imoveis', property._id]">
               <p class="card-title">{{ property.title }}</p>
             </a>
@@ -86,12 +86,12 @@
               </div>
             </div>
           </div>
-          <div *ngIf="property.tags.length > 0" class="card-footer">
+          <!-- <div *ngIf="property.tags.length > 0" class="card-footer">
             <i class="fas fa-tags mr-2 text-primary"></i>
             <ng-container *ngFor="let tag of property.tags; let last = last; let first = first">
               <a href="javascript:;">{{ tag.description }}</a>{{ !last ? ', ' : '' }}
             </ng-container>
-          </div>
+          </div> -->
         </div>
       </div>
       <div *ngIf="propertyList?.length == 0 && !loading"

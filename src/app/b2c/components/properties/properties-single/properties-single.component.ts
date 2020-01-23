@@ -59,7 +59,7 @@ export class PropertiesSingleComponent implements OnInit {
             this.whatsAppMessage = encodeURIComponent('Olá, você poderia me passar mais informações sobre o imóvel "' + this.property.title + '" localizado em ' + (this.property.address ? this.property.address : this.property.city) + ' que vi no site? (' + this.GLOBALS.SYSTEM_URL + 'imoveis/' + this.property._id + ')');
 
             if (this.deviceService.isDesktop()) {
-              this.usefullService.scrollTo();
+              this.usefullService.scrollTop();
             } else {
               setTimeout(() => {
                 this.usefullService.scrollTo('#backButton');

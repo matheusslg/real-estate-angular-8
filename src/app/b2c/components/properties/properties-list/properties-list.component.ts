@@ -9,6 +9,7 @@ import { CategoryService } from 'src/app/services/category.service';
 import { LocationService } from 'src/app/services/location.service';
 import { TypeService } from 'src/app/services/type.service';
 import { forkJoin } from 'rxjs/internal/observable/forkJoin';
+import { UsefullService } from 'src/app/services/usefull.service';
 
 @Component({
   selector: 'app-properties-list',
@@ -19,7 +20,6 @@ export class PropertiesListComponent implements OnInit {
 
   loading
   propertyList
-  filterValue = []
   cardTitle
   selectedFilter = {
     data: null,
@@ -48,7 +48,8 @@ export class PropertiesListComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private titleService: Title,
     private GLOBALS: Globals,
-    private normalizeString: NormalizeStringPipe
+    private normalizeString: NormalizeStringPipe,
+    private usefullService: UsefullService
   ) {
     this.preUrlImages = environment.baseUri.mongo;
     this.cardTitle = 'Todos os imóveis';
@@ -106,9 +107,6 @@ export class PropertiesListComponent implements OnInit {
   }
 
   executeFiltering() {
-    this.filterValue = [];
-    this.filterValue.push(this.routerParams);
-
     this.categoryList = this.categoryService.categoryList;
     this.locationList = this.locationService.locationList;
     this.typeList = this.typeService.typeList;
@@ -124,6 +122,7 @@ export class PropertiesListComponent implements OnInit {
           this.propertyService.getPropertiesByCategory(_category._id, this.propertiesLimitNumber, this.propertiesSkipNumber).subscribe((resolvedPromise) => {
             this.propertyList = resolvedPromise.data;
             this.loading = false;
+            this.usefullService.scrollTo('#cardBody');
           });
         }
       });
@@ -137,6 +136,7 @@ export class PropertiesListComponent implements OnInit {
           this.propertyService.getPropertiesByLocation(_location._id, this.propertiesLimitNumber, this.propertiesSkipNumber).subscribe((resolvedPromise) => {
             this.propertyList = resolvedPromise.data;
             this.loading = false;
+            this.usefullService.scrollTo('#cardBody');
           });
         }
       });
@@ -150,6 +150,7 @@ export class PropertiesListComponent implements OnInit {
           this.propertyService.getPropertiesByType(_type._id, this.propertiesLimitNumber, this.propertiesSkipNumber).subscribe((resolvedPromise) => {
             this.propertyList = resolvedPromise.data;
             this.loading = false;
+            this.usefullService.scrollTo('#cardBody');
           });
         }
       });
