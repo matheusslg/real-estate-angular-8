@@ -1,9 +1,9 @@
 export const environment = {
   production: true,
   baseUri: {
-    website: 'http://cavalliniimoveis.com.br',
-    mongo: 'http://cavalliniimoveis.com.br:21026',
-    uploadFile: 'http://cavalliniimoveis.com.br:21026/files/create',
-    uploadImage: 'http://cavalliniimoveis.com.br:21026/images/create'
+    website: 'https://cavalliniimoveis.com.br',
+    mongo: 'https://cavalliniimoveis.com.br/rest-api',
+    uploadFile: 'https://cavalliniimoveis.com.br/rest-api/files/create',
+    uploadImage: 'https://cavalliniimoveis.com.br/rest-api/images/create'
   }
 };

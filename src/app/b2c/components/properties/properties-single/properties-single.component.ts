@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
 import { UsefullService } from 'src/app/services/usefull.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
+declare let fbq:Function;
 
 @Component({
   selector: 'app-properties-single',
@@ -54,6 +55,7 @@ export class PropertiesSingleComponent implements OnInit {
           } else {
             this.loading = false;
             this.property = resolvedPromise.data;
+            fbq('track', 'PropertyView');
 
             this.titleService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - ' + this.property.title);
             this.whatsAppMessage = encodeURIComponent('Olá, você poderia me passar mais informações sobre o imóvel "' + this.property.title + '" localizado em ' + (this.property.address ? this.property.address : this.property.city) + ' que vi no site? (' + this.GLOBALS.SYSTEM_URL + 'imoveis/' + this.property._id + ')');
@@ -115,6 +117,10 @@ export class PropertiesSingleComponent implements OnInit {
   redirect() {
     this.toastr.error('Imóvel não encontrado no banco de dados!');
     this.router.navigate(['/']);
+  }
+
+  fbTrack() {
+    fbq('track', 'WhatsAppClick');
   }
 
 }

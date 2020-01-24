@@ -5,9 +5,12 @@ import { TypeService } from './services/type.service';
 import { TagService } from './services/tag.service';
 import { Globals } from './globals';
 import { forkJoin } from 'rxjs/internal/observable/forkJoin';
-import { Router, NavigationEnd, RoutesRecognized, NavigationStart } from '@angular/router';
+import { Router, NavigationEnd, RoutesRecognized } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { UsefullService } from './services/usefull.service';
+declare let gtag:Function;
+declare let fbq:Function;
+
 
 @Component({
   selector: 'app-root',
@@ -29,6 +32,10 @@ export class AppComponent implements OnInit {
     private usefullService: UsefullService
   ) {
     router.events.subscribe((val: RoutesRecognized) => {
+      if (val instanceof NavigationEnd) {
+        gtag('config', 'UA-45569438-2', { 'page_path': val.url });
+        fbq('track', 'PageView');
+      }
       if ((val.urlAfterRedirects && val.urlAfterRedirects.indexOf('/imoveis') == -1) || this.deviceService.isDesktop()) {
         this.usefullService.scrollTop();
       }
