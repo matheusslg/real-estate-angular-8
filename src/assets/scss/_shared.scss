@@ -118,9 +118,11 @@ $palettes:(
 $font-main: 'Roboto',sans-serif;
 $font-secondary: 'Open Sans',sans-serif;
 $font-terciary: 'Coolvetica',sans-serif;
+$font-icon: 'Font Awesome 5 Free';
 
 .font {
 	&-primary { font-family: $font-main !important; }
 	&-secondary { font-family: $font-secondary !important; }
 	&-terciary { font-family: $font-terciary !important; }
+	&-icon { font-family: $font-icon !important; }
 }

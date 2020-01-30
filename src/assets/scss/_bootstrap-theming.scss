@@ -25,9 +25,15 @@ $enable-gradients: true;
 $enable-grid-classes: true;
 $enable-print-styles: true;
 
+.d-xs-none {
+  @media screen and (max-width: 575px) {
+    display: none !important;
+  }
+}
+
 .form-control {
   background-color: #fff !important;
-  font-size: 13px !important;
+  //font-size: 13px !important;
 
   &:disabled {
     background-color: #e9ecef !important;

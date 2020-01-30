@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
 import { UsefullService } from 'src/app/services/usefull.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { TitleTagService } from 'src/app/services/titletag.service';
 declare let fbq:Function;
 
 @Component({
@@ -31,7 +32,6 @@ export class PropertiesSingleComponent implements OnInit {
 
   constructor(
     private GLOBALS: Globals,
-    private titleService: Title,
     private toastr: ToastrService,
     private router: Router,
     private propertyService: PropertyService,
@@ -39,7 +39,8 @@ export class PropertiesSingleComponent implements OnInit {
     private usefullService: UsefullService,
     private sanitizer: DomSanitizer,
     private location: Location,
-    private deviceService: DeviceDetectorService
+    private deviceService: DeviceDetectorService,
+    private titleTagService: TitleTagService
   ) {
     this.property = new Property();
     this.preUrlImages = environment.baseUri.mongo;
@@ -50,15 +51,17 @@ export class PropertiesSingleComponent implements OnInit {
       if (params['id']) {
         this.loading = true;
         this.propertyService.getProperty(params['id']).subscribe(resolvedPromise => {
-          if (!resolvedPromise.data) {
-            this.redirect();
+          if (!resolvedPromise.data || !resolvedPromise.data.active) {
+            this.toastr.error('Não foi possível buscar o imóvel no banco de dados, contate o responsável.', 'Erro');
+            this.router.navigate(['/']);
           } else {
             this.loading = false;
             this.property = resolvedPromise.data;
             fbq('track', 'PropertyView');
 
-            this.titleService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - ' + this.property.title);
-            this.whatsAppMessage = encodeURIComponent('Olá, você poderia me passar mais informações sobre o imóvel "' + this.property.title + '" localizado em ' + (this.property.address ? this.property.address : this.property.city) + ' que vi no site? (' + this.GLOBALS.SYSTEM_URL + 'imoveis/' + this.property._id + ')');
+            this.titleTagService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - ' + this.property.title);
+            this.titleTagService.setSocialMediaTags(environment.baseUri.website + '/imoveis/' + this.property._id, this.GLOBALS.SYSTEM_TITLE + ' - ' + this.property.title, this.property.description.replace(/<[^>]*>/g, '').split(',')[0], this.property.images[0].filePath);
+            this.whatsAppMessage = encodeURIComponent('Olá, você poderia me passar mais informações sobre o imóvel "' + this.property.title + '" localizado em ' + (this.property.address ? this.property.address : this.property.city) + ' que vi no site? (' + environment.baseUri.website + '/imoveis/' + this.property._id + ')');
 
             if (this.deviceService.isDesktop()) {
               this.usefullService.scrollTop();
@@ -108,15 +111,9 @@ export class PropertiesSingleComponent implements OnInit {
           }
         }, (error) => {
           console.log('error', error);
-          this.redirect();
         });
       }
     });
-  }
-
-  redirect() {
-    this.toastr.error('Imóvel não encontrado no banco de dados!');
-    this.router.navigate(['/']);
   }
 
   fbTrack() {

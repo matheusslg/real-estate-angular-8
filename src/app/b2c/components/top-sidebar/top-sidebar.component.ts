@@ -4,6 +4,10 @@ import { LocationService } from 'src/app/services/location.service';
 import { TypeService } from 'src/app/services/type.service';
 import { UsefullService } from 'src/app/services/usefull.service';
 import { forkJoin } from 'rxjs/internal/observable/forkJoin';
+import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
+import { SearchService } from 'src/app/services/search.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-top-sidebar',
@@ -19,10 +23,14 @@ export class TopSidebarComponent implements OnInit {
   locationList
   typeList
 
+  searchTerm
+
   constructor(
     private categoryService: CategoryService,
     private locationService: LocationService,
     private typeService: TypeService,
+    private router: Router,
+    private toastr: ToastrService,
     public usefullService: UsefullService
   ) { }
 
@@ -43,6 +51,14 @@ export class TopSidebarComponent implements OnInit {
     }, () => {
       this.loading = false;
     });
+  }
+
+  search() {
+    if (this.searchTerm && this.searchTerm !== '') {
+      this.router.navigate(['/buscar', this.searchTerm]);
+    } else {
+      this.toastr.warning('Você deve preencher o campo de busca para realizar uma pesquisa.', 'Atenção')
+    }
   }
 
   openWhatsApp() {

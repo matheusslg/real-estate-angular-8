@@ -11,6 +11,7 @@ import { TopSidebarComponent } from './components/top-sidebar/top-sidebar.compon
 import { PropertiesSingleComponent } from './components/properties/properties-single/properties-single.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CloseMobileMenuDirective } from './directives/close-mobile-menu.directive';
+import { PropertiesSearchComponent } from './components/properties/properties-search/properties-search.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { CloseMobileMenuDirective } from './directives/close-mobile-menu.directi
     PropertiesSingleComponent,
     TopSidebarComponent,
     FooterComponent,
-    CloseMobileMenuDirective
+    CloseMobileMenuDirective,
+    PropertiesSearchComponent
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
   exports: [

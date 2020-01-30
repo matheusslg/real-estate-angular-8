@@ -7,24 +7,31 @@ import { CurrencyMaskModule } from "ng2-currency-mask";
 import { CurrencyMaskConfig, CURRENCY_MASK_CONFIG } from "ng2-currency-mask/src/currency-mask.config";
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { BsDropdownModule } from 'ngx-bootstrap';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { LoadingComponent } from './loading/loading.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-import { UploadFilesComponent } from './upload-files/upload-files.component';
 import { FileUploadModule } from 'ng2-file-upload';
-import { UploadFilesThumbnailDirective } from '../b2c/directives/upload-files-thumbnail.directive';
-import { TruncatePipe } from '../b2c/pipes/truncate.pipe';
-import { NormalizeStringPipe } from '../b2c/pipes/normalize-string.pipe';
 import { DataTablesModule } from 'angular-datatables';
 import { NgxEditorModule } from 'ngx-editor';
-import { SwitchComponent } from './switch/switch.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NgxGalleryModule } from 'ngx-gallery';
 import { DeviceDetectorModule } from 'ngx-device-detector';
+
+// Components
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { LoadingComponent } from './loading/loading.component';
+import { UploadFilesComponent } from './upload-files/upload-files.component';
+import { SwitchComponent } from './switch/switch.component';
+
+// Directives
+import { UploadFilesThumbnailDirective } from '../b2c/directives/upload-files-thumbnail.directive';
+
+// Pipes
+import { TruncatePipe } from '../b2c/pipes/truncate.pipe';
+import { NormalizeStringPipe } from '../b2c/pipes/normalize-string.pipe';
+import { SearchPropertyPipe } from '../b2c/pipes/search-property.pipe';
 
 registerLocaleData(localePT);
 
@@ -69,7 +76,8 @@ export const toastrOptions = {
   providers: [
     { provide: LOCALE_ID, useValue: "pt" },
     { provide: CURRENCY_MASK_CONFIG, useValue: CustomCurrencyMaskConfig },
-    NormalizeStringPipe
+    NormalizeStringPipe,
+    SearchPropertyPipe
   ],
   declarations: [
     PageNotFoundComponent,
@@ -78,6 +86,7 @@ export const toastrOptions = {
     UploadFilesThumbnailDirective,
     TruncatePipe,
     NormalizeStringPipe,
+    SearchPropertyPipe,
     SwitchComponent
   ],
   schemas: [NO_ERRORS_SCHEMA],
@@ -101,6 +110,7 @@ export const toastrOptions = {
     DragDropModule,
     TruncatePipe,
     NormalizeStringPipe,
+    SearchPropertyPipe,
     InfiniteScrollModule,
     NgxGalleryModule,
     DeviceDetectorModule

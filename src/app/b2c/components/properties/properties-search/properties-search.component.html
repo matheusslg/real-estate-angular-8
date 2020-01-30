@@ -1,19 +1,15 @@
-<div class="row expanded">
-  <div class="col">
-    <div class="card">
-      <div class="card-body">
-        <h3>Seja bem-vindo!</h3>
-        <h6>O nosso site está em construção, mas você já pode navegar e conferir os imóveis disponíveis.</h6>
-      </div>
-    </div>
+<div class="card">
+  <div class="card-body">
+    <h5><i class="fas fa-search mr-2"></i>Buscando em tempo real</h5>
+    <input [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}" class="form-control form-control-lg mr-sm-2 mt-3" type="search"
+      placeholder="Digite o termo desejado..." aria-label="Buscar">
   </div>
 </div>
 <div class="card">
   <div id="cardBody" class="card-body">
-    <h5 *ngIf="!loading"><i class="fas fa-home mr-2"></i>{{ cardTitle }}</h5>
-    <div class="row mt-20" infiniteScroll [infiniteScrollDistance]="0.5" [infiniteScrollThrottle]="500"
-      (scrolled)="onScroll()">
-      <ng-container *ngFor="let property of propertyList; let index = index">
+    <h5 *ngIf="!loading && searchTerm"><i class="fas fa-home mr-2"></i>Buscando por: {{ searchTerm }}</h5>
+    <div class="row mt-20" (scrolled)="onScroll()">
+      <ng-container *ngFor="let property of propertyList | searchProperty:searchTerm; let index = index">
         <div *ngIf="property.active" class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4">
           <div class="card h-100 card-property">
             <a [routerLink]="['/imoveis', property._id]">
@@ -86,18 +82,16 @@
                 </div>
               </div>
             </div>
-            <!-- <div *ngIf="property.tags.length > 0" class="card-footer">
-            <i class="fas fa-tags mr-2 text-primary"></i>
-            <ng-container *ngFor="let tag of property.tags; let last = last; let first = first">
-              <a href="javascript:;">{{ tag.description }}</a>{{ !last ? ', ' : '' }}
-            </ng-container>
-          </div> -->
           </div>
         </div>
       </ng-container>
-      <div *ngIf="propertyList?.length == 0 && !loading"
+      <div *ngIf="!loading && searchTerm === undefined"
         class="col d-flex justify-content-center align-items-center text-center my-5">
-        <h4 class="text-muted">Nenhum imóvel encontrado. Tente procurar por outra categoria.</h4>
+        <h4 class="text-muted">Digite no campo acima o termo desejado.</h4>
+      </div>
+      <div *ngIf="(propertyList | searchProperty:searchTerm)?.length == 0 && !loading && searchTerm !== undefined"
+        class="col d-flex justify-content-center align-items-center text-center my-5">
+        <h4 class="text-muted">Nenhum resultado encontrado para o termo desejado.</h4>
       </div>
     </div>
     <app-loading *ngIf="loading"></app-loading>

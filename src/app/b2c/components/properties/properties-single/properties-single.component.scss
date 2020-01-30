@@ -67,11 +67,11 @@
     }
     &-small {
         p {
-            font-size: 13px;
+            font-size: 17px;
             font-family: $font-secondary;
         }
         i {
-            font-size: 14px;
+            font-size: 18px;
             color: palette(gray, light3);
         }
     }
@@ -94,6 +94,11 @@
             margin-top: 0.5rem;
         }
     }
+}
+
+.property-description {
+    font-size: 15px;
+    text-align: justify;
 }
 
 .go-back {

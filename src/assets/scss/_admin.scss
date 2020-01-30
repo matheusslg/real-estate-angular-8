@@ -53,20 +53,22 @@
 
 /* Closed submenu icon */
 #sidebar-container .list-group .list-group-item[aria-expanded="false"] .submenu-icon::after {
-  content: " \f0d7";
-  font-family: FontAwesome;
+  content: "\f0d7";
+  font-family: $font-icon;
   display: inline;
   text-align: right;
   padding-left: 10px;
+  font-weight: 900;
 }
 
 /* Opened submenu icon */
 #sidebar-container .list-group .list-group-item[aria-expanded="true"] .submenu-icon::after {
-  content: " \f0da";
-  font-family: FontAwesome;
+  content: "\f0d8";
+  font-family: $font-icon;
   display: inline;
   text-align: right;
   padding-left: 10px;
+  font-weight: 900;
 }
 
 .list-group-item-action:focus {

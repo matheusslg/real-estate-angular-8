@@ -261,8 +261,4 @@ export class PropertiesListComponent implements OnInit {
     }
   }
 
-  goTop() {
-    window.scroll(0,0);
-  }
-
 }
