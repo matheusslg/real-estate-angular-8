@@ -49,7 +49,7 @@ export class PropertiesListComponent implements OnInit {
     private titleService: Title,
     private GLOBALS: Globals,
     private normalizeString: NormalizeStringPipe,
-    private usefullService: UsefullService
+    public usefullService: UsefullService
   ) {
     this.preUrlImages = environment.baseUri.mongo;
     this.cardTitle = 'Todos os imóveis';
@@ -65,7 +65,7 @@ export class PropertiesListComponent implements OnInit {
       this.routerParams = params['description'];
       // Executes every time that user goes back to Home Page to reset propertyList
       if (!this.routerParams) {
-        this.propertyService.getProperties(this.propertiesLimitNumber, this.propertiesSkipNumber).subscribe((resolvedPromise) => {
+        this.propertyService.getPropertiesActive(this.propertiesLimitNumber, this.propertiesSkipNumber).subscribe((resolvedPromise) => {
           this.propertyList = resolvedPromise.data;
         }, (error) => {
           console.log(error);
@@ -177,7 +177,7 @@ export class PropertiesListComponent implements OnInit {
       }
       if (!this.noMoreProperties) {
         this.loading = true;
-        this.propertyService.getProperties(this.propertiesLimitNumber, this.propertiesSkipNumber).subscribe((resolvedPromise: any) => {
+        this.propertyService.getPropertiesActive(this.propertiesLimitNumber, this.propertiesSkipNumber).subscribe((resolvedPromise: any) => {
           let newProperties = resolvedPromise.data;
           if (newProperties.length == 0) {
             this.noMoreProperties = true;

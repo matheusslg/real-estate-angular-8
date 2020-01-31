@@ -57,7 +57,7 @@ export class PropertiesSingleComponent implements OnInit {
           } else {
             this.loading = false;
             this.property = resolvedPromise.data;
-            fbq('track', 'PropertyView');
+            fbq('track', 'PropertyView', { property_id: '* this.property._id *', property_title: '* this.property.title *' });
 
             this.titleTagService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - ' + this.property.title);
             this.titleTagService.setSocialMediaTags(environment.baseUri.website + '/imoveis/' + this.property._id, this.GLOBALS.SYSTEM_TITLE + ' - ' + this.property.title, this.property.description.replace(/<[^>]*>/g, '').split(',')[0], this.property.images[0].filePath);
@@ -117,7 +117,7 @@ export class PropertiesSingleComponent implements OnInit {
   }
 
   fbTrack() {
-    fbq('track', 'WhatsAppClick');
+    fbq('track', 'WhatsAppClick', { property_id: '* this.property._id *', property_title: '* this.property.title *' });
   }
 
 }

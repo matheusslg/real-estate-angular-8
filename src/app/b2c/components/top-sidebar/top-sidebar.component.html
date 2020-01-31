@@ -98,18 +98,21 @@
             class="fab fa-whatsapp ml-1 mr-2"></i>Conversar no WhatsApp</a>
       </li>
     </ul>
+
     <form class="form-inline my-2 my-lg-0 d-xs-none d-sm-none d-md-none d-lg-flex">
       <div class="input-group">
         <input [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}" type="search" class="form-control"
           placeholder="Digite aqui" aria-label="Buscar">
         <div class="input-group-append">
-          <button (click)="search()" class="btn btn-warning btn-block my-2 my-sm-0" type="button">Procurar
+          <button (click)="search()" (keyup.enter)="search()" class="btn btn-warning btn-block my-2 my-sm-0" type="button">Procurar
             Imóvel</button>
         </div>
       </div>
     </form>
+
   </div>
 </nav>
+
 <div class="whatsapp-call" [class.whatsapp-call-opened]="whatsAppAdvise == true">
   <div class="whatsapp-call-area" (click)="openWhatsApp()">
     <i class="fab fa-whatsapp mr-2"></i>
@@ -119,6 +122,7 @@
     <i class="far fa-times-circle" (click)="whatsAppAdvise = false"></i>
   </div>
 </div>
+
 <div class="container-fluid">
   <div class="row no-gutters">
     <div class="col-md-12">

@@ -4,6 +4,7 @@ import { PropertyService } from 'src/app/services/property.service';
 import { SearchService } from 'src/app/services/search.service';
 import { environment } from 'src/environments/environment';
 import { UsefullService } from 'src/app/services/usefull.service';
+declare let fbq: Function;
 
 @Component({
   selector: 'app-properties-search',
@@ -24,14 +25,14 @@ export class PropertiesSearchComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private propertyService: PropertyService,
     private searchService: SearchService,
-    private usefullService: UsefullService
+    public usefullService: UsefullService
   ) {
     this.preUrlImages = environment.baseUri.mongo;
   }
 
   ngOnInit() {
     this.loading = true;
-    this.propertyService.getProperties().subscribe(resolvedPromise => {
+    this.propertyService.getPropertiesActive().subscribe(resolvedPromise => {
       this.propertyList = resolvedPromise.data;
       this.loading = false;
     });
@@ -40,6 +41,7 @@ export class PropertiesSearchComponent implements OnInit {
       if (params['term']) {
         this.searchTerm = params['term'];
         this.cardTitle = 'Buscando por: ' + this.searchTerm;
+        fbq('track', 'SearchTerm', { term: '* this.searchTerm *' });
       }
     });
   }

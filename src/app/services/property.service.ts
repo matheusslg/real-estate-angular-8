@@ -27,6 +27,14 @@ export class PropertyService {
       )
   }
 
+  getPropertiesActive(limit?, skip?): Observable<Property> {
+    return this.http.get<Property>(this.apiURL + '/properties' + '?active=true' + (limit ? '&limit=' + limit : '') + (skip != null ? '&skip=' + skip : ''))
+      .pipe(
+        retry(1),
+        catchError(this.usefullService.handleError)
+      )
+  }
+
   getPropertiesByCategory(categoryId, limit?, skip?): Observable<Property> {
     return this.http.get<Property>(this.apiURL + '/properties/category/' + categoryId + (limit ? '?limit=' + limit : '') + (skip != null ? '&skip=' + skip : ''))
       .pipe(
