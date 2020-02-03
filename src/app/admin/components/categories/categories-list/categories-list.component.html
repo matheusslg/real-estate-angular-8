@@ -2,13 +2,14 @@
 <p>Listagem de categorias cadastradas no sistema.</p>
 <div class="card">
   <div class="card-body">
-    <app-loading *ngIf="loadingCategoryList"></app-loading>
-    <div class="table-responsive" *ngIf="!loadingCategoryList">
+    <app-loading *ngIf="loadingData"></app-loading>
+    <div class="table-responsive" *ngIf="!loadingData">
       <table datatable [dtOptions]="dtOptions" class="table">
         <thead>
           <tr>
             <th>#</th>
             <th>Título</th>
+            <th>Imóveis</th>
             <th>Ativa</th>
             <th>Opções</th>
           </tr>
@@ -17,6 +18,7 @@
           <tr *ngFor="let category of categoryList; let i = index">
             <td>{{ i + 1 }}</td>
             <td>{{ category.description }}</td>
+            <td>{{ categoryPropertiesCount[category._id] }}</td>
             <td>{{ category.active ? 'Sim' : 'Não' }}</td>
             <td>
               <button [routerLink]="['/area-logada/categorias/editar', category._id]" class="btn btn-sm btn-primary mr-2" title="Editar"><i class="fas fa-pencil-alt"></i></button>

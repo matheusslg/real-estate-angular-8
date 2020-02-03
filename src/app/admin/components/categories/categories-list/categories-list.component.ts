@@ -4,6 +4,8 @@ import { Globals } from 'src/app/globals';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from 'src/app/services/category.service';
 import { UsefullService } from 'src/app/services/usefull.service';
+import { PropertyService } from 'src/app/services/property.service';
+import { forkJoin } from 'rxjs/internal/observable/forkJoin';
 
 @Component({
   selector: 'app-categories-list',
@@ -12,8 +14,10 @@ import { UsefullService } from 'src/app/services/usefull.service';
 })
 export class CategoriesListComponent implements OnInit {
 
+  categoryPropertiesCount = []
   categoryList
-  loadingCategoryList
+  propertyList
+  loadingData
   loadingToggle
   dtOptions
 
@@ -22,6 +26,7 @@ export class CategoriesListComponent implements OnInit {
     private titleService: Title,
     private toastr: ToastrService,
     private categoryService: CategoryService,
+    private propertyService: PropertyService,
     private usefullService: UsefullService
   ) {
     this.titleService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - Listagem de Categorias');
@@ -32,16 +37,34 @@ export class CategoriesListComponent implements OnInit {
     this.dtOptions.buttons.forEach(element => {
       element.exportOptions.columns = [0, 1, 2];
     });
-    this.dtOptions.columnDefs = [{ "width": "10%", "targets": [2, 3] }, { "width": "5%", "targets": 0 }];
+    this.dtOptions.columnDefs = [{ "width": "10%", "targets": [3, 4] }, { "width": "5%", "targets": 0 }];
     this.refreshTable();
   }
 
   refreshTable() {
-    this.loadingCategoryList = true;
-    this.categoryService.getCategories().subscribe((resolvedPromise) => {
-      this.categoryList = this.usefullService.orderByLocale(resolvedPromise.data, 'description');
-      this.loadingCategoryList = false;
-    })
+    this.loadingData = true;
+    forkJoin([
+      this.categoryService.getCategories(),
+      this.propertyService.getPropertiesActive()
+    ]).subscribe(resolvedPromises => {
+      this.categoryList = this.usefullService.orderByLocale(resolvedPromises[0].data, 'description');
+      this.propertyList = resolvedPromises[1].data;
+      this.propertiesPerCategoryCount();
+      this.loadingData = false;
+    }, (error) => {
+      console.log(error);
+    });
+  }
+
+  propertiesPerCategoryCount() {
+    this.categoryList.forEach(_category => {
+      this.categoryPropertiesCount[_category._id] = 0;
+    });
+    this.propertyList.forEach(_property => {
+      _property.categories.forEach(_category => {
+        this.categoryPropertiesCount[_category._id]++;
+      });
+    });
   }
 
   toggleCategory(category) {
