@@ -1,0 +1,33 @@
+<app-loading *ngIf="loadingToggle" type="fullscreen"></app-loading>
+<p>Listagem de categorias cadastradas no sistema.</p>
+<div class="card">
+  <div class="card-body">
+    <app-loading *ngIf="loadingCategoryList"></app-loading>
+    <div class="table-responsive" *ngIf="!loadingCategoryList">
+      <table datatable [dtOptions]="dtOptions" class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Título</th>
+            <th>Ativa</th>
+            <th>Opções</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let category of categoryList; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ category.description }}</td>
+            <td>{{ category.active ? 'Sim' : 'Não' }}</td>
+            <td>
+              <button [routerLink]="['/area-logada/categorias/editar', category._id]" class="btn btn-sm btn-primary mr-2" title="Editar"><i class="fas fa-pencil-alt"></i></button>
+              <button (click)="toggleCategory(category)" class="btn btn-sm btn-danger" [ngClass]="{ 'btn-danger': category.active, 'btn-primary': !category.active }" [title]="category.active ? 'Desativar' : 'Ativar'">
+                <i *ngIf="!category.active" class="fas fa-toggle-on"></i>
+                <i *ngIf="category.active" class="fas fa-toggle-off"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

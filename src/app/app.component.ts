@@ -44,10 +44,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     forkJoin([
-      this.categoryService.getCategories(),
-      this.locationService.getLocations(),
-      this.typeService.getTypes(),
-      this.tagService.getTags()
+      this.categoryService.getCategoriesActive(),
+      this.locationService.getLocationsActive(),
+      this.typeService.getTypesActive(),
+      this.tagService.getTagsActive()
     ]).subscribe(resolvedPromises => {
       this.categoryService.categorySubject.next(resolvedPromises[0].data);
       this.locationService.locationSubject.next(resolvedPromises[1].data);

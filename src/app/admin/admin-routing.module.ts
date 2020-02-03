@@ -5,10 +5,13 @@ import { UsersAdminComponent } from './components/users-admin/users-admin.compon
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomeAdminComponent } from './components/home-admin/home-admin.component';
+import { LogoutComponent } from './components/logout/logout.component';
 import { PropertiesComponent } from './components/properties/properties.component';
 import { PropertiesPostComponent } from './components/properties/properties-post/properties-post.component';
 import { PropertiesListComponent } from './components/properties/properties-list/properties-list.component';
-import { LogoutComponent } from './components/logout/logout.component';
+import { CategoriesComponent } from './components/categories/categories.component';
+import { CategoriesListComponent } from './components/categories/categories-list/categories-list.component';
+import { CategoriesPostComponent } from './components/categories/categories-post/categories-post.component';
 
 const routes: Routes = [
   { path: 'login', pathMatch: 'full', component: LoginComponent },
@@ -22,6 +25,15 @@ const routes: Routes = [
           { path: 'listagem', component: PropertiesListComponent },
           { path: 'cadastrar', component: PropertiesPostComponent },
           { path: 'editar/:id', component: PropertiesPostComponent },
+          { path: '', redirectTo: 'listagem', pathMatch: 'full' }
+        ]
+      },
+      {
+        path: 'categorias', component: CategoriesComponent,
+        children: [
+          { path: 'listagem', component: CategoriesListComponent },
+          { path: 'cadastrar', component: CategoriesPostComponent },
+          { path: 'editar/:id', component: CategoriesPostComponent },
           { path: '', redirectTo: 'listagem', pathMatch: 'full' }
         ]
       },
