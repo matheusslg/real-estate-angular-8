@@ -12,6 +12,9 @@ import { PropertiesListComponent } from './components/properties/properties-list
 import { CategoriesComponent } from './components/categories/categories.component';
 import { CategoriesListComponent } from './components/categories/categories-list/categories-list.component';
 import { CategoriesPostComponent } from './components/categories/categories-post/categories-post.component';
+import { LocationsComponent } from './components/locations/locations.component';
+import { LocationsListComponent } from './components/locations/locations-list/locations-list.component';
+import { LocationsPostComponent } from './components/locations/locations-post/locations-post.component';
 
 const routes: Routes = [
   { path: 'login', pathMatch: 'full', component: LoginComponent },
@@ -34,6 +37,15 @@ const routes: Routes = [
           { path: 'listagem', component: CategoriesListComponent },
           { path: 'cadastrar', component: CategoriesPostComponent },
           { path: 'editar/:id', component: CategoriesPostComponent },
+          { path: '', redirectTo: 'listagem', pathMatch: 'full' }
+        ]
+      },
+      {
+        path: 'localizacoes', component: LocationsComponent,
+        children: [
+          { path: 'listagem', component: LocationsListComponent },
+          { path: 'cadastrar', component: LocationsPostComponent },
+          { path: 'editar/:id', component: LocationsPostComponent },
           { path: '', redirectTo: 'listagem', pathMatch: 'full' }
         ]
       },

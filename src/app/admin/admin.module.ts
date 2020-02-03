@@ -17,6 +17,9 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { CategoriesListComponent } from './components/categories/categories-list/categories-list.component';
 import { CategoriesPostComponent } from './components/categories/categories-post/categories-post.component';
 import { CategoriesComponent } from './components/categories/categories.component';
+import { LocationsComponent } from './components/locations/locations.component';
+import { LocationsListComponent } from './components/locations/locations-list/locations-list.component';
+import { LocationsPostComponent } from './components/locations/locations-post/locations-post.component';
 
 @NgModule({
   imports: [
@@ -41,7 +44,10 @@ import { CategoriesComponent } from './components/categories/categories.componen
     LogoutComponent,
     CategoriesListComponent,
     CategoriesPostComponent,
-    CategoriesComponent
+    CategoriesComponent,
+    LocationsComponent,
+    LocationsListComponent,
+    LocationsPostComponent
   ]
 })
 

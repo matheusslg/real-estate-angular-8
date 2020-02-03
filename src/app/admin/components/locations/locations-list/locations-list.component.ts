@@ -2,20 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Globals } from 'src/app/globals';
 import { ToastrService } from 'ngx-toastr';
-import { CategoryService } from 'src/app/services/category.service';
+import { LocationService } from 'src/app/services/location.service';
 import { UsefullService } from 'src/app/services/usefull.service';
 import { PropertyService } from 'src/app/services/property.service';
 import { forkJoin } from 'rxjs/internal/observable/forkJoin';
 
 @Component({
-  selector: 'app-categories-list',
-  templateUrl: './categories-list.component.html',
-  styleUrls: ['./categories-list.component.scss']
+  selector: 'app-locations-list',
+  templateUrl: './locations-list.component.html',
+  styleUrls: ['./locations-list.component.scss']
 })
-export class CategoriesListComponent implements OnInit {
+export class LocationsListComponent implements OnInit {
 
-  categoryPropertiesCount = []
-  categoryList
+  locationPropertiesCount = []
+  locationList
   propertyList
   loadingData
   loadingToggle
@@ -25,15 +25,15 @@ export class CategoriesListComponent implements OnInit {
     private GLOBALS: Globals,
     private titleService: Title,
     private toastr: ToastrService,
-    private categoryService: CategoryService,
+    private locationService: LocationService,
     private propertyService: PropertyService,
     private usefullService: UsefullService
   ) {
-    this.titleService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - Listagem de Categorias');
+    this.titleService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - Listagem de Localizações');
   }
 
   ngOnInit() {
-    this.dtOptions = this.GLOBALS.DATATABLES_OPTIONS('Listagem de categorias cadastradas no sistema');
+    this.dtOptions = this.GLOBALS.DATATABLES_OPTIONS('Listagem de localizações cadastradas no sistema');
     this.dtOptions.buttons.forEach(element => {
       element.exportOptions.columns = [0, 1, 2];
     });
@@ -44,39 +44,39 @@ export class CategoriesListComponent implements OnInit {
   refreshTable() {
     this.loadingData = true;
     forkJoin([
-      this.categoryService.getCategories(),
+      this.locationService.getLocations(),
       this.propertyService.getPropertiesActive()
     ]).subscribe(resolvedPromises => {
-      this.categoryList = this.usefullService.orderByLocale(resolvedPromises[0].data, 'description');
+      this.locationList = this.usefullService.orderByLocale(resolvedPromises[0].data, 'description');
       this.propertyList = resolvedPromises[1].data;
-      this.propertiesByCategoryCount();
+      this.propertiesByLocationCount();
       this.loadingData = false;
     }, (error) => {
       console.log(error);
     });
   }
 
-  propertiesByCategoryCount() {
-    this.categoryList.forEach(_category => {
-      this.categoryPropertiesCount[_category._id] = 0;
+  propertiesByLocationCount() {
+    this.locationList.forEach(_location => {
+      this.locationPropertiesCount[_location._id] = 0;
     });
     this.propertyList.forEach(_property => {
-      _property.categories.forEach(_category => {
-        this.categoryPropertiesCount[_category._id]++;
+      _property.locations.forEach(_location => {
+        this.locationPropertiesCount[_location._id]++;
       });
     });
   }
 
-  toggleCategory(category) {
-    console.log(category);
+  toggleLocation(location) {
+    console.log(location);
     this.loadingToggle = true;
-    if (category.active) {
-      this.categoryService.disableCategory(category._id).subscribe((resolvedPromise: any) => {
+    if (location.active) {
+      this.locationService.disableLocation(location._id).subscribe((resolvedPromise: any) => {
         if (resolvedPromise.success) {
-          this.toastr.success('Categoria desativada com sucesso!');
+          this.toastr.success('Localização desativada com sucesso!');
           this.refreshTable();
         } else {
-          this.toastr.error('Ocorreu um erro ao desativar a categoria. Contate um administrador para mais informações.');
+          this.toastr.error('Ocorreu um erro ao desativar a localização. Contate um administrador para mais informações.');
         }
       }, (error) => {
         this.toastr.error(error.message);
@@ -85,12 +85,12 @@ export class CategoriesListComponent implements OnInit {
         this.loadingToggle = false;
       });
     } else {
-      this.categoryService.enableCategory(category._id).subscribe((resolvedPromise: any) => {
+      this.locationService.enableLocation(location._id).subscribe((resolvedPromise: any) => {
         if (resolvedPromise.success) {
-          this.toastr.success('Categoria ativada com sucesso!');
+          this.toastr.success('Localização ativada com sucesso!');
           this.refreshTable();
         } else {
-          this.toastr.error('Ocorreu um erro ao ativar a categoria. Contate um administrador para mais informações.');
+          this.toastr.error('Ocorreu um erro ao ativar a localização. Contate um administrador para mais informações.');
         }
       }, (error) => {
         this.toastr.error(error.message);

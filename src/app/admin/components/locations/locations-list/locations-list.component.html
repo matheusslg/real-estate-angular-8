@@ -1,0 +1,35 @@
+<app-loading *ngIf="loadingToggle" type="fullscreen"></app-loading>
+<p>Listagem de localizações cadastradas no sistema.</p>
+<div class="card">
+  <div class="card-body">
+    <app-loading *ngIf="loadingData"></app-loading>
+    <div class="table-responsive" *ngIf="!loadingData">
+      <table datatable [dtOptions]="dtOptions" class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Título</th>
+            <th>Imóveis</th>
+            <th>Ativa</th>
+            <th>Opções</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let location of locationList; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ location.description }}</td>
+            <td>{{ locationPropertiesCount[location._id] }}</td>
+            <td>{{ location.active ? 'Sim' : 'Não' }}</td>
+            <td>
+              <button [routerLink]="['/area-logada/localizacoes/editar', location._id]" class="btn btn-sm btn-primary mr-2" title="Editar"><i class="fas fa-pencil-alt"></i></button>
+              <button (click)="toggleLocation(location)" class="btn btn-sm btn-danger" [ngClass]="{ 'btn-danger': location.active, 'btn-primary': !location.active }" [title]="location.active ? 'Desativar' : 'Ativar'">
+                <i *ngIf="!location.active" class="fas fa-toggle-on"></i>
+                <i *ngIf="location.active" class="fas fa-toggle-off"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

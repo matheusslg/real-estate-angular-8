@@ -36,7 +36,7 @@ export class CategoriesPostComponent implements OnInit {
     private categoryService: CategoryService,
     private activatedRoute: ActivatedRoute
   ) {
-    this.titleService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - Cadastrar Imóvel');
+    this.titleService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - Cadastrar Categoria');
     this.category = new Category();
     this.categoryChangeData = new Category();
   }
