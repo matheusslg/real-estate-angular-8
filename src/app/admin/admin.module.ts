@@ -20,6 +20,9 @@ import { CategoriesComponent } from './components/categories/categories.componen
 import { LocationsComponent } from './components/locations/locations.component';
 import { LocationsListComponent } from './components/locations/locations-list/locations-list.component';
 import { LocationsPostComponent } from './components/locations/locations-post/locations-post.component';
+import { TypesComponent } from './components/types/types.component';
+import { TypesListComponent } from './components/types/types-list/types-list.component';
+import { TypesPostComponent } from './components/types/types-post/types-post.component';
 
 @NgModule({
   imports: [
@@ -47,7 +50,10 @@ import { LocationsPostComponent } from './components/locations/locations-post/lo
     CategoriesComponent,
     LocationsComponent,
     LocationsListComponent,
-    LocationsPostComponent
+    LocationsPostComponent,
+    TypesComponent,
+    TypesListComponent,
+    TypesPostComponent
   ]
 })
 

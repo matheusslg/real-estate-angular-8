@@ -48,10 +48,16 @@
                       {{ property.priceNumber ? (property.priceNumber | currency:'BRL') : property.priceCustom }}</p>
                   </div>
                 </div>
-                <div class="property-indicator-address col-lg-12 col-md-12 col-sm-12">
+                <div *ngIf="property.address" class="property-indicator-address col-lg-12 col-md-12 col-sm-12">
                   <div class="property-indicator property-indicator-small mt-2">
                     <i class="fas fa-map-marker-alt"></i>
-                    <p class="mb-0 ml-2">{{ property.address ? property.address : property.city }}</p>
+                    <p class="mb-0 ml-2">{{ property.address }}</p>
+                  </div>
+                </div>
+                <div class="property-indicator-address col-lg-12 col-md-12 col-sm-12">
+                  <div class="property-indicator property-indicator-small mt-2">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <p class="mb-0 ml-2">{{ property.city }}</p>
                   </div>
                 </div>
               </div>

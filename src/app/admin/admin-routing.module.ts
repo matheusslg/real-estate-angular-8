@@ -15,6 +15,9 @@ import { CategoriesPostComponent } from './components/categories/categories-post
 import { LocationsComponent } from './components/locations/locations.component';
 import { LocationsListComponent } from './components/locations/locations-list/locations-list.component';
 import { LocationsPostComponent } from './components/locations/locations-post/locations-post.component';
+import { TypesComponent } from './components/types/types.component';
+import { TypesListComponent } from './components/types/types-list/types-list.component';
+import { TypesPostComponent } from './components/types/types-post/types-post.component';
 
 const routes: Routes = [
   { path: 'login', pathMatch: 'full', component: LoginComponent },
@@ -46,6 +49,15 @@ const routes: Routes = [
           { path: 'listagem', component: LocationsListComponent },
           { path: 'cadastrar', component: LocationsPostComponent },
           { path: 'editar/:id', component: LocationsPostComponent },
+          { path: '', redirectTo: 'listagem', pathMatch: 'full' }
+        ]
+      },
+      {
+        path: 'modalidades', component: TypesComponent,
+        children: [
+          { path: 'listagem', component: TypesListComponent },
+          { path: 'cadastrar', component: TypesPostComponent },
+          { path: 'editar/:id', component: TypesPostComponent },
           { path: '', redirectTo: 'listagem', pathMatch: 'full' }
         ]
       },

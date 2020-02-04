@@ -1,0 +1,35 @@
+<app-loading *ngIf="loadingToggle" type="fullscreen"></app-loading>
+<p>Listagem de modalidades cadastradas no sistema.</p>
+<div class="card">
+  <div class="card-body">
+    <app-loading *ngIf="loadingData"></app-loading>
+    <div class="table-responsive" *ngIf="!loadingData">
+      <table datatable [dtOptions]="dtOptions" class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Título</th>
+            <th>Imóveis</th>
+            <th>Ativa</th>
+            <th>Opções</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let type of typeList; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ type.description }}</td>
+            <td>{{ typePropertiesCount[type._id] }}</td>
+            <td>{{ type.active ? 'Sim' : 'Não' }}</td>
+            <td>
+              <button [routerLink]="['/area-logada/modalidades/editar', type._id]" class="btn btn-sm btn-primary mr-2" title="Editar"><i class="fas fa-pencil-alt"></i></button>
+              <button (click)="toggleType(type)" class="btn btn-sm btn-danger" [ngClass]="{ 'btn-danger': type.active, 'btn-primary': !type.active }" [title]="type.active ? 'Desativar' : 'Ativar'">
+                <i *ngIf="!type.active" class="fas fa-toggle-on"></i>
+                <i *ngIf="type.active" class="fas fa-toggle-off"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

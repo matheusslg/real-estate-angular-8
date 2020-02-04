@@ -57,8 +57,8 @@ export class LocationsPostComponent implements OnInit {
         this.locationService.getLocation(params['id']).subscribe(resolvedPromise => {
           this.locationChangeData = resolvedPromise.data;
           this.locationChangeData._id = params['id'];
-          this.locationChangeData.controls['description'].setValue(this.locationChangeData.description);
-          this.locationChangeData.controls['active'].setValue(this.locationChangeData.active);
+          this.locationForm.controls['description'].setValue(this.locationChangeData.description);
+          this.locationForm.controls['active'].setValue(this.locationChangeData.active);
           this.loading = false;
         }, (error) => {
           console.log('error', error);

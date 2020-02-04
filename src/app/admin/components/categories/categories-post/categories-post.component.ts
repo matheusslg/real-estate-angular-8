@@ -57,8 +57,8 @@ export class CategoriesPostComponent implements OnInit {
         this.categoryService.getCategory(params['id']).subscribe(resolvedPromise => {
           this.categoryChangeData = resolvedPromise.data;
           this.categoryChangeData._id = params['id'];
-          this.categoryChangeData.controls['description'].setValue(this.categoryChangeData.description);
-          this.categoryChangeData.controls['active'].setValue(this.categoryChangeData.active);
+          this.categoryForm.controls['description'].setValue(this.categoryChangeData.description);
+          this.categoryForm.controls['active'].setValue(this.categoryChangeData.active);
           this.loading = false;
         }, (error) => {
           console.log('error', error);
