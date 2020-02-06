@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { SearchService } from 'src/app/services/search.service';
 import { ToastrService } from 'ngx-toastr';
+import { CityService } from 'src/app/services/city.service';
 
 @Component({
   selector: 'app-top-sidebar',
@@ -22,6 +23,7 @@ export class TopSidebarComponent implements OnInit {
   categoryList
   locationList
   typeList
+  cityList
 
   searchTerm
 
@@ -29,6 +31,7 @@ export class TopSidebarComponent implements OnInit {
     private categoryService: CategoryService,
     private locationService: LocationService,
     private typeService: TypeService,
+    private cityService: CityService,
     private router: Router,
     private toastr: ToastrService,
     public usefullService: UsefullService
@@ -40,11 +43,13 @@ export class TopSidebarComponent implements OnInit {
     forkJoin([
       this.categoryService.categorySubject,
       this.locationService.locationSubject,
-      this.typeService.typeSubject
+      this.typeService.typeSubject,
+      this.cityService.citySubject
     ]).subscribe(resolvedPromises => {
       this.categoryList = this.usefullService.orderByLocale(resolvedPromises[0], 'description');
       this.locationList = this.usefullService.orderByLocale(resolvedPromises[1], 'description');
       this.typeList = this.usefullService.orderByLocale(resolvedPromises[2], 'description');
+      this.cityList = this.usefullService.orderByLocale(resolvedPromises[3], 'description');
       this.whatsAppAdvise = true;
     }, (error) => {
       console.log(error);

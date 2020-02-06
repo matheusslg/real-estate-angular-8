@@ -61,7 +61,7 @@ export class PropertiesSingleComponent implements OnInit {
 
             this.titleTagService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - ' + this.property.title);
             this.titleTagService.setSocialMediaTags(environment.baseUri.website + '/imoveis/' + this.property._id, this.GLOBALS.SYSTEM_TITLE + ' - ' + this.property.title, this.property.description.replace(/<[^>]*>/g, '').split(',')[0], this.property.images[0].filePath);
-            this.whatsAppMessage = encodeURIComponent('Olá, você poderia me passar mais informações sobre o imóvel "' + this.property.title + '" localizado em ' + (this.property.address ? this.property.address : this.property.city) + ' que vi no site? (' + environment.baseUri.website + '/imoveis/' + this.property._id + ')');
+            this.whatsAppMessage = encodeURIComponent('Olá, você poderia me passar mais informações sobre o imóvel "' + this.property.title + '" localizado em ' + (this.property.address ? this.property.address : this.property.city.description) + ' que vi no site? (' + environment.baseUri.website + '/imoveis/' + this.property._id + ')');
 
             if (this.deviceService.isDesktop()) {
               this.usefullService.scrollTop();

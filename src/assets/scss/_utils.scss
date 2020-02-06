@@ -40,3 +40,13 @@
 .carousel-control-next {
   cursor: pointer;
 }
+
+@media screen and (min-width: 991px) {
+  .dropdown-menu {
+    width: calc(100% + 120px) !important;
+  }
+}
+
+img {
+  image-rendering: crisp-edges !important;
+}

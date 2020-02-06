@@ -51,9 +51,15 @@
               </div>
               <div class="form-row">
                 <div class="form-group col-6">
-                  <label for="cityText">Cidade *</label>
-                  <input formControlName="city" name="city" type="text" class="form-control" id="cityText"
-                    placeholder="Ex: São Luiz Gonzaga" [ngClass]="{ 'is-invalid': submitted && f.city.errors }">
+                  <label for="cityMultiselect">Cidade *</label>
+                  <ng-select formControlName="city" [items]="cityList" [addTag]="addCity"
+                    [loading]="loadingCity" [multiple]="false" [closeOnSelect]="true" [searchable]="true"
+                    bindLabel="description" placeholder="Selecione uma cidade" name="city"
+                    class="ng-select-custom form-control" [ngClass]="{ 'is-invalid': submitted && f.city.errors }">
+                    <ng-template ng-tag-tmp let-search="searchTerm">
+                      <b>Adicionar</b>: {{ search }}
+                    </ng-template>
+                  </ng-select>
                   <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
                     <div *ngIf="f.city.errors.required">Este campo é obrigatório</div>
                   </div>
@@ -101,6 +107,17 @@
           <app-loading *ngIf="loading"></app-loading>
           <div class="row">
             <div *ngIf="!loading" class="col-12">
+              <div class="form-check form-check-inline mb-3">
+                <app-switch [value]="property.data.featured"
+                  (clicked)="property.data.featured = !property.data.featured; f.featured.setValue(this.property.data.featured)"
+                  id="featuredCheckbox"></app-switch>
+                <label class="form-check-label" for="featuredCheckbox">Destaque <small class="text-muted">(Texto padrão: "Destaque")</small></label>
+              </div>
+              <div *ngIf="property.data.featured" class="form-group">
+                <label for="adviseText">Palavra Destaque</label>
+                <input formControlName="advise" name="advise" type="text" class="form-control" id="adviseText"
+                  placeholder="Ex: Baixou!" />
+              </div>
               <div class="form-check form-check-inline mb-3">
                 <app-switch [value]="property.data.active"
                   (clicked)="property.data.active = !property.data.active; f.active.setValue(this.property.data.active)"

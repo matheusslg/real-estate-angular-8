@@ -18,6 +18,7 @@ const routes: Routes = [
       { path: 'categoria/:description', component: PropertiesListComponent },
       { path: 'localizacao/:description', component: PropertiesListComponent },
       { path: 'modalidade/:description', component: PropertiesListComponent },
+      { path: 'cidade/:description', component: PropertiesListComponent },
       { path: '', pathMatch: 'full', redirectTo: '' },
     ]
   },

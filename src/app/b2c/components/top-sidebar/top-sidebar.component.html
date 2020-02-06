@@ -91,6 +91,19 @@
               class="dropdown-item" href="javascript:;">{{ type.description }}</a>
           </div>
         </li>
+
+        <!-- Cidades -->
+        <li class="nav-item dropdown" routerLinkActive="active">
+          <a class="nav-link dropdown-toggle" href="javascript:;" id="navbarDropdown" role="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-map-marked-alt fa-fw mr-1"></i>
+            Cidades
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a *ngFor="let city of cityList" [routerLink]="['/cidade', (city.description | normalizeString)]"
+              class="dropdown-item" href="javascript:;">{{ city.description }}</a>
+          </div>
+        </li>
       </ng-container>
       <li *ngIf="whatsAppAdvise == false" class="nav-item d-xs-list-item d-sm-list-item d-md-list-item d-lg-none"
         routerLinkActive="active">
@@ -99,13 +112,12 @@
       </li>
     </ul>
 
-    <form class="form-inline my-2 my-lg-0 d-xs-none d-sm-none d-md-none d-lg-flex">
+    <form (ngSubmit)="search()" class="form-inline my-2 my-lg-0 d-xs-none d-sm-none d-md-none d-lg-flex">
       <div class="input-group">
         <input [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}" type="search" class="form-control"
           placeholder="Digite aqui" aria-label="Buscar">
         <div class="input-group-append">
-          <button (click)="search()" (keyup.enter)="search()" class="btn btn-warning btn-block my-2 my-sm-0" type="button">Procurar
-            Imóvel</button>
+          <button type="submit" class="btn btn-warning btn-block my-2 my-sm-0"><i class="fas fa-search"></i></button>
         </div>
       </div>
     </form>
@@ -130,8 +142,7 @@
         <input [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}" type="search" class="form-control"
           placeholder="Digite aqui" aria-label="Buscar">
         <div class="input-group-append">
-          <button (click)="search()" class="btn btn-warning btn-block my-sm-0" type="button">Procurar
-            Imóvel</button>
+          <button (click)="search()" class="btn btn-warning btn-block my-sm-0" type="button"><i class="fas fa-search"></i></button>
         </div>
       </div>
     </div>

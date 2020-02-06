@@ -1,3 +1,5 @@
+import { City } from './city';
+
 export class Property {
     data: Data = new Data();
     count: number;
@@ -11,7 +13,7 @@ class Data {
     locations: string[] = [];
     categories: string[] = [];
     types: string[] = [];
-    city: string;
+    city: City = new City();
     geolocation: string;
     bedrooms: number = 0;
     toilets: number = 0;
@@ -22,6 +24,8 @@ class Data {
     priceNumber: number;
     priceCustom: string;
     active: boolean = true;
+    featured: boolean = false;
+    advise: string;
     createdBy: string;
     updatedAt: string;
 }

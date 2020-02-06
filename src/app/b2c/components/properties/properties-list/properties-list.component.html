@@ -1,4 +1,16 @@
-<div class="row expanded">
+<!-- Slideshow -->
+<slideshow 
+  *ngIf="propertyFeaturedList?.length > 0"
+  [height]="'400px'"
+  [minHeight]="'400px'"
+  [autoPlay]="true"
+  [showDots]="true"
+  [autoPlayInterval]="7500"
+  [imageUrls]="propertyFeaturedImages">
+</slideshow>
+
+<!-- Under Construction Warning -->
+<div class="row expanded" [class.mt-4]="propertyFeaturedList?.length > 0">
   <div class="col">
     <div class="card">
       <div class="card-body">
@@ -8,6 +20,8 @@
     </div>
   </div>
 </div>
+
+<!-- All Properties (Infinite Scroll)-->
 <div class="card">
   <div id="cardBody" class="card-body">
     <h5 *ngIf="!loading"><i class="fas fa-home mr-2"></i>{{ cardTitle }}</h5>
@@ -36,6 +50,9 @@
                   [routerLink]="['/modalidade', (type.description | normalizeString)]">{{ type.description }}</a>
               </div>
             </div>
+            <div *ngIf="property.featured" class="featured-advise">
+              <span>{{ !property.advise ? 'Destaque' : property.advise }}</span>
+            </div>
             <div class="card-body pb-0 pt-1">
               <a [routerLink]="['/imoveis', property._id]">
                 <p class="card-title">{{ property.title }}</p>
@@ -57,7 +74,7 @@
                 <div class="property-indicator-address col-lg-12 col-md-12 col-sm-12">
                   <div class="property-indicator property-indicator-small mt-2">
                     <i class="fas fa-map-marked-alt"></i>
-                    <p class="mb-0 ml-2">{{ property.city }}</p>
+                    <p class="mb-0 ml-2">{{ property.city.description }}</p>
                   </div>
                 </div>
               </div>

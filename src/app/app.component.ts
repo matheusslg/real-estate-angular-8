@@ -8,6 +8,7 @@ import { forkJoin } from 'rxjs/internal/observable/forkJoin';
 import { Router, NavigationEnd, RoutesRecognized } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { UsefullService } from './services/usefull.service';
+import { CityService } from './services/city.service';
 declare let gtag:Function;
 declare let fbq:Function;
 
@@ -28,6 +29,7 @@ export class AppComponent implements OnInit {
     private locationService: LocationService,
     private typeService: TypeService,
     private tagService: TagService,
+    private cityService: CityService,
     private deviceService: DeviceDetectorService,
     private usefullService: UsefullService
   ) {
@@ -47,18 +49,21 @@ export class AppComponent implements OnInit {
       this.categoryService.getCategoriesActive(),
       this.locationService.getLocationsActive(),
       this.typeService.getTypesActive(),
-      this.tagService.getTagsActive()
+      this.tagService.getTagsActive(),
+      this.cityService.getCitiesActive()
     ]).subscribe(resolvedPromises => {
       this.categoryService.categorySubject.next(resolvedPromises[0].data);
       this.locationService.locationSubject.next(resolvedPromises[1].data);
       this.typeService.typeSubject.next(resolvedPromises[2].data);
       this.tagService.tagSubject.next(resolvedPromises[3].data);
+      this.cityService.citySubject.next(resolvedPromises[4].data);
 
       // Store data on service
       this.categoryService.categoryList = resolvedPromises[0].data;
       this.locationService.locationList = resolvedPromises[1].data;
       this.typeService.typeList = resolvedPromises[2].data;
       this.tagService.tagList = resolvedPromises[3].data;
+      this.cityService.cityList = resolvedPromises[4].data;
     }, (error) => {
       console.log(error);
     }, () => {
@@ -66,6 +71,7 @@ export class AppComponent implements OnInit {
       this.locationService.locationSubject.complete();
       this.typeService.typeSubject.complete();
       this.tagService.tagSubject.complete();
+      this.cityService.citySubject.complete();
     });
   }
 

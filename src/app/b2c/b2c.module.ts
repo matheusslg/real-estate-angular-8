@@ -1,5 +1,5 @@
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { DefaultComponentsModule } from '../default-components/default-components.module';
 import { BsDropdownModule } from 'ngx-bootstrap';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
@@ -21,7 +21,9 @@ import { PropertiesSearchComponent } from './components/properties/properties-se
     MDBBootstrapModule.forRoot(),
     BsDropdownModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    CurrencyPipe
+  ],
   declarations: [
     HomeComponent,
     PropertiesListComponent,

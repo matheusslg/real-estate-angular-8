@@ -37,7 +37,7 @@ export class PropertiesListComponent implements OnInit {
 
   refreshTable() {
     this.loadingPropertyList = true;
-    this.propertyService.getPropertiesActive().subscribe((resolvedPromise) => {
+    this.propertyService.getProperties().subscribe((resolvedPromise) => {
       this.propertyList = resolvedPromise.data;
       this.loadingPropertyList = false;
     })

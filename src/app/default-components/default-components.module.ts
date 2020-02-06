@@ -18,6 +18,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NgxGalleryModule } from 'ngx-gallery';
 import { DeviceDetectorModule } from 'ngx-device-detector';
+import { SlideshowModule } from 'ng-simple-slideshow';
 
 // Components
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -71,7 +72,8 @@ export const toastrOptions = {
     DragDropModule,
     InfiniteScrollModule,
     NgxGalleryModule,
-    DeviceDetectorModule.forRoot()
+    DeviceDetectorModule.forRoot(),
+    SlideshowModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: "pt" },
@@ -113,7 +115,8 @@ export const toastrOptions = {
     SearchPropertyPipe,
     InfiniteScrollModule,
     NgxGalleryModule,
-    DeviceDetectorModule
+    DeviceDetectorModule,
+    SlideshowModule
   ],
 })
 export class DefaultComponentsModule { }

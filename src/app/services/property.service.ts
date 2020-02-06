@@ -35,8 +35,16 @@ export class PropertyService {
       )
   }
 
+  getPropertiesFeatured(limit?, skip?): Observable<Property> {
+    return this.http.get<Property>(this.apiURL + '/properties' + '?active=true&featured=true' + (limit ? '&limit=' + limit : '') + (skip != null ? '&skip=' + skip : ''))
+      .pipe(
+        retry(1),
+        catchError(this.usefullService.handleError)
+      )
+  }
+
   getPropertiesByCategory(categoryId, limit?, skip?): Observable<Property> {
-    return this.http.get<Property>(this.apiURL + '/properties/category/' + categoryId + (limit ? '?limit=' + limit : '') + (skip != null ? '&skip=' + skip : ''))
+    return this.http.get<Property>(this.apiURL + '/properties/category/' + categoryId + '?active=true' + (limit ? '&limit=' + limit : '') + (skip != null ? '&skip=' + skip : ''))
       .pipe(
         retry(1),
         catchError(this.usefullService.handleError)
@@ -44,7 +52,7 @@ export class PropertyService {
   }
 
   getPropertiesByLocation(locationId, limit?, skip?): Observable<Property> {
-    return this.http.get<Property>(this.apiURL + '/properties/location/' + locationId + (limit ? '?limit=' + limit : '') + (skip != null ? '&skip=' + skip : ''))
+    return this.http.get<Property>(this.apiURL + '/properties/location/' + locationId + '?active=true' + (limit ? '&limit=' + limit : '') + (skip != null ? '&skip=' + skip : ''))
       .pipe(
         retry(1),
         catchError(this.usefullService.handleError)
@@ -52,7 +60,15 @@ export class PropertyService {
   }
 
   getPropertiesByType(typeId, limit?, skip?): Observable<Property> {
-    return this.http.get<Property>(this.apiURL + '/properties/type/' + typeId + (limit ? '?limit=' + limit : '') + (skip != null ? '&skip=' + skip : ''))
+    return this.http.get<Property>(this.apiURL + '/properties/type/' + typeId + '?active=true' + (limit ? '&limit=' + limit : '') + (skip != null ? '&skip=' + skip : ''))
+      .pipe(
+        retry(1),
+        catchError(this.usefullService.handleError)
+      )
+  }
+
+  getPropertiesByCity(cityId, limit?, skip?): Observable<Property> {
+    return this.http.get<Property>(this.apiURL + '/properties/city/' + cityId + '?active=true' + (limit ? '&limit=' + limit : '') + (skip != null ? '&skip=' + skip : ''))
       .pipe(
         retry(1),
         catchError(this.usefullService.handleError)

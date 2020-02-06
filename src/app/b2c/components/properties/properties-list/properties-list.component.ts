@@ -10,6 +10,8 @@ import { LocationService } from 'src/app/services/location.service';
 import { TypeService } from 'src/app/services/type.service';
 import { forkJoin } from 'rxjs/internal/observable/forkJoin';
 import { UsefullService } from 'src/app/services/usefull.service';
+import { IImage } from 'ng-simple-slideshow/src/app/modules/slideshow/IImage';
+import { CityService } from 'src/app/services/city.service';
 
 @Component({
   selector: 'app-properties-list',
@@ -20,6 +22,8 @@ export class PropertiesListComponent implements OnInit {
 
   loading
   propertyList
+  propertyFeaturedList
+  propertyFeaturedImages: (string | IImage)[] = []
   cardTitle
   selectedFilter = {
     data: null,
@@ -37,6 +41,7 @@ export class PropertiesListComponent implements OnInit {
   categoryList
   locationList
   typeList
+  cityList
 
   routerParams
 
@@ -45,6 +50,7 @@ export class PropertiesListComponent implements OnInit {
     private categoryService: CategoryService,
     private locationService: LocationService,
     private typeService: TypeService,
+    private cityService: CityService,
     private activatedRoute: ActivatedRoute,
     private titleService: Title,
     private GLOBALS: Globals,
@@ -65,8 +71,21 @@ export class PropertiesListComponent implements OnInit {
       this.routerParams = params['description'];
       // Executes every time that user goes back to Home Page to reset propertyList
       if (!this.routerParams) {
-        this.propertyService.getPropertiesActive(this.propertiesLimitNumber, this.propertiesSkipNumber).subscribe((resolvedPromise) => {
-          this.propertyList = resolvedPromise.data;
+        forkJoin([
+          this.propertyService.getPropertiesActive(this.propertiesLimitNumber, this.propertiesSkipNumber),
+          this.propertyService.getPropertiesFeatured()
+        ]).subscribe(resolvedPromises => {
+          this.propertyList = resolvedPromises[0].data;
+          this.propertyFeaturedList = resolvedPromises[1].data;
+          if (this.propertyFeaturedList.length > 0) {
+            this.propertyFeaturedList.forEach(_property => {
+              this.propertyFeaturedImages.push({
+                url: environment.baseUri.mongo + '/' + _property.images[0].filePath,
+                href: environment.baseUri.website + '/imoveis/' + _property._id,
+                caption: _property.description
+              })
+            });
+          }
         }, (error) => {
           console.log(error);
         }, () => {
@@ -82,15 +101,18 @@ export class PropertiesListComponent implements OnInit {
     forkJoin([
       this.categoryService.categorySubject,
       this.locationService.locationSubject,
-      this.typeService.typeSubject
+      this.typeService.typeSubject,
+      this.cityService.citySubject
     ]).subscribe(resolvedPromises => {
       this.categoryService.categoryList = resolvedPromises[0];
       this.locationService.locationList = resolvedPromises[1];
       this.typeService.typeList = resolvedPromises[2];
+      this.cityService.cityList = resolvedPromises[3];
 
       this.categoryList = this.categoryService.categoryList;
       this.locationList = this.locationService.locationList;
       this.typeList = this.typeService.typeList;
+      this.cityList = this.cityService.cityList;
 
       this.activatedRoute.params.subscribe(params => {
         this.routerParams = params['description'];
@@ -110,8 +132,9 @@ export class PropertiesListComponent implements OnInit {
     this.categoryList = this.categoryService.categoryList;
     this.locationList = this.locationService.locationList;
     this.typeList = this.typeService.typeList;
+    this.cityList = this.cityService.cityList;
 
-    if (this.categoryList && this.locationList && this.typeList) {
+    if (this.categoryList && this.locationList && this.typeList && this.cityList) {
 
       this.categoryList.forEach(_category => {
         if (this.normalizeString.transform(_category.description) == this.routerParams) {
@@ -148,6 +171,20 @@ export class PropertiesListComponent implements OnInit {
           this.resetInfinityScrollData();
           this.loading = true;
           this.propertyService.getPropertiesByType(_type._id, this.propertiesLimitNumber, this.propertiesSkipNumber).subscribe((resolvedPromise) => {
+            this.propertyList = resolvedPromise.data;
+            this.loading = false;
+            this.usefullService.scrollTo('#cardBody');
+          });
+        }
+      });
+
+      this.cityList.forEach(_city => {
+        if (this.normalizeString.transform(_city.description) == this.routerParams) {
+          this.selectedFilter.data = _city;
+          this.selectedFilter.type = 'city';
+          this.resetInfinityScrollData();
+          this.loading = true;
+          this.propertyService.getPropertiesByCity(_city._id, this.propertiesLimitNumber, this.propertiesSkipNumber).subscribe((resolvedPromise) => {
             this.propertyList = resolvedPromise.data;
             this.loading = false;
             this.usefullService.scrollTo('#cardBody');
@@ -245,6 +282,28 @@ export class PropertiesListComponent implements OnInit {
           if (!this.noMoreProperties) {
             this.loading = true;
             this.propertyService.getPropertiesByType(this.selectedFilter.data._id, this.propertiesLimitNumber, this.propertiesSkipNumber).subscribe((resolvedPromise: any) => {
+              let newProperties = resolvedPromise.data;
+              if (newProperties.length == 0) {
+                this.noMoreProperties = true;
+              } else {
+                newProperties.forEach(_property => {
+                  this.propertyList.push(_property);
+                });
+              }
+              this.loading = false;
+            })
+          }
+          break;
+        case 'city':
+          this.scrollCounter++;
+          if (this.scrollCounter != 1) {
+            this.propertiesSkipNumber = this.propertiesLimitNumber + this.propertiesSkipNumber;
+          } else {
+            this.propertiesSkipNumber = this.propertiesLimitNumber;
+          }
+          if (!this.noMoreProperties) {
+            this.loading = true;
+            this.propertyService.getPropertiesByCity(this.selectedFilter.data._id, this.propertiesLimitNumber, this.propertiesSkipNumber).subscribe((resolvedPromise: any) => {
               let newProperties = resolvedPromise.data;
               if (newProperties.length == 0) {
                 this.noMoreProperties = true;

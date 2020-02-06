@@ -14,7 +14,7 @@ export class UsefullService {
       if (error.error.error) {
         errorRes = {
           'message': error.error.message,
-          'type': error.error.error.errors.description.kind
+          'type': error.error.error.kind
         }
       } else {
         errorRes = error.error
