@@ -12,6 +12,7 @@ import { forkJoin } from 'rxjs/internal/observable/forkJoin';
 import { UsefullService } from 'src/app/services/usefull.service';
 import { IImage } from 'ng-simple-slideshow/src/app/modules/slideshow/IImage';
 import { CityService } from 'src/app/services/city.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-properties-list',
@@ -55,6 +56,7 @@ export class PropertiesListComponent implements OnInit {
     private titleService: Title,
     private GLOBALS: Globals,
     private normalizeString: NormalizeStringPipe,
+    private toastr: ToastrService,
     public usefullService: UsefullService
   ) {
     this.preUrlImages = environment.baseUri.mongo;
@@ -143,7 +145,7 @@ export class PropertiesListComponent implements OnInit {
         if (this.normalizeString.transform(_category.description) == this.routerParams) {
           this.selectedFilter.data = _category;
           this.selectedFilter.type = 'category';
-          this.resetInfinityScrollData();
+          this.resetSeeMoreData();
           this.loading = true;
           this.propertyService.getPropertiesByCategory(_category._id, this.propertiesLimitNumber, this.propertiesSkipNumber).subscribe((resolvedPromise) => {
             this.propertyList = resolvedPromise.data;
@@ -157,7 +159,7 @@ export class PropertiesListComponent implements OnInit {
         if (this.normalizeString.transform(_location.description) == this.routerParams) {
           this.selectedFilter.data = _location;
           this.selectedFilter.type = 'location';
-          this.resetInfinityScrollData();
+          this.resetSeeMoreData();
           this.loading = true;
           this.propertyService.getPropertiesByLocation(_location._id, this.propertiesLimitNumber, this.propertiesSkipNumber).subscribe((resolvedPromise) => {
             this.propertyList = resolvedPromise.data;
@@ -171,7 +173,7 @@ export class PropertiesListComponent implements OnInit {
         if (this.normalizeString.transform(_type.description) == this.routerParams) {
           this.selectedFilter.data = _type;
           this.selectedFilter.type = 'type';
-          this.resetInfinityScrollData();
+          this.resetSeeMoreData();
           this.loading = true;
           this.propertyService.getPropertiesByType(_type._id, this.propertiesLimitNumber, this.propertiesSkipNumber).subscribe((resolvedPromise) => {
             this.propertyList = resolvedPromise.data;
@@ -185,7 +187,7 @@ export class PropertiesListComponent implements OnInit {
         if (this.normalizeString.transform(_city.description) == this.routerParams) {
           this.selectedFilter.data = _city;
           this.selectedFilter.type = 'city';
-          this.resetInfinityScrollData();
+          this.resetSeeMoreData();
           this.loading = true;
           this.propertyService.getPropertiesByCity(_city._id, this.propertiesLimitNumber, this.propertiesSkipNumber).subscribe((resolvedPromise) => {
             this.propertyList = resolvedPromise.data;
@@ -200,14 +202,18 @@ export class PropertiesListComponent implements OnInit {
     }
   }
 
-  resetInfinityScrollData() {
+  resetSeeMoreData() {
     this.propertiesSkipNumber = 0;
     this.scrollCounter = 0;
     this.noMoreProperties = false;
   }
 
-  onScroll() {
-    console.log('Scroll Triggered');
+  noMorePropertiesToShow() {
+    this.toastr.warning('Não há mais imóveis para serem mostrados.', 'Aviso');
+  }
+
+  seeMore() {
+    console.log('See More Triggered');
     if (!this.routerParams) {
       this.scrollCounter++;
       if (this.scrollCounter != 1) {
@@ -221,6 +227,7 @@ export class PropertiesListComponent implements OnInit {
           let newProperties = resolvedPromise.data;
           if (newProperties.length == 0) {
             this.noMoreProperties = true;
+            this.noMorePropertiesToShow();
           } else {
             newProperties.forEach(_property => {
               this.propertyList.push(_property);
@@ -244,6 +251,7 @@ export class PropertiesListComponent implements OnInit {
               let newProperties = resolvedPromise.data;
               if (newProperties.length == 0) {
                 this.noMoreProperties = true;
+                this.noMorePropertiesToShow();
               } else {
                 newProperties.forEach(_property => {
                   this.propertyList.push(_property);
@@ -266,6 +274,7 @@ export class PropertiesListComponent implements OnInit {
               let newProperties = resolvedPromise.data;
               if (newProperties.length == 0) {
                 this.noMoreProperties = true;
+                this.noMorePropertiesToShow();
               } else {
                 newProperties.forEach(_property => {
                   this.propertyList.push(_property);
@@ -288,6 +297,7 @@ export class PropertiesListComponent implements OnInit {
               let newProperties = resolvedPromise.data;
               if (newProperties.length == 0) {
                 this.noMoreProperties = true;
+                this.noMorePropertiesToShow();
               } else {
                 newProperties.forEach(_property => {
                   this.propertyList.push(_property);
@@ -310,6 +320,7 @@ export class PropertiesListComponent implements OnInit {
               let newProperties = resolvedPromise.data;
               if (newProperties.length == 0) {
                 this.noMoreProperties = true;
+                this.noMorePropertiesToShow();
               } else {
                 newProperties.forEach(_property => {
                   this.propertyList.push(_property);

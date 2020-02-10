@@ -96,9 +96,10 @@
     }
 }
 
-.property-description {
-    font-size: 15px;
-    text-align: justify;
+.property-description,
+.property-description * {
+    font-size: 15px !important;
+    text-align: justify !important;
 }
 
 .go-back {
