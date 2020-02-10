@@ -5,9 +5,9 @@
     align-items: center;
     background: palette(terciary, ter9light);
     &-right {
-        h4 {
+        h5 {
             color: palette(white);
-            padding: 20px;
+            padding: 15px;
             background: palette(main);
             border-radius: 5px;
         }
@@ -32,7 +32,7 @@
 
 .nav-link {
     font-size: 1rem;
-    text-transform: uppercase;
+    //text-transform: uppercase;
     color: rgba(255, 255, 255, 0.8);
 }
 

@@ -85,6 +85,9 @@ export class PropertiesListComponent implements OnInit {
                 caption: _property.description
               })
             });
+            setTimeout(() => {
+              $('.slideshow-container .slick-dots').css('bottom', 'initial');
+            }, 0)
           }
         }, (error) => {
           console.log(error);

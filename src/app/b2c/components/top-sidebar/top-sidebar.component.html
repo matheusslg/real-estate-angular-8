@@ -11,7 +11,7 @@
       </div>
       <div class="col-lg-6 col-xl-5 col-xxl-4 col-xxxl-4 d-flex align-items-center justify-content-center">
         <div class="topbar-right text-center">
-          <h4>Especializado em Áreas Rurais</h4>
+          <h5>Especializado em Áreas Rurais</h5>
           <h6>Mais de 35 anos de experiência no Setor Rural.</h6>
         </div>
       </div>
@@ -65,12 +65,12 @@
           </div>
         </li>
 
-        <!-- Localização -->
+        <!-- Localizações -->
         <li class="nav-item dropdown" routerLinkActive="active">
           <a class="nav-link dropdown-toggle" href="javascript:;" id="navbarDropdown" role="button"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-map-signs fa-fw mr-1"></i>
-            Localização
+            Localizações
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a *ngFor="let location of locationList"
@@ -138,13 +138,15 @@
 <div class="container-fluid">
   <div class="row no-gutters">
     <div class="col-md-12">
-      <div class="input-group d-lg-none mb-4">
-        <input [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}" type="search" class="form-control"
-          placeholder="Digite aqui" aria-label="Buscar">
-        <div class="input-group-append">
-          <button (click)="search()" class="btn btn-warning btn-block my-sm-0" type="button"><i class="fas fa-search"></i></button>
+      <form (ngSubmit)="search()">
+        <div class="input-group d-lg-none mb-4">
+          <input [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}" type="search" class="form-control"
+            placeholder="Digite aqui" aria-label="Buscar">
+          <div class="input-group-append">
+            <button type="submit" class="btn btn-warning btn-block my-sm-0"><i class="fas fa-search"></i></button>
+          </div>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </div>
