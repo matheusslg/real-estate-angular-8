@@ -8,27 +8,11 @@
       <div class="card h-100">
         <div class="card-body">
           <h5 class="mb-3"><i class="fas fa-images mr-2"></i>Fotos</h5>
-          <!-- <mdb-carousel class="carousel slide carousel-fade" [animation]="'slide'" [interval]="'3000'">
-            <mdb-carousel-item class="justify-content-center"
-              *ngFor="let image of property.images; let first = first; let indexImage = index">
-              <div class="carousel-item-div view"
-                [style.background]="'url(' + preUrlImages + '/' + image.filePath + ')'">
-                <img class="card-img-top d-block w-100" [src]="preUrlImages + '/' + image.filePath"
-                  [alt]="image.description">
-                <div class="mask waves-light" mdbWavesEffect></div>
-              </div>
-            </mdb-carousel-item>
-          </mdb-carousel> -->
           <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
-          <!-- <mdb-carousel class="carousel slide carousel-fade" [type]="'carousel-thumbnails'" [animation]="'fade'">
-            <mdb-carousel-item *ngFor="let image of property.images; let first = first; let indexImage = index">
-              <img class="d-block w-100" [src]="preUrlImages + '/' + image.filePath">
-            </mdb-carousel-item>
-          </mdb-carousel> -->
         </div>
       </div>
     </div>
-    <div class="col-xxxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 m-mbl-t-20">
+    <div class="col-xxxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 m-mbl-t-30">
       <div class="card h-100">
         <div class="card-body">
           <h4>{{ property.title }}</h4>
@@ -94,12 +78,39 @@
                 {{ property.priceNumber ? (property.priceNumber | currency:'BRL') : property.priceCustom }}</h3>
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6 d-md-flex d-lg-flex align-items-center justify-content-end">
-              <a [href]="'https://wa.me/5555999225333?text=' + whatsAppMessage" target="_blank" (click)="fbTrack()"
-                class="btn btn-primary btn-lg"><i class="fab fa-whatsapp mr-2"></i>Tenho Interesse</a>
+              <a href="http://fb.me/msg/corretorcavallini" target="_blank" (click)="fbTrackMessenger()"
+                class="btn btn-primary btn-lg btn-messenger d-xs-none d-sm-none d-md-none d-lg-block"><i class="fab fa-facebook-messenger mr-2"></i>Tenho Interesse</a>
+              <a [href]="'https://wa.me/5555999225333?text=' + whatsAppMessage" target="_blank" (click)="fbTrackWhatsApp()"
+                class="btn btn-primary btn-lg btn-block btn-whatsapp d-xs-block d-sm-block d-md-block d-lg-none"><i class="fab fa-whatsapp mr-2"></i>Tenho Interesse</a>
             </div>
           </div>
           <hr />
           <div class="property-description" [innerHTML]="property.description"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="property.geolocation" class="row mt-30">
+    <div class="col-xxxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h5 class="mb-3"><i class="fas fa-map-marked-alt mr-2"></i>Geolocalização</h5>
+            </div>
+            <div>
+              <a href="https://www.google.com/maps/search/?api=1&query={{ property.geolocation }}" target="_blank" class="btn btn-primary btn-sm"><i class="fab fa-google mr-2"></i>Abrir no GPS</a>
+            </div>
+          </div>
+          <agm-map [streetViewControl]="false" [latitude]="property.geolocation | geo:'lat'" [longitude]="property.geolocation | geo:'lng'" [zoom]="18">
+            <agm-marker [latitude]="property.geolocation | geo:'lat'" [longitude]="property.geolocation | geo:'lng'"></agm-marker>
+            <agm-info-window [isOpen]="true" [latitude]="property.geolocation | geo:'lat'" [longitude]="property.geolocation | geo:'lng'" [disableAutoPan]="false">
+              <div class="d-flex">
+                <img src="assets/images/logo.png" height="25" class="mr-2"/>
+                O imóvel está localizado aqui.
+              </div>
+            </agm-info-window>
+          </agm-map>
         </div>
       </div>
     </div>

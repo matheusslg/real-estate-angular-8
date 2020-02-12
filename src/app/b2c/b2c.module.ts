@@ -12,6 +12,8 @@ import { PropertiesSingleComponent } from './components/properties/properties-si
 import { FooterComponent } from './components/footer/footer.component';
 import { CloseMobileMenuDirective } from './directives/close-mobile-menu.directive';
 import { PropertiesSearchComponent } from './components/properties/properties-search/properties-search.component';
+import { GeoPipe } from './pipes/geo.pipe';
+import { PropertyDescriptionLimitPipe } from './property-description-limit.pipe';
 
 @NgModule({
   imports: [
@@ -22,7 +24,8 @@ import { PropertiesSearchComponent } from './components/properties/properties-se
     BsDropdownModule.forRoot()
   ],
   providers: [
-    CurrencyPipe
+    CurrencyPipe,
+    PropertyDescriptionLimitPipe
   ],
   declarations: [
     HomeComponent,
@@ -31,7 +34,9 @@ import { PropertiesSearchComponent } from './components/properties/properties-se
     TopSidebarComponent,
     FooterComponent,
     CloseMobileMenuDirective,
-    PropertiesSearchComponent
+    PropertiesSearchComponent,
+    GeoPipe,
+    PropertyDescriptionLimitPipe
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
   exports: [

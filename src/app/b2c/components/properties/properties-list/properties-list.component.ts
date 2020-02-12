@@ -13,6 +13,7 @@ import { UsefullService } from 'src/app/services/usefull.service';
 import { IImage } from 'ng-simple-slideshow/src/app/modules/slideshow/IImage';
 import { CityService } from 'src/app/services/city.service';
 import { ToastrService } from 'ngx-toastr';
+import { PropertyDescriptionLimitPipe } from 'src/app/b2c/property-description-limit.pipe';
 
 @Component({
   selector: 'app-properties-list',
@@ -57,6 +58,7 @@ export class PropertiesListComponent implements OnInit {
     private GLOBALS: Globals,
     private normalizeString: NormalizeStringPipe,
     private toastr: ToastrService,
+    private propertyDescriptionLimit: PropertyDescriptionLimitPipe,
     public usefullService: UsefullService
   ) {
     this.preUrlImages = environment.baseUri.mongo;
@@ -84,7 +86,7 @@ export class PropertiesListComponent implements OnInit {
               this.propertyFeaturedImages.push({
                 url: environment.baseUri.mongo + '/' + _property.images[0].filePath,
                 href: environment.baseUri.website + '/imoveis/' + _property._id,
-                caption: _property.description
+                caption: this.propertyDescriptionLimit.transform(_property.description)
               })
             });
             setTimeout(() => {

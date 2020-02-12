@@ -116,8 +116,12 @@ export class PropertiesSingleComponent implements OnInit {
     });
   }
 
-  fbTrack() {
+  fbTrackWhatsApp() {
     fbq('track', 'WhatsAppClick', { property_id: '* this.property._id *', property_title: '* this.property.title *' });
+  }
+
+  fbTrackMessenger() {
+    fbq('track', 'MessengerClick', { property_id: '* this.property._id *', property_title: '* this.property.title *' });
   }
 
 }

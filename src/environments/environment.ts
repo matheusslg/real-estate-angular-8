@@ -9,6 +9,9 @@ export const environment = {
     mongo: 'http://localhost:21026',
     uploadFile: 'http://localhost:21026/files/create',
     uploadImage: 'http://localhost:21026/images/create'
+  },
+  keys: {
+    googleMaps: 'AIzaSyDJpZiWp0vWS07lN0suqLdHgiygOPmJFsA'
   }
 };
 

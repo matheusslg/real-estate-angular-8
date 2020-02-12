@@ -2,6 +2,7 @@ import { NgModule, NO_ERRORS_SCHEMA, LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localePT from '@angular/common/locales/pt';
 import { HttpClientModule } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CurrencyMaskModule } from "ng2-currency-mask";
 import { CurrencyMaskConfig, CURRENCY_MASK_CONFIG } from "ng2-currency-mask/src/currency-mask.config";
@@ -19,6 +20,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NgxGalleryModule } from 'ngx-gallery';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { SlideshowModule } from 'ng-simple-slideshow';
+import { AgmCoreModule } from '@agm/core';
 
 // Components
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -73,7 +75,10 @@ export const toastrOptions = {
     InfiniteScrollModule,
     NgxGalleryModule,
     DeviceDetectorModule.forRoot(),
-    SlideshowModule
+    SlideshowModule,
+    AgmCoreModule.forRoot({
+      apiKey: environment.keys.googleMaps
+    })
   ],
   providers: [
     { provide: LOCALE_ID, useValue: "pt" },
@@ -116,7 +121,8 @@ export const toastrOptions = {
     InfiniteScrollModule,
     NgxGalleryModule,
     DeviceDetectorModule,
-    SlideshowModule
+    SlideshowModule,
+    AgmCoreModule
   ],
 })
 export class DefaultComponentsModule { }
