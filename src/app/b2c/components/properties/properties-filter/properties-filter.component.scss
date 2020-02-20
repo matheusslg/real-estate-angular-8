@@ -1,0 +1,17 @@
+@import '../../../../../assets/scss/utils';
+
+div.form-group > label,
+hr + label {
+    font-size: 15px;
+    font-weight: 500;
+    color: palette(main);
+}
+
+input + label {
+    font-size: 14px;
+}
+
+.form-control,
+.input-group-text {
+    font-size: 13px;
+}

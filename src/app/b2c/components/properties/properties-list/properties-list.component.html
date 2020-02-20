@@ -1,33 +1,10 @@
-<!-- Slideshow -->
-<slideshow 
-  *ngIf="propertyFeaturedList?.length > 0"
-  [height]="'400px'"
-  [minHeight]="'400px'"
-  [autoPlay]="true"
-  [showDots]="true"
-  [autoPlayInterval]="7500"
-  [imageUrls]="propertyFeaturedImages">
-</slideshow>
-
-<!-- Under Construction Warning -->
-<div class="row expanded" [class.mt-4]="propertyFeaturedList?.length > 0">
-  <div class="col">
-    <div class="card">
-      <div class="card-body">
-        <h3>Seja bem-vindo!</h3>
-        <h6>O nosso site está em construção, mas você já pode navegar e conferir os imóveis disponíveis.</h6>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- All Properties -->
 <div class="card">
   <div id="cardBody" class="card-body">
     <h5 *ngIf="!loading"><i class="fas fa-home mr-2"></i>{{ cardTitle }}</h5>
     <div class="row mt-20">
       <ng-container *ngFor="let property of propertyList; let index = index">
-        <div *ngIf="property.active" class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4">
+        <div *ngIf="property.active" class="col-xxxl-3 col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
           <div class="card h-100 card-property">
             <a [routerLink]="['/imoveis', property._id]">
               <img *ngIf="property.images.length > 0" class="card-img-top"
@@ -73,7 +50,9 @@
                 <div class="property-indicator-address col-lg-12 col-md-12 col-sm-12">
                   <div class="property-indicator property-indicator-small mt-2">
                     <i class="fas fa-map-marked-alt"></i>
-                    <p class="mb-0 ml-2">{{ property.city.description }}</p>
+                    <p class="mb-0 ml-2"><a href="javascript:;"
+                        [routerLink]="['/cidade', (property.city.description | normalizeString)]">{{ property.city.description }}</a>
+                    </p>
                   </div>
                 </div>
               </div>
@@ -82,28 +61,28 @@
                   <span class="property-indicator-text mt-2">Quartos</span>
                   <div class="property-indicator property-indicator-small">
                     <i class="fas fa-bed"></i>
-                    <p class="mb-0 ml-2">{{ property.bedrooms }}</p>
+                    <p class="mb-0 ml-1">{{ property.bedrooms }}</p>
                   </div>
                 </div>
                 <div *ngIf="property.toilets > 0" class="col col-xxxl-3 col-xl-6 col-lg-6 col-md-6 col-sm-3 mt-3">
                   <span class="property-indicator-text mt-2">Banheiros</span>
                   <div class="property-indicator property-indicator-small">
                     <i class="fas fa-shower"></i>
-                    <p class="mb-0 ml-2">{{ property.toilets }}</p>
+                    <p class="mb-0 ml-1">{{ property.toilets }}</p>
                   </div>
                 </div>
                 <div *ngIf="property.garage > 0" class="col col-xxxl-3 col-xl-6 col-lg-6 col-md-6 col-sm-3 mt-3">
                   <span class="property-indicator-text mt-2">Garagem</span>
                   <div class="property-indicator property-indicator-small">
                     <i class="fas fa-car"></i>
-                    <p class="mb-0 ml-2">{{ property.garage }}</p>
+                    <p class="mb-0 ml-1">{{ property.garage }}</p>
                   </div>
                 </div>
                 <div *ngIf="property.size" class="col col-xxxl-3 col-xl-6 col-lg-6 col-md-6 col-sm-3 mt-3">
                   <span class="property-indicator-text mt-2">Tamanho</span>
                   <div class="property-indicator property-indicator-small">
                     <i class="fas fa-pencil-ruler"></i>
-                    <p class="mb-0 ml-2">{{ property.size }}</p>
+                    <p class="mb-0 ml-1">{{ property.size }}</p>
                   </div>
                 </div>
               </div>
@@ -124,7 +103,8 @@
     </div>
     <div class="row" *ngIf="propertyList?.length != 0 && !loading && !noMoreProperties">
       <div class="col">
-        <button type="button" class="btn btn-primary btn-lg btn-block" (click)="seeMore()"><i class="fas fa-caret-down mr-2"></i>Ver Mais</button>
+        <button type="button" class="btn btn-primary btn-lg btn-block" (click)="seeMore()"><i
+            class="fas fa-caret-down mr-2"></i>Ver Mais</button>
       </div>
     </div>
     <app-loading *ngIf="loading"></app-loading>

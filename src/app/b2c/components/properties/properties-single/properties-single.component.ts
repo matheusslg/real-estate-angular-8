@@ -12,6 +12,7 @@ import { UsefullService } from 'src/app/services/usefull.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { TitleTagService } from 'src/app/services/titletag.service';
 declare let fbq:Function;
+declare let gtag:Function;
 
 @Component({
   selector: 'app-properties-single',
@@ -117,10 +118,20 @@ export class PropertiesSingleComponent implements OnInit {
   }
 
   fbTrackWhatsApp() {
+    gtag('event', 'conversion', {
+      'send_to': 'AW-1026588755/-QfXCOOThMQBENOAwukD',
+      'value': this.property.priceNumber > 0 ? this.property.priceNumber : this.property.priceCustom,
+      'currency': 'BRL'
+    });
     fbq('track', 'WhatsAppClick', { property_id: '* this.property._id *', property_title: '* this.property.title *' });
   }
 
   fbTrackMessenger() {
+    gtag('event', 'conversion', {
+      'send_to': 'AW-1026588755/-QfXCOOThMQBENOAwukD',
+      'value': this.property.priceNumber > 0 ? this.property.priceNumber : this.property.priceCustom,
+      'currency': 'BRL'
+    });
     fbq('track', 'MessengerClick', { property_id: '* this.property._id *', property_title: '* this.property.title *' });
   }
 

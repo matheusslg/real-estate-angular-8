@@ -14,6 +14,10 @@ import { CloseMobileMenuDirective } from './directives/close-mobile-menu.directi
 import { PropertiesSearchComponent } from './components/properties/properties-search/properties-search.component';
 import { GeoPipe } from './pipes/geo.pipe';
 import { PropertyDescriptionLimitPipe } from './property-description-limit.pipe';
+import { PropertiesSlideshowComponent } from './components/properties/properties-slideshow/properties-slideshow.component';
+import { PropertiesHomeComponent } from './components/properties/properties-home/properties-home.component';
+import { PropertiesFilterComponent } from './components/properties/properties-filter/properties-filter.component';
+import { PropertiesFilteringComponent } from './components/properties/properties-filtering/properties-filtering.component';
 
 @NgModule({
   imports: [
@@ -36,7 +40,11 @@ import { PropertyDescriptionLimitPipe } from './property-description-limit.pipe'
     CloseMobileMenuDirective,
     PropertiesSearchComponent,
     GeoPipe,
-    PropertyDescriptionLimitPipe
+    PropertyDescriptionLimitPipe,
+    PropertiesSlideshowComponent,
+    PropertiesHomeComponent,
+    PropertiesFilterComponent,
+    PropertiesFilteringComponent
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
   exports: [

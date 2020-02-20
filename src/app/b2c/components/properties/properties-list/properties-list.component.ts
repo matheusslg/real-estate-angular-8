@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { PropertyService } from '../../../../services/property.service';
 import { environment } from 'src/environments/environment';
 import { ActivatedRoute } from '@angular/router';
@@ -10,10 +10,8 @@ import { LocationService } from 'src/app/services/location.service';
 import { TypeService } from 'src/app/services/type.service';
 import { forkJoin } from 'rxjs/internal/observable/forkJoin';
 import { UsefullService } from 'src/app/services/usefull.service';
-import { IImage } from 'ng-simple-slideshow/src/app/modules/slideshow/IImage';
 import { CityService } from 'src/app/services/city.service';
 import { ToastrService } from 'ngx-toastr';
-import { PropertyDescriptionLimitPipe } from 'src/app/b2c/property-description-limit.pipe';
 
 @Component({
   selector: 'app-properties-list',
@@ -22,10 +20,39 @@ import { PropertyDescriptionLimitPipe } from 'src/app/b2c/property-description-l
 })
 export class PropertiesListComponent implements OnInit {
 
+  @Output() propertyListEmitter = new EventEmitter()
+  @Output() filterCall = new EventEmitter()
+
+  _filterData
+  @Input()
+  set filterData(data) {
+    if (data) {
+      this._filterData = data;
+      this.loading = this._filterData.loading;
+      if (this._filterData.resetPageCounter) {
+        this.propertiesPageNumber = 1;
+      }
+      if (!this.loading) {
+        this.propertyList = this._filterData.data;
+        if (this.propertiesPageNumber === 1) {
+          this.usefullService.scrollTo('#cardBody');
+        }
+        if (this._filterData.noMoreProperties === true) {
+          this.noMoreProperties = true;
+          this.noMorePropertiesToShow();
+        } else if (this._filterData.data && this._filterData.data.length === 0) {
+          this.noMoreProperties = true;
+        } else {
+          this.noMoreProperties = false;
+        }
+      }
+    }
+  }
+  get filterData() { return this._filterData; }
+
   loading
   propertyList
   propertyFeaturedList
-  propertyFeaturedImages: (string | IImage)[] = []
   cardTitle
   selectedFilter = {
     data: null,
@@ -34,10 +61,11 @@ export class PropertiesListComponent implements OnInit {
 
   preUrlImages
 
-  propertiesListNumber = 8
+  propertiesListNumber = 12
   propertiesLimitNumber
   propertiesSkipNumber
-  scrollCounter = 0
+  propertiesPageNumber
+  seeMoreCounter = 0
   noMoreProperties = false
 
   categoryList
@@ -58,41 +86,26 @@ export class PropertiesListComponent implements OnInit {
     private GLOBALS: Globals,
     private normalizeString: NormalizeStringPipe,
     private toastr: ToastrService,
-    private propertyDescriptionLimit: PropertyDescriptionLimitPipe,
     public usefullService: UsefullService
   ) {
     this.preUrlImages = environment.baseUri.mongo;
-    this.cardTitle = 'Todos os imóveis';
+    this.cardTitle = 'Imóveis';
   }
 
   ngOnInit() {
     this.titleService.setTitle(this.GLOBALS.SYSTEM_TITLE);
     this.propertiesLimitNumber = this.propertiesListNumber;
     this.propertiesSkipNumber = 0;
+    this.propertiesPageNumber = 1;
 
     // When route changes
     this.activatedRoute.params.subscribe(params => {
       this.routerParams = params['description'];
       // Executes every time that user goes back to Home Page to reset propertyList
       if (!this.routerParams) {
-        forkJoin([
-          this.propertyService.getPropertiesActive(this.propertiesLimitNumber, this.propertiesSkipNumber),
-          this.propertyService.getPropertiesFeatured()
-        ]).subscribe(resolvedPromises => {
-          this.propertyList = resolvedPromises[0].data;
-          this.propertyFeaturedList = resolvedPromises[1].data;
-          if (this.propertyFeaturedList.length > 0) {
-            this.propertyFeaturedList.forEach(_property => {
-              this.propertyFeaturedImages.push({
-                url: environment.baseUri.mongo + '/' + _property.images[0].filePath,
-                href: environment.baseUri.website + '/imoveis/' + _property._id,
-                caption: this.propertyDescriptionLimit.transform(_property.description)
-              })
-            });
-            setTimeout(() => {
-              $('.slideshow-container .slick-dots').css('bottom', 'initial');
-            }, 0)
-          }
+        this.propertyService.getPropertiesActive(this.propertiesLimitNumber, this.propertiesSkipNumber).subscribe(resolvedPromise => {
+          this.propertyList = resolvedPromise.data;
+          this.propertyListEmitter.emit({ res: this.propertyList });
         }, (error) => {
           console.log(error);
         }, () => {
@@ -206,7 +219,8 @@ export class PropertiesListComponent implements OnInit {
 
   resetSeeMoreData() {
     this.propertiesSkipNumber = 0;
-    this.scrollCounter = 0;
+    this.propertiesPageNumber = 1;
+    this.seeMoreCounter = 0;
     this.noMoreProperties = false;
   }
 
@@ -216,9 +230,13 @@ export class PropertiesListComponent implements OnInit {
 
   seeMore() {
     console.log('See More Triggered');
-    if (!this.routerParams) {
-      this.scrollCounter++;
-      if (this.scrollCounter != 1) {
+    if (this._filterData) {
+      // call more properties from filter
+      this.propertiesPageNumber++;
+      this.filterCall.emit({ page: this.propertiesPageNumber, loadMore: true });
+    } else if (!this.routerParams) {
+      this.seeMoreCounter++;
+      if (this.seeMoreCounter != 1) {
         this.propertiesSkipNumber = this.propertiesLimitNumber + this.propertiesSkipNumber;
       } else {
         this.propertiesSkipNumber = this.propertiesLimitNumber;
@@ -241,8 +259,8 @@ export class PropertiesListComponent implements OnInit {
     } else {
       switch (this.selectedFilter.type) {
         case 'category':
-          this.scrollCounter++;
-          if (this.scrollCounter != 1) {
+          this.seeMoreCounter++;
+          if (this.seeMoreCounter != 1) {
             this.propertiesSkipNumber = this.propertiesLimitNumber + this.propertiesSkipNumber;
           } else {
             this.propertiesSkipNumber = this.propertiesLimitNumber;
@@ -264,8 +282,8 @@ export class PropertiesListComponent implements OnInit {
           }
           break;
         case 'location':
-          this.scrollCounter++;
-          if (this.scrollCounter != 1) {
+          this.seeMoreCounter++;
+          if (this.seeMoreCounter != 1) {
             this.propertiesSkipNumber = this.propertiesLimitNumber + this.propertiesSkipNumber;
           } else {
             this.propertiesSkipNumber = this.propertiesLimitNumber;
@@ -287,8 +305,8 @@ export class PropertiesListComponent implements OnInit {
           }
           break;
         case 'type':
-          this.scrollCounter++;
-          if (this.scrollCounter != 1) {
+          this.seeMoreCounter++;
+          if (this.seeMoreCounter != 1) {
             this.propertiesSkipNumber = this.propertiesLimitNumber + this.propertiesSkipNumber;
           } else {
             this.propertiesSkipNumber = this.propertiesLimitNumber;
@@ -310,8 +328,8 @@ export class PropertiesListComponent implements OnInit {
           }
           break;
         case 'city':
-          this.scrollCounter++;
-          if (this.scrollCounter != 1) {
+          this.seeMoreCounter++;
+          if (this.seeMoreCounter != 1) {
             this.propertiesSkipNumber = this.propertiesLimitNumber + this.propertiesSkipNumber;
           } else {
             this.propertiesSkipNumber = this.propertiesLimitNumber;

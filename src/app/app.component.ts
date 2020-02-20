@@ -36,6 +36,7 @@ export class AppComponent implements OnInit {
     router.events.subscribe((val: RoutesRecognized) => {
       if (val instanceof NavigationEnd) {
         gtag('config', 'UA-45569438-2', { 'page_path': val.url });
+        gtag('config', 'AW-1026588755');
         fbq('track', 'PageView');
       }
       if ((val.urlAfterRedirects && val.urlAfterRedirects.indexOf('/imoveis') == -1) || this.deviceService.isDesktop()) {

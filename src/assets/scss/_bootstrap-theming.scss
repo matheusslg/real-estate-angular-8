@@ -48,4 +48,8 @@ $enable-print-styles: true;
   background-color: rgba(0, 0, 0, 0.03) !important;
 }
 
+.no-padding {
+  padding: 0 !important;
+}
+
 @import "node_modules/bootstrap/scss/bootstrap";

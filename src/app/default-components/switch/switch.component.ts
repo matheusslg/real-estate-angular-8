@@ -11,6 +11,7 @@ export class SwitchComponent implements OnInit {
   @Input() value: any;
   @Input() clickable: any;
   @Input() disabled: false
+  @Input() class: any;
   @Output() clicked = new EventEmitter<any>();
 
   constructor() {

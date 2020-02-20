@@ -53,6 +53,7 @@
     "ngx-gallery": "^5.10.0",
     "ngx-infinite-scroll": "^8.0.1",
     "ngx-mask": "^8.0.5",
+    "ngx-slider-moby": "^2.0.6",
     "ngx-toastr": "^10.2.0",
     "pdfmake": "^0.1.59",
     "popper.js": "^1.15.0",

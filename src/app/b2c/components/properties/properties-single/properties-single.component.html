@@ -105,7 +105,7 @@
           <agm-map [streetViewControl]="false" [latitude]="property.geolocation | geo:'lat'" [longitude]="property.geolocation | geo:'lng'" [zoom]="18">
             <agm-marker [latitude]="property.geolocation | geo:'lat'" [longitude]="property.geolocation | geo:'lng'"></agm-marker>
             <agm-info-window [isOpen]="true" [latitude]="property.geolocation | geo:'lat'" [longitude]="property.geolocation | geo:'lng'" [disableAutoPan]="false">
-              <div class="d-flex">
+              <div class="d-flex m-2">
                 <img src="assets/images/logo.png" height="25" class="mr-2"/>
                 O imóvel está localizado aqui.
               </div>

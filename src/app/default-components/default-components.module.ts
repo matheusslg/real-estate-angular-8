@@ -21,6 +21,7 @@ import { NgxGalleryModule } from 'ngx-gallery';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { SlideshowModule } from 'ng-simple-slideshow';
 import { AgmCoreModule } from '@agm/core';
+import { NgxSliderMobyModule } from 'ngx-slider-moby';
 
 // Components
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -78,7 +79,8 @@ export const toastrOptions = {
     SlideshowModule,
     AgmCoreModule.forRoot({
       apiKey: environment.keys.googleMaps
-    })
+    }),
+    NgxSliderMobyModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: "pt" },
@@ -122,7 +124,8 @@ export const toastrOptions = {
     NgxGalleryModule,
     DeviceDetectorModule,
     SlideshowModule,
-    AgmCoreModule
+    AgmCoreModule,
+    NgxSliderMobyModule
   ],
 })
 export class DefaultComponentsModule { }
