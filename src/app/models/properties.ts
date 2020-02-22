@@ -2,7 +2,7 @@ import { City } from './city';
 
 export class Properties {
     data: Data[] = [];
-    all: Data[] = [];
+    counters: Data[] = [];
     count: number;
 }
 

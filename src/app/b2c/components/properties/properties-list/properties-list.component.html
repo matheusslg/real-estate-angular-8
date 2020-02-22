@@ -1,8 +1,7 @@
 <!-- All Properties -->
 <div class="card">
   <div id="cardBody" class="card-body">
-    <h5 *ngIf="!loading"><i class="fas fa-home mr-2"></i>{{ cardTitle }}</h5>
-    <div class="row mt-20">
+    <div *ngIf="propertyList?.length > 0 || !loading" class="row">
       <ng-container *ngFor="let property of propertyList; let index = index">
         <div *ngIf="property.active" class="col-xxxl-3 col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
           <div class="card h-100 card-property">
@@ -97,11 +96,11 @@
         </div>
       </ng-container>
       <div *ngIf="propertyList?.length == 0 && !loading"
-        class="col d-flex justify-content-center align-items-center text-center my-5">
+        class="col d-flex justify-content-center align-items-center text-center mt-100 mb-100">
         <h4 class="text-muted">Nenhum imóvel encontrado. Tente procurar por outra categoria.</h4>
       </div>
     </div>
-    <div class="row" *ngIf="propertyList?.length != 0 && !loading && !noMoreProperties">
+    <div class="row" *ngIf="propertyList?.length > 0 && !loading && !noMoreProperties">
       <div class="col">
         <button type="button" class="btn btn-primary btn-lg btn-block" (click)="seeMore()"><i
             class="fas fa-caret-down mr-2"></i>Ver Mais</button>

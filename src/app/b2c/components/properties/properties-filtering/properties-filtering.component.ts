@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-properties-filtering',
@@ -7,9 +8,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PropertiesFilteringComponent implements OnInit {
 
-  constructor() { }
+  propertyList
+  propertyFeaturedList
+  filterData
+  filterCall
+
+  routerParams
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private cdr: ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
+    this.activatedRoute.params.subscribe(params => {
+      this.routerParams = params['description'];
+      this.cdr.detectChanges();
+    });
   }
 
 }

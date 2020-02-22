@@ -2,7 +2,7 @@
 
 $grid-breakpoints: (
   xs: 0,
-  sm: 576px,
+  sm: 320px,
   md: 768px,
   lg: 992px,
   xl: 1200px,
@@ -28,6 +28,12 @@ $enable-print-styles: true;
 .d-xs-none {
   @media screen and (max-width: 575px) {
     display: none !important;
+  }
+}
+
+.d-xs-block {
+  @media screen and (max-width: 575px) {
+    display: block !important;
   }
 }
 

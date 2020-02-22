@@ -1,202 +1,213 @@
 <ng-container *ngIf="!type">
-  <div class="row">
-    <div class="col">
-      <div class="card">
-        <div class="card-body">
 
-          <h5><i class="fas fa-filter mr-2"></i>Filtro</h5>
+  <div class="card">
 
-          <hr>
-
-          <app-loading *ngIf="loading"></app-loading>
-
-          <ng-container *ngIf="!loading">
-
-            <form (ngSubmit)="execFilter()">
-
-              <div class="form-group">
-                <label for="titleText"><i class="fas fa-font mr-1"></i>Título</label>
-                <input [(ngModel)]="filter.title" [ngModelOptions]="{ standalone: true }" name="title" type="text" class="form-control" id="titleText"
-                  placeholder="Ex: Fazenda completa com 400ha" />
-              </div>
-
-              <div class="form-group">
-                <label for="addressText"><i class="fas fa-map mr-1"></i>Endereço</label>
-                <input [(ngModel)]="filter.address" [ngModelOptions]="{ standalone: true }" name="address" type="text" class="form-control" id="addressText"
-                  placeholder="Ex: Rua General Osório" />
-              </div>
-
-              <hr>
-
-              <label for="bedroomsNumber"><i class="fas fa-bed mr-1"></i>Quartos</label>
-              <div class="input-group">
-                <input [(ngModel)]="filter.bedroomsMin" [ngModelOptions]="{ standalone: true }" type="number" class="form-control" placeholder="Mínimo"/>
-                <div class="input-group-prepend">
-                  <span class="input-group-text">-</span>
-                </div>
-                <input [(ngModel)]="filter.bedroomsMax" [ngModelOptions]="{ standalone: true }" type="number" class="form-control" placeholder="Máximo"/>
-              </div>
-
-              <hr>
-
-              <label for="toiletsNumber"><i class="fas fa-shower mr-1"></i>Banheiros</label>
-              <div class="input-group">
-                <input [(ngModel)]="filter.toiletsMin" [ngModelOptions]="{ standalone: true }" type="number" class="form-control" placeholder="Mínimo"/>
-                <div class="input-group-prepend">
-                  <span class="input-group-text">-</span>
-                </div>
-                <input [(ngModel)]="filter.toiletsMax" [ngModelOptions]="{ standalone: true }" type="number" class="form-control" placeholder="Máximo"/>
-              </div>
-
-              <hr>
-
-              <label for="garageNumber"><i class="fas fa-car mr-1"></i>Garagem</label>
-              <div class="input-group">
-                <input [(ngModel)]="filter.garageMin" [ngModelOptions]="{ standalone: true }" type="number" class="form-control" placeholder="Mínimo"/>
-                <div class="input-group-prepend">
-                  <span class="input-group-text">-</span>
-                </div>
-                <input [(ngModel)]="filter.garageMax" [ngModelOptions]="{ standalone: true }" type="number" class="form-control" placeholder="Máximo"/>
-              </div>
-
-              <hr>
-
-              <label><i class="fa fa-tags mr-1"></i>Categorias</label>
-              <div *ngFor="let item of categoryList; let index = index" class="form-check">
-                <input (change)="onChangeCategories($event, item)" class="form-check-input" type="checkbox" [name]="item.description" [value]="item._id" [id]="item._id" [checked]="filter.categories.includes(item._id)">
-                <label class="form-check-label" [for]="item._id">
-                  {{ item.description }} <span class="text-primary">({{ categoryCount[item._id] }})</span>
-                </label>
-              </div>
-
-              <hr>
-
-              <label><i class="fa fa-map-signs mr-1"></i>Localizações</label>
-              <div *ngFor="let item of locationList; let index = index" class="form-check">
-                <input (change)="onChangeLocations($event, item)" class="form-check-input" type="checkbox" [name]="item.description" [value]="item._id" [id]="item._id" [checked]="filter.locations.includes(item._id)">
-                <label class="form-check-label" [for]="item._id">
-                  {{ item.description }} <span class="text-primary">({{ locationCount[item._id] }})</span>
-                </label>
-              </div>
-
-              <hr>
-
-              <label><i class="fa fa-sticky-note mr-1"></i>Modalidades</label>
-              <div *ngFor="let item of typeList; let index = index" class="form-check">
-                <input (change)="onChangeTypes($event, item)" class="form-check-input" type="checkbox" [name]="item.description" [value]="item._id" [id]="item._id" [checked]="filter.types.includes(item._id)">
-                <label class="form-check-label" [for]="item._id">
-                  {{ item.description }} <span class="text-primary">({{ typeCount[item._id] }})</span>
-                </label>
-              </div>
-
-              <hr>
-
-              <label><i class="fas fa-city mr-1"></i>Cidades</label>
-              <div *ngFor="let item of cityList; let index = index" class="form-check">
-                <input (change)="onChangeCities($event, item)" class="form-check-input" type="checkbox" [name]="item.description" [value]="item._id" [id]="item._id" [checked]="filter.cities.includes(item._id)">
-                <label class="form-check-label" [for]="item._id">
-                  {{ item.description }} <span class="text-primary" class="text-primary">({{ cityCount[item._id] }})</span>
-                </label>
-              </div>
-
-              <hr>
-
-              <label><i class="fas fa-dollar-sign mr-1"></i>Faixa de Preço</label>
-              <div class="form-check">
-                <input class="form-check-input" [(ngModel)]="filter.priceType" (ngModelChange)="execFilter()" type="radio" name="filterByPrice" id="all" value="all">
-                <label class="form-check-label" for="all">
-                  Por Valor
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" [(ngModel)]="filter.priceType" (ngModelChange)="execFilter()" type="radio" name="filterByPrice" id="hectare" value="hectare">
-                <label class="form-check-label" for="hectare">
-                  Por Hectare
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" [(ngModel)]="filter.priceType" (ngModelChange)="execFilter()" type="radio" name="filterByPrice" id="soja" value="soja">
-                <label class="form-check-label" for="soja">
-                  Por Sacas de Soja
-                </label>
-              </div>
-
-              <!-- <ngx-slider-moby 
-                *ngIf="showPriceRange"
-                [(ngModel)]="filter.priceRange"
-                [ngModelOptions]="{ standalone: true }"
-                (valueChange)="priceRangeChanged($event)"
-                [min_distance]="1"
-                [max_value]="priceRange.max" 
-                [min_value]="priceRange.min" 
-                [value_from]="0"
-                [value_to]="priceRange.max"
-                [range]="true"
-                [step]="priceRange.step"
-                [showThumbLabels]="false"
-                [color]="'green'">
-              </ngx-slider-moby> -->
-
-              <div *ngIf="filter.priceType === 'hectare'" class="input-group mt-3">
-                <input currencyMask [(ngModel)]="filter.priceMin" [ngModelOptions]="{ standalone: true }" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" class="form-control" placeholder="Mínimo"/>
-                <div class="input-group-prepend">
-                  <span class="input-group-text">-</span>
-                </div>
-                <input currencyMask [(ngModel)]="filter.priceMax" [ngModelOptions]="{ standalone: true }" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" class="form-control" placeholder="Máximo"/>
-              </div>
-              <div *ngIf="filter.priceType !== 'hectare'" class="input-group mt-3">
-                <input type="number" [(ngModel)]="filter.priceMin" [ngModelOptions]="{ standalone: true }" class="form-control" placeholder="Mínimo"/>
-                <div class="input-group-prepend">
-                  <span class="input-group-text">-</span>
-                </div>
-                <input type="number" [(ngModel)]="filter.priceMax" [ngModelOptions]="{ standalone: true }" class="form-control" placeholder="Máximo"/>
-              </div>
-
-              <hr>
-
-              <label><i class="fas fa-ruler-combined mr-1"></i>Tamanho</label>
-              <div class="form-check">
-                <input class="form-check-input" [(ngModel)]="filter.sizeType" (ngModelChange)="execFilter()" type="radio" name="filterBySize" id="sizeMetro" value="metro">
-                <label class="form-check-label" for="sizeMetro">
-                  Por Metro Quadrado
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" [(ngModel)]="filter.sizeType" (ngModelChange)="execFilter()" type="radio" name="filterBySize" id="sizeHectare" value="hectare">
-                <label class="form-check-label" for="sizeHectare">
-                  Por Hectare
-                </label>
-              </div>
-
-              <div class="input-group mt-3">
-                <input type="number" [(ngModel)]="filter.sizeMin" [ngModelOptions]="{ standalone: true }" class="form-control" placeholder="Mínimo"/>
-                <div class="input-group-prepend">
-                  <span class="input-group-text">-</span>
-                </div>
-                <input type="number" [(ngModel)]="filter.sizeMax" [ngModelOptions]="{ standalone: true }" class="form-control" placeholder="Máximo"/>
-              </div>
-
-              <hr>
-
-              <label><i class="fas fa-star mr-1"></i>Mostrar somente destaques?</label>
-              <div class="form-check">
-                <input [(ngModel)]="filter.featured" (ngModelChange)="filterTimeout()" class="form-check-input" type="checkbox" name="featured" value="true" id="featured" [checked]="filter.featured === true">
-                <label class="form-check-label" for="featured">
-                  Sim <span class="text-primary" class="text-primary">({{ featuredCount }})</span>
-                </label>
-              </div>
-
-              <hr>
-
-              <button type="submit" class="btn btn-primary btn-block mt-3">Filtrar</button>
-              <button type="button" (click)="resetFilter()" class="btn btn-warning btn-block mt-2">Limpar</button>
-
-            </form>
-
-          </ng-container>
-
+    <div class="card-header d-none d-md-block d-sm-block d-xs-block d-lg-none">
+      <a class="card-link" data-toggle="collapse" href="#collapseFilter">
+        <div class="d-flex align-items-center justify-content-between">
+          <h5 class="mb-0"><i class="fas fa-filter mr-2"></i>Filtro</h5>
+          <i class="fas fa-caret-down"></i>
         </div>
+      </a>
+    </div>
+
+    <div id="collapseFilter" class="collapse show">
+      <div class="card-body">
+
+        <div class="d-none d-md-none d-sm-none d-xs-none d-lg-block">
+          <h5><i class="fas fa-filter mr-2"></i>Filtro</h5>
+          <hr>
+        </div>
+
+        <app-loading *ngIf="loading"></app-loading>
+
+        <ng-container *ngIf="!loading">
+
+          <form (ngSubmit)="execFilter()">
+
+            <div class="form-group">
+              <label for="titleText"><i class="fas fa-font mr-1"></i>Título</label><a *ngIf="filter.title && filter.title !== ''" (click)="filter.title = null; execFilter()" href="javascript:;" class="float-right"><i class="fas fa-eraser mr-1"></i>Limpar</a>
+              <input [(ngModel)]="filter.title" [ngModelOptions]="{ standalone: true }" name="title" type="text" class="form-control" id="titleText"
+                placeholder="Ex: Fazenda completa com 400ha" />
+            </div>
+
+            <div class="form-group">
+              <label for="addressText"><i class="fas fa-map mr-1"></i>Endereço</label><a *ngIf="filter.address && filter.address !== ''" (click)="filter.address = null; execFilter()" href="javascript:;" class="float-right"><i class="fas fa-eraser mr-1"></i>Limpar</a>
+              <input [(ngModel)]="filter.address" [ngModelOptions]="{ standalone: true }" name="address" type="text" class="form-control" id="addressText"
+                placeholder="Ex: Rua General Osório" />
+            </div>
+
+            <hr>
+
+            <label for="bedroomsNumber"><i class="fas fa-bed mr-1"></i>Quartos</label><a *ngIf="(filter.bedroomsMin || filter.bedroomsMax) && (filter.bedroomsMin !== '' || filter.bedroomsMax !== '')" (click)="filter.bedroomsMin = null; filter.bedroomsMax = null; execFilter()" href="javascript:;" class="float-right"><i class="fas fa-eraser mr-1"></i>Limpar</a>
+            <div class="input-group">
+              <input [(ngModel)]="filter.bedroomsMin" [ngModelOptions]="{ standalone: true }" type="number" class="form-control" placeholder="Mínimo"/>
+              <div class="input-group-prepend">
+                <span class="input-group-text">-</span>
+              </div>
+              <input [(ngModel)]="filter.bedroomsMax" [ngModelOptions]="{ standalone: true }" type="number" class="form-control" placeholder="Máximo"/>
+            </div>
+
+            <hr>
+
+            <label for="toiletsNumber"><i class="fas fa-shower mr-1"></i>Banheiros</label><a *ngIf="(filter.toiletsMin || filter.toiletsMax) && (filter.toiletsMin !== '' || filter.toiletsMax !== '')" (click)="filter.toiletsMin = null; filter.toiletsMax = null; execFilter()" href="javascript:;" class="float-right"><i class="fas fa-eraser mr-1"></i>Limpar</a>
+            <div class="input-group">
+              <input [(ngModel)]="filter.toiletsMin" [ngModelOptions]="{ standalone: true }" type="number" class="form-control" placeholder="Mínimo"/>
+              <div class="input-group-prepend">
+                <span class="input-group-text">-</span>
+              </div>
+              <input [(ngModel)]="filter.toiletsMax" [ngModelOptions]="{ standalone: true }" type="number" class="form-control" placeholder="Máximo"/>
+            </div>
+
+            <hr>
+
+            <label for="garageNumber"><i class="fas fa-car mr-1"></i>Garagem</label><a *ngIf="(filter.garageMin || filter.garageMax) && (filter.garageMin !== '' || filter.garageMax !== '')" (click)="filter.garageMin = null; filter.garageMax = null; execFilter()" href="javascript:;" class="float-right"><i class="fas fa-eraser mr-1"></i>Limpar</a>
+            <div class="input-group">
+              <input [(ngModel)]="filter.garageMin" [ngModelOptions]="{ standalone: true }" type="number" class="form-control" placeholder="Mínimo"/>
+              <div class="input-group-prepend">
+                <span class="input-group-text">-</span>
+              </div>
+              <input [(ngModel)]="filter.garageMax" [ngModelOptions]="{ standalone: true }" type="number" class="form-control" placeholder="Máximo"/>
+            </div>
+
+            <hr>
+
+            <label><i class="fa fa-tags mr-1"></i>Categorias</label><a *ngIf="filter.categories && filter.categories.length > 0" (click)="filter.categories = []; execFilter()" href="javascript:;" class="float-right"><i class="fas fa-eraser mr-1"></i>Limpar</a>
+            <div *ngFor="let item of categoryList; let index = index" class="form-check">
+              <input (change)="onChangeCategories($event, item)" class="form-check-input" type="checkbox" [name]="item.description" [value]="item._id" [id]="item._id" [checked]="filter.categories.includes(item._id)">
+              <label class="form-check-label" [for]="item._id" [class.font-weight-bold]="filter.categories.includes(item._id)">
+                {{ item.description }} <span class="text-primary">({{ filterCounters ? filterCounters.categories[item._id]?.count : 0 }})</span>
+              </label>
+            </div>
+
+            <hr>
+
+            <label><i class="fa fa-map-signs mr-1"></i>Localizações</label><a *ngIf="filter.locations && filter.locations.length > 0" (click)="filter.locations = []; execFilter()" href="javascript:;" class="float-right"><i class="fas fa-eraser mr-1"></i>Limpar</a>
+            <div *ngFor="let item of locationList; let index = index" class="form-check">
+              <input (change)="onChangeLocations($event, item)" class="form-check-input" type="checkbox" [name]="item.description" [value]="item._id" [id]="item._id" [checked]="filter.locations.includes(item._id)">
+              <label class="form-check-label" [for]="item._id" [class.font-weight-bold]="filter.locations.includes(item._id)">
+                {{ item.description }} <span class="text-primary">({{ filterCounters ? filterCounters.locations[item._id]?.count : 0 }})</span>
+              </label>
+            </div>
+
+            <hr>
+
+            <label><i class="fa fa-sticky-note mr-1"></i>Modalidades</label><a *ngIf="filter.types && filter.types.length > 0" (click)="filter.types = []; execFilter()" href="javascript:;" class="float-right"><i class="fas fa-eraser mr-1"></i>Limpar</a>
+            <div *ngFor="let item of typeList; let index = index" class="form-check">
+              <input (change)="onChangeTypes($event, item)" class="form-check-input" type="checkbox" [name]="item.description" [value]="item._id" [id]="item._id" [checked]="filter.types.includes(item._id)">
+              <label class="form-check-label" [for]="item._id" [class.font-weight-bold]="filter.types.includes(item._id)">
+                {{ item.description }} <span class="text-primary">({{ filterCounters ? filterCounters.types[item._id]?.count : 0 }})</span>
+              </label>
+            </div>
+
+            <hr>
+
+            <label><i class="fas fa-city mr-1"></i>Cidades</label><a *ngIf="filter.cities && filter.cities.length > 0" (click)="filter.cities = []; execFilter()" href="javascript:;" class="float-right"><i class="fas fa-eraser mr-1"></i>Limpar</a>
+            <div *ngFor="let item of cityList; let index = index" class="form-check">
+              <input (change)="onChangeCities($event, item)" class="form-check-input" type="checkbox" [name]="item.description" [value]="item._id" [id]="item._id" [checked]="filter.cities.includes(item._id)">
+              <label class="form-check-label" [for]="item._id" [class.font-weight-bold]="filter.cities.includes(item._id)">
+                {{ item.description }} <span class="text-primary" class="text-primary">({{ filterCounters ? filterCounters.cities[item._id]?.count : 0 }})</span>
+              </label>
+            </div>
+
+            <hr>
+
+            <label><i class="fas fa-dollar-sign mr-1"></i>Faixa de Preço</label><a *ngIf="(filter.priceMin || filter.priceMax) && (filter.priceMin !== 0 || filter.priceMax !== 0)" (click)="filter.priceMin = null; filter.priceMax = null; execFilter()" href="javascript:;" class="float-right"><i class="fas fa-eraser mr-1"></i>Limpar</a>
+            <div class="form-check">
+              <input class="form-check-input" [(ngModel)]="filter.priceType" (ngModelChange)="filter.priceMin = null; filter.priceMax = null; execFilter()" type="radio" name="filterByPrice" id="all" value="all">
+              <label class="form-check-label" for="all">
+                Por Valor <span class="text-primary" class="text-primary">({{ filterCounters ? filterCounters.prices.all : 0 }})</span>
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" [(ngModel)]="filter.priceType" (ngModelChange)="filter.priceMin = null; filter.priceMax = null; execFilter()" type="radio" name="filterByPrice" id="hectare" value="hectare">
+              <label class="form-check-label" for="hectare">
+                Por Hectare <span class="text-primary" class="text-primary">({{ filterCounters ? filterCounters.prices.hectare : 0 }})</span>
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" [(ngModel)]="filter.priceType" (ngModelChange)="filter.priceMin = null; filter.priceMax = null; execFilter()" type="radio" name="filterByPrice" id="soja" value="soja">
+              <label class="form-check-label" for="soja">
+                Por Sacas de Soja <span class="text-primary" class="text-primary">({{ filterCounters ? filterCounters.prices.soja : 0 }})</span>
+              </label>
+            </div>
+
+            <!-- <ngx-slider-moby 
+              *ngIf="showPriceRange"
+              [(ngModel)]="filter.priceRange"
+              [ngModelOptions]="{ standalone: true }"
+              (valueChange)="priceRangeChanged($event)"
+              [min_distance]="1"
+              [max_value]="priceRange.max" 
+              [min_value]="priceRange.min" 
+              [value_from]="0"
+              [value_to]="priceRange.max"
+              [range]="true"
+              [step]="priceRange.step"
+              [showThumbLabels]="false"
+              [color]="'green'">
+            </ngx-slider-moby> -->
+
+            <div *ngIf="filter.priceType === 'hectare'" class="input-group mt-3">
+              <input currencyMask [(ngModel)]="filter.priceMin" [ngModelOptions]="{ standalone: true }" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" class="form-control" placeholder="Mínimo"/>
+              <div class="input-group-prepend">
+                <span class="input-group-text">-</span>
+              </div>
+              <input currencyMask [(ngModel)]="filter.priceMax" [ngModelOptions]="{ standalone: true }" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" class="form-control" placeholder="Máximo"/>
+            </div>
+            <div *ngIf="filter.priceType !== 'hectare'" class="input-group mt-3">
+              <input type="number" [(ngModel)]="filter.priceMin" [ngModelOptions]="{ standalone: true }" class="form-control" placeholder="Mínimo"/>
+              <div class="input-group-prepend">
+                <span class="input-group-text">-</span>
+              </div>
+              <input type="number" [(ngModel)]="filter.priceMax" [ngModelOptions]="{ standalone: true }" class="form-control" placeholder="Máximo"/>
+            </div>
+
+            <hr>
+
+            <label><i class="fas fa-ruler-combined mr-1"></i>Tamanho</label><a *ngIf="(filter.sizeMin || filter.sizeMax) && (filter.sizeMin !== 0 || filter.sizeMax !== 0)" (click)="filter.sizeMin = null; filter.sizeMax = null; execFilter()" href="javascript:;" class="float-right"><i class="fas fa-eraser mr-1"></i>Limpar</a>
+            <div class="form-check">
+              <input class="form-check-input" [(ngModel)]="filter.sizeType" (ngModelChange)="filter.sizeMin = null; filter.sizeMax = null; execFilter()" type="radio" name="filterBySize" id="sizeMetro" value="metro">
+              <label class="form-check-label" for="sizeMetro">
+                Por Metro Quadrado <span class="text-primary" class="text-primary">({{ filterCounters ? filterCounters.sizes.metro : 0 }})</span>
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" [(ngModel)]="filter.sizeType" (ngModelChange)="filter.sizeMin = null; filter.sizeMax = null; execFilter()" type="radio" name="filterBySize" id="sizeHectare" value="hectare">
+              <label class="form-check-label" for="sizeHectare">
+                Por Hectare <span class="text-primary" class="text-primary">({{ filterCounters ? filterCounters.sizes.hectare : 0 }})</span>
+              </label>
+            </div>
+
+            <div class="input-group mt-3">
+              <input type="number" [(ngModel)]="filter.sizeMin" [ngModelOptions]="{ standalone: true }" class="form-control" placeholder="Mínimo"/>
+              <div class="input-group-prepend">
+                <span class="input-group-text">-</span>
+              </div>
+              <input type="number" [(ngModel)]="filter.sizeMax" [ngModelOptions]="{ standalone: true }" class="form-control" placeholder="Máximo"/>
+            </div>
+
+            <hr>
+
+            <label><i class="fas fa-star mr-1"></i>Mostrar somente destaques?</label>
+            <div class="form-check">
+              <input [(ngModel)]="filter.featured" (ngModelChange)="filterTimeout()" class="form-check-input" type="checkbox" name="featured" value="true" id="featured" [checked]="filter.featured === true">
+              <label class="form-check-label" for="featured" [class.font-weight-bold]="filter.featured === true">
+                Sim <span class="text-primary" class="text-primary">({{ filterCounters ? filterCounters.featured : 0 }})</span>
+              </label>
+            </div>
+
+            <hr>
+
+            <button type="submit" class="btn btn-primary btn-block mt-3">Filtrar</button>
+            <button type="button" (click)="resetFilter()" class="btn btn-warning btn-block mt-2">Limpar</button>
+
+          </form>
+
+        </ng-container>
+
       </div>
     </div>
   </div>
+
 </ng-container>

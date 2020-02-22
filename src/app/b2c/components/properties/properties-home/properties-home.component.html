@@ -26,8 +26,8 @@
   <div class="col col-xxxl-10 col-xxl-10 col-xl-9 col-lg-9 col-md-12 col-sm-12 col-xs-12">
     <app-properties-list
       [filterData]="filterData"
-      (filterCall)="filterCall = $event"
-      (propertyListEmitter)="propertyList = $event">
+      [routerParams]="routerParams"
+      (filterCall)="filterCall = $event">
     </app-properties-list>
   </div>
 </div>
