@@ -41,32 +41,34 @@
             </div>
           </div>
           <div class="row d-flex">
-            <div *ngIf="property.bedrooms > 0" class="col col-xxxl-3 col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-3">
-              <span class="property-indicator-text mt-2">Quartos</span>
-              <div class="property-indicator property-indicator-small">
-                <i class="fas fa-bed"></i>
-                <p class="mb-0 ml-2">{{ property.bedrooms }}</p>
+            <div class="indicators">
+              <div *ngIf="property.bedrooms > 0" class="indicators-div">
+                <span class="property-indicator-text">Quartos</span>
+                <div class="property-indicator property-indicator-small">
+                  <i class="fas fa-bed"></i>
+                  <p class="mb-0 ml-1">{{ property.bedrooms }}</p>
+                </div>
               </div>
-            </div>
-            <div *ngIf="property.toilets > 0" class="col col-xxxl-3 col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-3">
-              <span class="property-indicator-text mt-2">Banheiros</span>
-              <div class="property-indicator property-indicator-small">
-                <i class="fas fa-shower"></i>
-                <p class="mb-0 ml-2">{{ property.toilets }}</p>
+              <div *ngIf="property.toilets > 0" class="indicators-div">
+                <span class="property-indicator-text">Banheiros</span>
+                <div class="property-indicator property-indicator-small">
+                  <i class="fas fa-shower"></i>
+                  <p class="mb-0 ml-1">{{ property.toilets }}</p>
+                </div>
               </div>
-            </div>
-            <div *ngIf="property.garage > 0" class="col col-xxxl-3 col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-3">
-              <span class="property-indicator-text mt-2">Garagem</span>
-              <div class="property-indicator property-indicator-small">
-                <i class="fas fa-car"></i>
-                <p class="mb-0 ml-2">{{ property.garage }}</p>
+              <div *ngIf="property.garage > 0" class="indicators-div">
+                <span class="property-indicator-text">Garagem</span>
+                <div class="property-indicator property-indicator-small">
+                  <i class="fas fa-car"></i>
+                  <p class="mb-0 ml-1">{{ property.garage }}</p>
+                </div>
               </div>
-            </div>
-            <div *ngIf="property.size" class="col col-xxxl-3 col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-3">
-              <span class="property-indicator-text mt-2">Tamanho</span>
-              <div class="property-indicator property-indicator-small">
-                <i class="fas fa-pencil-ruler"></i>
-                <p class="mb-0 ml-2">{{ property.size }}</p>
+              <div *ngIf="property.size" class="indicators-div">
+                <span class="property-indicator-text">Tamanho</span>
+                <div class="property-indicator property-indicator-small">
+                  <i class="fas fa-pencil-ruler"></i>
+                  <p class="mb-0 ml-1">{{ property.size }}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -77,14 +79,20 @@
               <h3 class="text-primary font-terciary">
                 {{ property.priceNumber ? (property.priceNumber | currency:'BRL') : property.priceCustom }}</h3>
             </div>
-            <div class="col-md-6 col-sm-12 col-xs-12 d-md-flex d-lg-flex align-items-center justify-content-end">
-              <a href="http://fb.me/msg/corretorcavallini" target="_blank" (click)="fbTrackMessenger()"
-                class="btn btn-primary btn-lg btn-messenger d-xs-none d-sm-none d-md-none d-lg-block"><i class="fab fa-facebook-messenger mr-2"></i>Tenho Interesse</a>
-              <a [href]="'https://wa.me/5555999225333?text=' + whatsAppMessage" target="_blank" (click)="fbTrackWhatsApp()"
-                class="btn btn-primary btn-lg btn-block btn-whatsapp d-xs-block d-sm-block d-md-block d-lg-none"><i class="fab fa-whatsapp mr-2"></i>Tenho Interesse</a>
+            <div class="col-md-6 d-md-flex d-sm-none align-items-center justify-content-end">
+              <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#interestModal">
+                <i class="far fa-comments mr-2"></i>Tenho Interesse
+              </button>
+            </div>
+            <div class="col-md-12 d-md-none align-items-center">
+              <hr />
+              <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#interestModal">
+                <i class="far fa-comments mr-2"></i>Tenho Interesse
+              </button>
             </div>
           </div>
           <hr />
+          <h5 class="mb-4">Descrição do imóvel:</h5>
           <div class="property-description" [innerHTML]="property.description"></div>
         </div>
       </div>
@@ -116,3 +124,37 @@
     </div>
   </div>
 </ng-container>
+
+<!-- Interest Modal -->
+<div class="modal fade" id="interestModal" tabindex="-1" role="dialog" aria-labelledby="interestModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-10 col-sm-10 col-xs-10">
+            <h4 class="font-secondary text-primary">É rápido e fácil!</h4>
+          </div>
+          <div class="col-md-2 col-sm-2 col-xs-2">
+            <button class="float-right" type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+        <div class="row my-4">
+          <div class="col-md-12 text-center">
+            <h5 class="font-secondary mb-5">Escolha uma das opções abaixo para entrar em contato conosco.</h5>
+            <a [href]="'https://wa.me/5555999225333?text=' + whatsAppMessage" target="_blank" (click)="trackWhatsApp()"
+              class="btn btn-primary btn-lg btn-whatsapp btn-block"><i class="fab fa-whatsapp mr-2"></i>WhatsApp</a>
+            <button (click)="openChat(); trackChat()"
+              class="btn btn-primary btn-lg btn-block"><i class="fas fa-headset mr-2"></i>Chat Ao Vivo</button>
+            <a href="http://fb.me/msg/corretorcavallini" target="_blank" (click)="trackMessenger()"
+              class="btn btn-primary btn-lg btn-messenger btn-block"><i class="fab fa-facebook-messenger mr-2"></i>Messenger</a>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a href="javascript:;" class="btn btn-outline-secondary" data-dismiss="modal">Fechar</a>
+      </div>
+    </div>
+  </div>
+</div>

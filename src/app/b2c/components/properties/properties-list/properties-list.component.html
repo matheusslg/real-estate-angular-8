@@ -56,32 +56,34 @@
                 </div>
               </div>
               <div class="row d-flex">
-                <div *ngIf="property.bedrooms > 0" class="col col-xxxl-3 col-xl-6 col-lg-6 col-md-6 col-sm-3 mt-3">
-                  <span class="property-indicator-text mt-2">Quartos</span>
-                  <div class="property-indicator property-indicator-small">
-                    <i class="fas fa-bed"></i>
-                    <p class="mb-0 ml-1">{{ property.bedrooms }}</p>
+                <div class="indicators">
+                  <div *ngIf="property.bedrooms > 0" class="indicators-div">
+                    <span class="property-indicator-text">Quartos</span>
+                    <div class="property-indicator property-indicator-small">
+                      <i class="fas fa-bed"></i>
+                      <p class="mb-0 ml-1">{{ property.bedrooms }}</p>
+                    </div>
                   </div>
-                </div>
-                <div *ngIf="property.toilets > 0" class="col col-xxxl-3 col-xl-6 col-lg-6 col-md-6 col-sm-3 mt-3">
-                  <span class="property-indicator-text mt-2">Banheiros</span>
-                  <div class="property-indicator property-indicator-small">
-                    <i class="fas fa-shower"></i>
-                    <p class="mb-0 ml-1">{{ property.toilets }}</p>
+                  <div *ngIf="property.toilets > 0" class="indicators-div">
+                    <span class="property-indicator-text">Banheiros</span>
+                    <div class="property-indicator property-indicator-small">
+                      <i class="fas fa-shower"></i>
+                      <p class="mb-0 ml-1">{{ property.toilets }}</p>
+                    </div>
                   </div>
-                </div>
-                <div *ngIf="property.garage > 0" class="col col-xxxl-3 col-xl-6 col-lg-6 col-md-6 col-sm-3 mt-3">
-                  <span class="property-indicator-text mt-2">Garagem</span>
-                  <div class="property-indicator property-indicator-small">
-                    <i class="fas fa-car"></i>
-                    <p class="mb-0 ml-1">{{ property.garage }}</p>
+                  <div *ngIf="property.garage > 0" class="indicators-div">
+                    <span class="property-indicator-text">Garagem</span>
+                    <div class="property-indicator property-indicator-small">
+                      <i class="fas fa-car"></i>
+                      <p class="mb-0 ml-1">{{ property.garage }}</p>
+                    </div>
                   </div>
-                </div>
-                <div *ngIf="property.size" class="col col-xxxl-3 col-xl-6 col-lg-6 col-md-6 col-sm-3 mt-3">
-                  <span class="property-indicator-text mt-2">Tamanho</span>
-                  <div class="property-indicator property-indicator-small">
-                    <i class="fas fa-pencil-ruler"></i>
-                    <p class="mb-0 ml-1">{{ property.size }}</p>
+                  <div *ngIf="property.size" class="indicators-div">
+                    <span class="property-indicator-text">Tamanho</span>
+                    <div class="property-indicator property-indicator-small">
+                      <i class="fas fa-pencil-ruler"></i>
+                      <p class="mb-0 ml-1">{{ property.size }}</p>
+                    </div>
                   </div>
                 </div>
               </div>

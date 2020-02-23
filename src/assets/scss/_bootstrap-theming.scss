@@ -58,4 +58,23 @@ $enable-print-styles: true;
   padding: 0 !important;
 }
 
+.modal {
+  z-index: 3000 !important;
+  &-body {
+    @media screen and (max-width: 770px) {
+      padding: 1.5rem !important;
+    }
+    @media screen and (min-width: 771px) {
+      padding: 2rem !important;
+    }
+  }
+  &-dialog {
+    justify-content: center;
+  }
+  &-content {
+    border: none !important;
+    width: 90% !important;
+  }
+}
+
 @import "node_modules/bootstrap/scss/bootstrap";

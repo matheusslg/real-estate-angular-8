@@ -28,6 +28,15 @@
     padding: 20px 15px;
 }
 
+.indicators {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    &-div {
+        margin: 5px 15px;
+    }
+}
+
 .property-indicator {
     display: flex;
     align-items: center;

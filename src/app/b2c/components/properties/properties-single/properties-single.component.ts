@@ -13,6 +13,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { TitleTagService } from 'src/app/services/titletag.service';
 declare let fbq:Function;
 declare let gtag:Function;
+declare let Tawk_API:Function;
 
 @Component({
   selector: 'app-properties-single',
@@ -117,7 +118,12 @@ export class PropertiesSingleComponent implements OnInit {
     });
   }
 
-  fbTrackWhatsApp() {
+  openChat() {
+    (<any>$('#interestModal')).modal('hide');
+    (<any>Tawk_API).toggle();
+  }
+
+  trackWhatsApp() {
     gtag('event', 'conversion', {
       'send_to': 'AW-1026588755/-QfXCOOThMQBENOAwukD',
       'value': this.property.priceNumber > 0 ? this.property.priceNumber : this.property.priceCustom,
@@ -126,7 +132,16 @@ export class PropertiesSingleComponent implements OnInit {
     fbq('track', 'WhatsAppClick', { property_id: '* this.property._id *', property_title: '* this.property.title *' });
   }
 
-  fbTrackMessenger() {
+  trackChat() {
+    gtag('event', 'conversion', {
+      'send_to': 'AW-1026588755/-QfXCOOThMQBENOAwukD',
+      'value': this.property.priceNumber > 0 ? this.property.priceNumber : this.property.priceCustom,
+      'currency': 'BRL'
+    });
+    fbq('track', 'ChatClick', { property_id: '* this.property._id *', property_title: '* this.property.title *' });
+  }
+
+  trackMessenger() {
     gtag('event', 'conversion', {
       'send_to': 'AW-1026588755/-QfXCOOThMQBENOAwukD',
       'value': this.property.priceNumber > 0 ? this.property.priceNumber : this.property.priceCustom,
