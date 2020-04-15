@@ -32,6 +32,14 @@ export class CategoryService {
       )
   }
 
+  getCategoriesActive(): Observable<Categories> {
+    return this.http.get<Categories>(this.apiURL + '/categories?active=true')
+      .pipe(
+        retry(1),
+        catchError(this.usefullService.handleError)
+      )
+  }
+
   getCategory(id): Observable<Category> {
     return this.http.get<Category>(this.apiURL + '/categories/' + id)
       .pipe(

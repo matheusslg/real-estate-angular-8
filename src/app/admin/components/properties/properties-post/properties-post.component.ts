@@ -21,6 +21,8 @@ import { environment } from 'src/environments/environment';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { forkJoin } from 'rxjs/internal/observable/forkJoin';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { City } from 'src/app/models/city';
+import { CityService } from 'src/app/services/city.service';
 
 
 @Component({
@@ -34,12 +36,14 @@ export class PropertiesPostComponent implements OnInit {
   locationList
   typeList
   tagList
+  cityList
 
   loading
   loadingCategory
   loadingLocation
   loadingType
   loadingTag
+  loadingCity
   loadingImages
   loadingFullscreen
 
@@ -74,6 +78,7 @@ export class PropertiesPostComponent implements OnInit {
     private propertyService: PropertyService,
     private categoryService: CategoryService,
     private locationService: LocationService,
+    private cityService: CityService,
     private imageService: ImageService,
     private typeService: TypeService,
     private tagService: TagService,
@@ -105,6 +110,7 @@ export class PropertiesPostComponent implements OnInit {
         this.propertyService.getProperty(params['id']).subscribe(resolvedPromise => {
           this.propertyChangeData = resolvedPromise.data;
           this.propertyChangeData._id = params['id'];
+          console.log('this.propertyChangeData', this.propertyChangeData);
           this.propertyForm.controls['title'].setValue(this.propertyChangeData.title);
           this.propertyForm.controls['description'].setValue(this.propertyChangeData.description);
           this.propertyForm.controls['address'].setValue(this.propertyChangeData.address);
@@ -118,11 +124,23 @@ export class PropertiesPostComponent implements OnInit {
           this.propertyForm.controls['types'].setValue(this.propertyChangeData.types);
           this.propertyForm.controls['city'].setValue(this.propertyChangeData.city);
           this.propertyForm.controls['geolocation'].setValue(this.propertyChangeData.geolocation);
-          this.propertyForm.controls['priceRadio'].setValue(this.propertyChangeData.priceNumber ? '1' : '2');
+          this.propertyForm.controls['priceRadio'].setValue(this.propertyChangeData.priceNumber > 0 ? '1' : '2');
           this.propertyForm.controls['priceNumber'].setValue(this.propertyChangeData.priceNumber);
           this.propertyForm.controls['priceCustom'].setValue(this.propertyChangeData.priceCustom);
           this.propertyForm.controls['active'].setValue(this.propertyChangeData.active);
-          this.propertyChangeData.priceNumber ? this.priceRadioValue = '1' : this.priceRadioValue = '2';
+          this.propertyForm.controls['featured'].setValue(this.propertyChangeData.featured);
+          this.propertyForm.controls['advise'].setValue(this.propertyChangeData.advise);
+          this.property.data.active = this.propertyChangeData.active;
+          this.property.data.featured = this.propertyChangeData.featured;
+          if (this.propertyChangeData.priceNumber > 0) {
+            this.priceRadioValue = '1';
+            this.propertyForm.controls['priceCustom'].disable();
+            this.propertyForm.controls['priceNumber'].enable();
+          } else {
+            this.priceRadioValue = '2';
+            this.propertyForm.controls['priceNumber'].disable();
+            this.propertyForm.controls['priceCustom'].enable();
+          }
           this.loading = false;
         }, (error) => {
           console.log('error', error);
@@ -138,12 +156,14 @@ export class PropertiesPostComponent implements OnInit {
       this.categoryService.getCategories(),
       this.locationService.getLocations(),
       this.typeService.getTypes(),
-      this.tagService.getTags()
+      this.tagService.getTags(),
+      this.cityService.getCities()
     ]).subscribe(resolvedPromises => {
       this.categoryList = resolvedPromises[0].data;
       this.locationList = resolvedPromises[1].data;
       this.typeList = resolvedPromises[2].data;
       this.tagList = resolvedPromises[3].data;
+      this.cityList = resolvedPromises[4].data;
     }, (error) => {
       console.log(error);
     });
@@ -167,7 +187,9 @@ export class PropertiesPostComponent implements OnInit {
       'priceRadio': new FormControl(this.priceRadioValue),
       'priceNumber': new FormControl({ 'value': this.property.data.priceNumber, 'disabled': this.priceRadioValue == '2' }, [Validators.required]),
       'priceCustom': new FormControl({ 'value': this.property.data.priceCustom, 'disabled': this.priceRadioValue == '1' }, [Validators.required]),
-      'active': new FormControl(this.property.data.active)
+      'active': new FormControl(this.property.data.active),
+      'featured': new FormControl(this.property.data.featured),
+      'advise': new FormControl(this.property.data.advise)
     });
   }
 
@@ -247,6 +269,26 @@ export class PropertiesPostComponent implements OnInit {
           this.toastr.error(error.message);
         }
         this.loadingTag = false;
+      })
+    })
+  }
+
+  addCity = (name) => {
+    return new Promise((resolve) => {
+      this.loadingCity = true;
+      let city = new City();
+      city.data.description = name;
+      this.cityService.createCity(city.data).subscribe((resolvedPromise: any) => {
+        resolve(resolvedPromise.result);
+        this.toastr.success('Cidade adicionada com sucesso!');
+        this.loadingCity = false;
+      }, (error) => {
+        if (error.type == 'unique') {
+          this.toastr.error(this.GLOBALS.STRING_TEXT_DUPLICATE_ITEM);
+        } else {
+          this.toastr.error(error.message);
+        }
+        this.loadingCity = false;
       })
     })
   }

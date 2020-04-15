@@ -31,6 +31,14 @@ export class TagService {
       )
   }
 
+  getTagsActive(): Observable<Tag> {
+    return this.http.get<Tag>(this.apiURL + '/tags?active=true')
+      .pipe(
+        retry(1),
+        catchError(this.usefullService.handleError)
+      )
+  }
+
   getTag(id): Observable<Tag> {
     return this.http.get<Tag>(this.apiURL + '/tags/' + id)
       .pipe(

@@ -32,6 +32,14 @@ export class TypeService {
       )
   }
 
+  getTypesActive(): Observable<Types> {
+    return this.http.get<Types>(this.apiURL + '/types?active=true')
+      .pipe(
+        retry(1),
+        catchError(this.usefullService.handleError)
+      )
+  }
+
   getType(id): Observable<Type> {
     return this.http.get<Type>(this.apiURL + '/types/' + id)
       .pipe(

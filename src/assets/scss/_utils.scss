@@ -40,3 +40,43 @@
 .carousel-control-next {
   cursor: pointer;
 }
+
+@media screen and (min-width: 991px) {
+  .dropdown-menu {
+    width: calc(100% + 120px) !important;
+  }
+}
+
+img {
+  image-rendering: crisp-edges !important;
+}
+
+.btn-messenger {
+  background: #0084ff linear-gradient(180deg, #1da1f2, #0084ff) repeat-x !important;
+  border-color: #0084ff !important;
+  &:hover,
+  &:active,
+  &:visited,
+  &:focus { 
+      background: #1da1f2 linear-gradient(180deg, #0084ff, #1da1f2) repeat-x !important;
+      border-color: #1da1f2 !important;
+  }
+  &:focus {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 0.2rem rgba(0, 132, 255, 0.5) !important;
+  }
+}
+
+.btn-whatsapp {
+  background: #075e54 linear-gradient(180deg, #128c7e, #075e54) repeat-x !important;
+  border-color: #075e54 !important;
+  &:hover,
+  &:active,
+  &:visited,
+  &:focus { 
+      background: #128c7e linear-gradient(180deg, #075e54, #128c7e) repeat-x !important;
+      border-color: #128c7e !important;
+  }
+  &:focus {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 0.2rem rgba(7, 94, 84, 0.5) !important;
+  }
+}

@@ -11,7 +11,7 @@
       </div>
       <div class="col-lg-6 col-xl-5 col-xxl-4 col-xxxl-4 d-flex align-items-center justify-content-center">
         <div class="topbar-right text-center">
-          <h4>Especializado em Áreas Rurais</h4>
+          <h5>Especializado em Áreas Rurais</h5>
           <h6>Mais de 35 anos de experiência no Setor Rural.</h6>
         </div>
       </div>
@@ -47,51 +47,133 @@
   <div class="collapse navbar-collapse" id="navbarTop">
     <ul class="navbar-nav mr-auto" #menu>
       <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="/"><i class="fas fa-home mr-2"></i>Página Inicial</a>
+        <a (click)="selectedSubNav = null" class="nav-link" routerLink="/"><i class="fas fa-home mr-2"></i>Página Inicial</a>
       </li>
 
-      <ng-container *ngIf="!loading">
-        <!-- Categorias -->
+      <!-- For Desktop -->
+      <div class="navbar-desktop">
+        <ng-container *ngIf="!loading">
+          <!-- Categorias -->
+          <li class="nav-item" routerLinkActive="active">
+            <a (click)="selectedSubNav = 'categories'" class="nav-link" href="javascript:;">
+              <i class="fa fa-tags fa-fw mr-1"></i>
+              Categorias
+            </a>
+          </li>
+
+          <!-- Localizações -->
+          <li class="nav-item" routerLinkActive="active">
+            <a (click)="selectedSubNav = 'locations'" class="nav-link" href="javascript:;">
+              <i class="fas fa-map-signs fa-fw mr-1"></i>
+              Localizações
+            </a>
+          </li>
+
+          <!-- Modalidades -->
+          <li (click)="selectedSubNav = 'types'" class="nav-item" routerLinkActive="active">
+            <a class="nav-link" href="javascript:;">
+              <i class="fas fa-sticky-note fa-fw mr-1"></i>
+              Modalidades
+            </a>
+          </li>
+
+          <!-- Cidades -->
+          <li (click)="selectedSubNav = 'cities'" class="nav-item" routerLinkActive="active">
+            <a class="nav-link" href="javascript:;">
+              <i class="fas fa-map-marked-alt fa-fw mr-1"></i>
+              Cidades
+            </a>
+          </li>
+        </ng-container>
+
+        <li (click)="selectedSubNav = 'tools'" class="nav-item" routerLinkActive="active">
+          <a class="nav-link" href="javascript:;">
+            <i class="fas fa-tools mr-1"></i>
+            Ferramentas
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="javascript:;" data-toggle="modal" data-target="#contactModal" ><i class="far fa-comments mr-2"></i>Contato</a>
+        </li>
+      </div>
+
+      <!-- For Mobile -->
+      <div class="navbar-mobile">
+        <ng-container *ngIf="!loading">
+          <!-- Categorias -->
+          <li class="nav-item dropdown" routerLinkActive="active">
+            <a (click)="selectedSubNav = 'categories'" class="nav-link dropdown-toggle" href="javascript:;"
+              id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-tags fa-fw mr-1"></i>
+              Categorias
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a *ngFor="let category of categoryList"
+                [routerLink]="['/categoria', (category.description | normalizeString)]" class="dropdown-item"
+                href="javascript:;">{{ category.description }}</a>
+            </div>
+          </li>
+
+          <!-- Localizações -->
+          <li class="nav-item dropdown" routerLinkActive="active">
+            <a (click)="selectedSubNav = 'locations'" class="nav-link dropdown-toggle" href="javascript:;"
+              id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-map-signs fa-fw mr-1"></i>
+              Localizações
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a *ngFor="let location of locationList"
+                [routerLink]="['/localizacao', (location.description | normalizeString)]" class="dropdown-item"
+                href="javascript:;">{{ location.description }}</a>
+            </div>
+          </li>
+
+          <!-- Modalidades -->
+          <li (click)="selectedSubNav = 'types'" class="nav-item dropdown" routerLinkActive="active">
+            <a class="nav-link dropdown-toggle" href="javascript:;" id="navbarDropdown" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-sticky-note fa-fw mr-1"></i>
+              Modalidades
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a *ngFor="let type of typeList" [routerLink]="['/modalidade', (type.description | normalizeString)]"
+                class="dropdown-item" href="javascript:;">{{ type.description }}</a>
+            </div>
+          </li>
+
+          <!-- Cidades -->
+          <li (click)="selectedSubNav = 'cities'" class="nav-item dropdown" routerLinkActive="active">
+            <a class="nav-link dropdown-toggle" href="javascript:;" id="navbarDropdown" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-map-marked-alt fa-fw mr-1"></i>
+              Cidades
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a *ngFor="let city of cityList" [routerLink]="['/cidade', (city.description | normalizeString)]"
+                class="dropdown-item" href="javascript:;">{{ city.description }}</a>
+            </div>
+          </li>
+        </ng-container>
+
         <li class="nav-item dropdown" routerLinkActive="active">
           <a class="nav-link dropdown-toggle" href="javascript:;" id="navbarDropdown" role="button"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-tags fa-fw mr-1"></i>
-            Categorias
+            <i class="fas fa-tools mr-1"></i>
+            Ferramentas
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a *ngFor="let category of categoryList"
-              [routerLink]="['/categoria', (category.description | normalizeString)]" class="dropdown-item"
-              href="javascript:;">{{ category.description }}</a>
+            <a class="dropdown-item"
+              href="http://www8.caixa.gov.br/siopiinternet-web/simulaOperacaoInternet.do?method=inicializarCasoUso"
+              target="_blank">Simulador de Financiamento</a>
           </div>
         </li>
 
-        <!-- Localização -->
-        <li class="nav-item dropdown" routerLinkActive="active">
-          <a class="nav-link dropdown-toggle" href="javascript:;" id="navbarDropdown" role="button"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-map-signs fa-fw mr-1"></i>
-            Localização
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a *ngFor="let location of locationList"
-              [routerLink]="['/localizacao', (location.description | normalizeString)]" class="dropdown-item"
-              href="javascript:;">{{ location.description }}</a>
-          </div>
+        <li class="nav-item">
+          <a class="nav-link" href="javascript:;" data-toggle="modal" data-target="#contactModal" ><i class="far fa-comments mr-2"></i>Contato</a>
         </li>
+      </div>
 
-        <!-- Modalidades -->
-        <li class="nav-item dropdown" routerLinkActive="active">
-          <a class="nav-link dropdown-toggle" href="javascript:;" id="navbarDropdown" role="button"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-sticky-note fa-fw mr-1"></i>
-            Modalidades
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a *ngFor="let type of typeList" [routerLink]="['/modalidade', (type.description | normalizeString)]"
-              class="dropdown-item" href="javascript:;">{{ type.description }}</a>
-          </div>
-        </li>
-      </ng-container>
       <li *ngIf="whatsAppAdvise == false" class="nav-item d-xs-list-item d-sm-list-item d-md-list-item d-lg-none"
         routerLinkActive="active">
         <a class="nav-link" href="https://wa.me/5555999225333" target="_blank"><i
@@ -99,19 +181,70 @@
       </li>
     </ul>
 
-    <form class="form-inline my-2 my-lg-0 d-xs-none d-sm-none d-md-none d-lg-flex">
+    <form (ngSubmit)="search()" class="form-inline my-2 my-lg-0 d-xs-none d-sm-none d-md-none d-lg-flex">
       <div class="input-group">
         <input [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}" type="search" class="form-control"
           placeholder="Digite aqui" aria-label="Buscar">
         <div class="input-group-append">
-          <button (click)="search()" (keyup.enter)="search()" class="btn btn-warning btn-block my-2 my-sm-0" type="button">Procurar
-            Imóvel</button>
+          <button type="submit" class="btn btn-warning btn-block my-2 my-sm-0"><i class="fas fa-search"></i></button>
         </div>
       </div>
     </form>
 
   </div>
 </nav>
+
+<div [hidden]="!selectedSubNav" class="subnav">
+  <ul>
+
+    <!-- Categorias -->
+    <ng-container *ngIf="selectedSubNav === 'categories'">
+      <li *ngFor="let category of categoryList" class="subnav-item" routerLinkActive="active">
+        <a [routerLink]="['/categoria', (category.description | normalizeString)]" href="javascript:;">
+          {{ category.description }}
+        </a>
+      </li>
+    </ng-container>
+
+    <!-- Localizações -->
+    <ng-container *ngIf="selectedSubNav === 'locations'">
+      <li *ngFor="let location of locationList" class="subnav-item" routerLinkActive="active">
+        <a [routerLink]="['/localizacao', (location.description | normalizeString)]" href="javascript:;">
+          {{ location.description }}
+        </a>
+      </li>
+    </ng-container>
+
+    <!-- Modalidades -->
+    <ng-container *ngIf="selectedSubNav === 'types'">
+      <li *ngFor="let type of typeList" class="subnav-item" routerLinkActive="active">
+        <a [routerLink]="['/modalidade', (type.description | normalizeString)]" href="javascript:;">
+          {{ type.description }}
+        </a>
+      </li>
+    </ng-container>
+
+    <!-- Cidades -->
+    <ng-container *ngIf="selectedSubNav === 'cities'">
+      <li *ngFor="let city of cityList" class="subnav-item" routerLinkActive="active">
+        <a [routerLink]="['/cidade', (city.description | normalizeString)]" href="javascript:;">
+          {{ city.description }}
+        </a>
+      </li>
+    </ng-container>
+
+    <!-- Cidades -->
+    <ng-container *ngIf="selectedSubNav === 'tools'">
+      <li class="subnav-item" routerLinkActive="active">
+        <a href="http://www8.caixa.gov.br/siopiinternet-web/simulaOperacaoInternet.do?method=inicializarCasoUso"
+          target="_blank">
+          <i class="fas fa-hand-holding-usd mr-2"></i>Simulador de Financiamento
+        </a>
+      </li>
+    </ng-container>
+
+  </ul>
+</div>
 
 <div class="whatsapp-call" [class.whatsapp-call-opened]="whatsAppAdvise == true">
   <div class="whatsapp-call-area" (click)="openWhatsApp()">
@@ -126,13 +259,54 @@
 <div class="container-fluid">
   <div class="row no-gutters">
     <div class="col-md-12">
-      <div class="input-group d-lg-none mb-4">
-        <input [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}" type="search" class="form-control"
-          placeholder="Digite aqui" aria-label="Buscar">
-        <div class="input-group-append">
-          <button (click)="search()" class="btn btn-warning btn-block my-sm-0" type="button">Procurar
-            Imóvel</button>
+      <form (ngSubmit)="search()">
+        <div class="input-group d-lg-none mb-4">
+          <input [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}" type="search" class="form-control"
+            placeholder="Digite aqui" aria-label="Buscar">
+          <div class="input-group-append">
+            <button type="submit" class="btn btn-warning btn-block my-sm-0"><i class="fas fa-search"></i></button>
+          </div>
         </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Contact Modal -->
+<div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="contactModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-10 col-sm-10 col-xs-10">
+            <h4 class="font-secondary text-primary">Contato</h4>
+          </div>
+          <div class="col-md-2 col-sm-2 col-xs-2">
+            <button class="float-right" type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+        <div class="row my-4">
+          <div class="col-md-12 text-center">
+            <h5 class="font-secondary mb-5">Escolha uma das opções abaixo para entrar em contato conosco.</h5>
+            <a href="javascript:;" (click)="openWhatsApp(); trackWhatsApp()"
+              class="btn btn-primary btn-lg btn-whatsapp btn-block"><i class="fab fa-whatsapp mr-2"></i>WhatsApp</a>
+            <button (click)="openChat(); trackChat()"
+              class="btn btn-primary btn-lg btn-block"><i class="fas fa-headset mr-2"></i>Chat Ao Vivo</button>
+            <a href="http://fb.me/msg/corretorcavallini" target="_blank" (click)="trackMessenger()"
+              class="btn btn-primary btn-lg btn-messenger btn-block"><i class="fab fa-facebook-messenger mr-2"></i>Messenger</a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <h3 class="font-secondary text-muted">Ou</h3>
+            <h6 class="font-secondary text-muted mt-3">Se preferir, nosso telefone é <span class="text-primary">(55) 3352-3352</span> e nosso e-mail é <span class="text-primary">contato@cavalliniimoveis.com.br</span></h6>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a href="javascript:;" class="btn btn-outline-secondary" data-dismiss="modal">Fechar</a>
       </div>
     </div>
   </div>

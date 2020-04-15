@@ -1,0 +1,12 @@
+<div class="row">
+  <div *ngIf="propertyFeaturedList?.length > 0" class="col">
+    <slideshow 
+      [height]="'400px'"
+      [minHeight]="'400px'"
+      [autoPlay]="true"
+      [showDots]="true"
+      [autoPlayInterval]="7500"
+      [imageUrls]="propertyFeaturedImages">
+    </slideshow>
+  </div>
+</div>

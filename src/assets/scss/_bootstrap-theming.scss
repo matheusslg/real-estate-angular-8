@@ -2,11 +2,11 @@
 
 $grid-breakpoints: (
   xs: 0,
-  sm: 576px,
+  sm: 320px,
   md: 768px,
   lg: 992px,
   xl: 1200px,
-  xxl: 1366px,
+  xxl: 1367px,
   xxxl: 1600px
 );
 
@@ -31,6 +31,12 @@ $enable-print-styles: true;
   }
 }
 
+.d-xs-block {
+  @media screen and (max-width: 575px) {
+    display: block !important;
+  }
+}
+
 .form-control {
   background-color: #fff !important;
   //font-size: 13px !important;
@@ -46,6 +52,29 @@ $enable-print-styles: true;
 
 .table-striped tbody tr:nth-of-type(odd) {
   background-color: rgba(0, 0, 0, 0.03) !important;
+}
+
+.no-padding {
+  padding: 0 !important;
+}
+
+.modal {
+  z-index: 3000 !important;
+  &-body {
+    @media screen and (max-width: 770px) {
+      padding: 1.5rem !important;
+    }
+    @media screen and (min-width: 771px) {
+      padding: 2rem !important;
+    }
+  }
+  &-dialog {
+    justify-content: center;
+  }
+  &-content {
+    border: none !important;
+    width: 90% !important;
+  }
 }
 
 @import "node_modules/bootstrap/scss/bootstrap";

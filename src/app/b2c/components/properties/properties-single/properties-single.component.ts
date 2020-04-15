@@ -12,6 +12,8 @@ import { UsefullService } from 'src/app/services/usefull.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { TitleTagService } from 'src/app/services/titletag.service';
 declare let fbq:Function;
+declare let gtag:Function;
+declare let Tawk_API:Function;
 
 @Component({
   selector: 'app-properties-single',
@@ -61,7 +63,7 @@ export class PropertiesSingleComponent implements OnInit {
 
             this.titleTagService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - ' + this.property.title);
             this.titleTagService.setSocialMediaTags(environment.baseUri.website + '/imoveis/' + this.property._id, this.GLOBALS.SYSTEM_TITLE + ' - ' + this.property.title, this.property.description.replace(/<[^>]*>/g, '').split(',')[0], this.property.images[0].filePath);
-            this.whatsAppMessage = encodeURIComponent('Olá, você poderia me passar mais informações sobre o imóvel "' + this.property.title + '" localizado em ' + (this.property.address ? this.property.address : this.property.city) + ' que vi no site? (' + environment.baseUri.website + '/imoveis/' + this.property._id + ')');
+            this.whatsAppMessage = encodeURIComponent('Olá, você poderia me passar mais informações sobre o imóvel "' + this.property.title + '" localizado em ' + (this.property.address ? this.property.address : this.property.city.description) + ' que vi no site? (' + environment.baseUri.website + '/imoveis/' + this.property._id + ')');
 
             if (this.deviceService.isDesktop()) {
               this.usefullService.scrollTop();
@@ -116,8 +118,36 @@ export class PropertiesSingleComponent implements OnInit {
     });
   }
 
-  fbTrack() {
+  openChat() {
+    (<any>$('#interestModal')).modal('hide');
+    (<any>Tawk_API).toggle();
+  }
+
+  trackWhatsApp() {
+    gtag('event', 'conversion', {
+      'send_to': 'AW-1026588755/-QfXCOOThMQBENOAwukD',
+      'value': this.property.priceNumber > 0 ? this.property.priceNumber : this.property.priceCustom,
+      'currency': 'BRL'
+    });
     fbq('track', 'WhatsAppClick', { property_id: '* this.property._id *', property_title: '* this.property.title *' });
+  }
+
+  trackChat() {
+    gtag('event', 'conversion', {
+      'send_to': 'AW-1026588755/-QfXCOOThMQBENOAwukD',
+      'value': this.property.priceNumber > 0 ? this.property.priceNumber : this.property.priceCustom,
+      'currency': 'BRL'
+    });
+    fbq('track', 'ChatClick', { property_id: '* this.property._id *', property_title: '* this.property.title *' });
+  }
+
+  trackMessenger() {
+    gtag('event', 'conversion', {
+      'send_to': 'AW-1026588755/-QfXCOOThMQBENOAwukD',
+      'value': this.property.priceNumber > 0 ? this.property.priceNumber : this.property.priceCustom,
+      'currency': 'BRL'
+    });
+    fbq('track', 'MessengerClick', { property_id: '* this.property._id *', property_title: '* this.property.title *' });
   }
 
 }

@@ -28,6 +28,15 @@
     padding: 20px 15px;
 }
 
+.indicators {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    &-div {
+        margin: 5px 15px;
+    }
+}
+
 .property-indicator {
     display: flex;
     align-items: center;
@@ -103,7 +112,21 @@
     }
 }
 
-.go-top {
-    cursor: pointer;
-    h4:hover { color: palette(main); }
+.featured-advise {
+    display: flex;
+    flex-wrap: wrap;
+    position: absolute;
+    margin: 10px;
+    justify-content: flex-end;
+    align-items: flex-end;
+    z-index: 0;
+    top: 200px;
+    span {
+        font: 700 16px/18px "Roboto", sans-serif, sans-serif;
+        color: palette(white);
+        background: palette(terciary, warning);
+        margin: 10px;
+        padding: 5px;
+        border-radius: 5px;
+    }
 }

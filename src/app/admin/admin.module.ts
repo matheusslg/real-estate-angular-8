@@ -14,6 +14,15 @@ import { PropertiesListComponent } from './components/properties/properties-list
 import { SidebarAdminMenuDropdownDirective } from './directives/sidebar-admin-menu-dropdown.directive';
 import { SidebarAdminMenuActiveDirective } from './directives/sidebar-admin-menu-active.directive';
 import { LogoutComponent } from './components/logout/logout.component';
+import { CategoriesListComponent } from './components/categories/categories-list/categories-list.component';
+import { CategoriesPostComponent } from './components/categories/categories-post/categories-post.component';
+import { CategoriesComponent } from './components/categories/categories.component';
+import { LocationsComponent } from './components/locations/locations.component';
+import { LocationsListComponent } from './components/locations/locations-list/locations-list.component';
+import { LocationsPostComponent } from './components/locations/locations-post/locations-post.component';
+import { TypesComponent } from './components/types/types.component';
+import { TypesListComponent } from './components/types/types-list/types-list.component';
+import { TypesPostComponent } from './components/types/types-post/types-post.component';
 
 @NgModule({
   imports: [
@@ -35,7 +44,16 @@ import { LogoutComponent } from './components/logout/logout.component';
     PropertiesListComponent,
     SidebarAdminMenuDropdownDirective,
     SidebarAdminMenuActiveDirective,
-    LogoutComponent
+    LogoutComponent,
+    CategoriesListComponent,
+    CategoriesPostComponent,
+    CategoriesComponent,
+    LocationsComponent,
+    LocationsListComponent,
+    LocationsPostComponent,
+    TypesComponent,
+    TypesListComponent,
+    TypesPostComponent
   ]
 })
 

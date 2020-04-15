@@ -32,6 +32,14 @@ export class LocationService {
       )
   }
 
+  getLocationsActive(): Observable<Locations> {
+    return this.http.get<Locations>(this.apiURL + '/locations?active=true')
+      .pipe(
+        retry(1),
+        catchError(this.usefullService.handleError)
+      )
+  }
+
   getLocation(id): Observable<Location> {
     return this.http.get<Location>(this.apiURL + '/locations/' + id)
       .pipe(

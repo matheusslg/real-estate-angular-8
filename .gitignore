@@ -46,3 +46,7 @@ Thumbs.db
 
 # Compilation Files
 dist/*
+
+# Environment
+src/environments/environment.prod.ts
+src/environments/environment.ts

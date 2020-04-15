@@ -6,6 +6,7 @@ import { UsefullService } from 'src/app/services/usefull.service';
 import { Observable } from 'rxjs/internal/Observable';
 import { retry } from 'rxjs/internal/operators/retry';
 import { catchError } from 'rxjs/internal/operators/catchError';
+import { Properties } from '../models/properties';
 
 @Injectable({
   providedIn: 'root'
@@ -35,8 +36,16 @@ export class PropertyService {
       )
   }
 
+  getPropertiesFeatured(limit?, skip?): Observable<Property> {
+    return this.http.get<Property>(this.apiURL + '/properties' + '?active=true&featured=true' + (limit ? '&limit=' + limit : '') + (skip != null ? '&skip=' + skip : ''))
+      .pipe(
+        retry(1),
+        catchError(this.usefullService.handleError)
+      )
+  }
+
   getPropertiesByCategory(categoryId, limit?, skip?): Observable<Property> {
-    return this.http.get<Property>(this.apiURL + '/properties/category/' + categoryId + (limit ? '?limit=' + limit : '') + (skip != null ? '&skip=' + skip : ''))
+    return this.http.get<Property>(this.apiURL + '/properties/category/' + categoryId + '?active=true' + (limit ? '&limit=' + limit : '') + (skip != null ? '&skip=' + skip : ''))
       .pipe(
         retry(1),
         catchError(this.usefullService.handleError)
@@ -44,7 +53,7 @@ export class PropertyService {
   }
 
   getPropertiesByLocation(locationId, limit?, skip?): Observable<Property> {
-    return this.http.get<Property>(this.apiURL + '/properties/location/' + locationId + (limit ? '?limit=' + limit : '') + (skip != null ? '&skip=' + skip : ''))
+    return this.http.get<Property>(this.apiURL + '/properties/location/' + locationId + '?active=true' + (limit ? '&limit=' + limit : '') + (skip != null ? '&skip=' + skip : ''))
       .pipe(
         retry(1),
         catchError(this.usefullService.handleError)
@@ -52,7 +61,23 @@ export class PropertyService {
   }
 
   getPropertiesByType(typeId, limit?, skip?): Observable<Property> {
-    return this.http.get<Property>(this.apiURL + '/properties/type/' + typeId + (limit ? '?limit=' + limit : '') + (skip != null ? '&skip=' + skip : ''))
+    return this.http.get<Property>(this.apiURL + '/properties/type/' + typeId + '?active=true' + (limit ? '&limit=' + limit : '') + (skip != null ? '&skip=' + skip : ''))
+      .pipe(
+        retry(1),
+        catchError(this.usefullService.handleError)
+      )
+  }
+
+  getPropertiesByCity(cityId, limit?, skip?): Observable<Property> {
+    return this.http.get<Property>(this.apiURL + '/properties/city/' + cityId + '?active=true' + (limit ? '&limit=' + limit : '') + (skip != null ? '&skip=' + skip : ''))
+      .pipe(
+        retry(1),
+        catchError(this.usefullService.handleError)
+      )
+  }
+
+  getPropertiesFilter(limit?, page?, title?, address?, locations?, categories?, types?, cities?, bedroomsMin?, bedroomsMax?, toiletsMin?, toiletsMax?, garageMin?, garageMax?, priceType?, priceMin?, priceMax?, sizeType?, sizeMin?, sizeMax?, featured?): Observable<Properties> { 
+    return this.http.get<Properties>(this.apiURL + '/properties/filter' + '?active=true' + (limit ? '&limit=' + limit : '') + (page != null ? '&page=' + page : '') + (title != null ? '&title=' + title : '') + (address != null ? '&address=' + address : '') + (locations.length > 0 ? '&locations=' + locations : '') + (categories.length > 0 ? '&categories=' + categories : '') + (types.length > 0 ? '&types=' + types : '') + (cities.length > 0 ? '&cities=' + cities : '') + (bedroomsMin != null ? '&bedroomsMin=' + bedroomsMin : '') + (bedroomsMax != null ? '&bedroomsMax=' + bedroomsMax : '') + (toiletsMin != null ? '&toiletsMin=' + toiletsMin : '') + (toiletsMax != null ? '&toiletsMax=' + toiletsMax : '') + (garageMin != null ? '&garageMin=' + garageMin : '') + (garageMax != null ? '&garageMax=' + garageMax : '') + (priceType != null ? '&priceType=' + priceType : '') + (priceMin != null ? '&priceMin=' + priceMin : '') + (priceMax != null ? '&priceMax=' + priceMax : '') + (sizeType != null ? '&sizeType=' + sizeType : '') + (sizeMin != null ? '&sizeMin=' + sizeMin : '') + (sizeMax != null ? '&sizeMax=' + sizeMax : '') + (featured != null ? '&featured=' + featured : ''))
       .pipe(
         retry(1),
         catchError(this.usefullService.handleError)

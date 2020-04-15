@@ -1,5 +1,5 @@
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { DefaultComponentsModule } from '../default-components/default-components.module';
 import { BsDropdownModule } from 'ngx-bootstrap';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
@@ -12,6 +12,12 @@ import { PropertiesSingleComponent } from './components/properties/properties-si
 import { FooterComponent } from './components/footer/footer.component';
 import { CloseMobileMenuDirective } from './directives/close-mobile-menu.directive';
 import { PropertiesSearchComponent } from './components/properties/properties-search/properties-search.component';
+import { GeoPipe } from './pipes/geo.pipe';
+import { PropertyDescriptionLimitPipe } from './property-description-limit.pipe';
+import { PropertiesSlideshowComponent } from './components/properties/properties-slideshow/properties-slideshow.component';
+import { PropertiesHomeComponent } from './components/properties/properties-home/properties-home.component';
+import { PropertiesFilterComponent } from './components/properties/properties-filter/properties-filter.component';
+import { PropertiesFilteringComponent } from './components/properties/properties-filtering/properties-filtering.component';
 
 @NgModule({
   imports: [
@@ -21,7 +27,10 @@ import { PropertiesSearchComponent } from './components/properties/properties-se
     MDBBootstrapModule.forRoot(),
     BsDropdownModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    CurrencyPipe,
+    PropertyDescriptionLimitPipe
+  ],
   declarations: [
     HomeComponent,
     PropertiesListComponent,
@@ -29,7 +38,13 @@ import { PropertiesSearchComponent } from './components/properties/properties-se
     TopSidebarComponent,
     FooterComponent,
     CloseMobileMenuDirective,
-    PropertiesSearchComponent
+    PropertiesSearchComponent,
+    GeoPipe,
+    PropertyDescriptionLimitPipe,
+    PropertiesSlideshowComponent,
+    PropertiesHomeComponent,
+    PropertiesFilterComponent,
+    PropertiesFilteringComponent
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
   exports: [

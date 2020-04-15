@@ -54,6 +54,15 @@
     }
 }
 
+.indicators {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    &-div {
+        margin: 5px 15px;
+    }
+}
+
 .property-indicator {
     display: flex;
     align-items: center;
@@ -96,9 +105,14 @@
     }
 }
 
-.property-description {
-    font-size: 15px;
-    text-align: justify;
+.property-description,
+.property-description * {
+    font-size: 15px !important;
+    text-align: justify !important;
+}
+
+agm-map {
+    height: 400px;
 }
 
 .go-back {
