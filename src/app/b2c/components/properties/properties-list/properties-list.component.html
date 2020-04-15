@@ -1,118 +1,117 @@
 <!-- All Properties -->
-<div class="card">
-  <div id="cardBody" class="card-body">
-    <div *ngIf="propertyList?.length > 0 || !loading" class="row">
-      <ng-container *ngFor="let property of propertyList; let index = index">
-        <div *ngIf="property.active" class="col-xxxl-3 col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
-          <div class="card h-100 card-property">
-            <a [routerLink]="['/imoveis', property._id]">
-              <img *ngIf="property.images.length > 0" class="card-img-top"
-                [src]="preUrlImages + '/' + property.images[0].filePath">
-            </a>
-            <div class="carousel-square">
-              <div class="carousel-square-location"
-                *ngFor="let location of property.locations; let last = last; let first = first">
-                <a href="javascript:;"
-                  [routerLink]="['/localizacao', (location.description | normalizeString)]">{{ location.description }}</a>
-              </div>
-              <div class="carousel-square-category"
-                *ngFor="let category of property.categories; let last = last; let first = first">
-                <a href="javascript:;"
-                  [routerLink]="['/categoria', (category.description | normalizeString)]">{{ category.description }}</a>
-              </div>
-              <div class="carousel-square-type" *ngFor="let type of property.types; let last = last; let first = first">
-                <a href="javascript:;"
-                  [routerLink]="['/modalidade', (type.description | normalizeString)]">{{ type.description }}</a>
+<div id="topBody"></div>
+<div *ngIf="propertyList?.length > 0 || !loading" class="row">
+  <ng-container *ngFor="let property of propertyList; let index = index">
+    <div *ngIf="property.active" class="col-xxxl-3 col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
+      <div class="card h-100 card-property">
+        <a [routerLink]="['/imoveis', property._id]">
+          <img *ngIf="property.images.length > 0" class="card-img-top"
+            [src]="preUrlImages + '/' + property.images[0].filePath">
+        </a>
+        <div class="carousel-square">
+          <div class="carousel-square-location"
+            *ngFor="let location of property.locations; let last = last; let first = first">
+            <a href="javascript:;"
+              [routerLink]="['/localizacao', (location.description | normalizeString)]">{{ location.description }}</a>
+          </div>
+          <div class="carousel-square-category"
+            *ngFor="let category of property.categories; let last = last; let first = first">
+            <a href="javascript:;"
+              [routerLink]="['/categoria', (category.description | normalizeString)]">{{ category.description }}</a>
+          </div>
+          <div class="carousel-square-type" *ngFor="let type of property.types; let last = last; let first = first">
+            <a href="javascript:;"
+              [routerLink]="['/modalidade', (type.description | normalizeString)]">{{ type.description }}</a>
+          </div>
+        </div>
+        <div *ngIf="property.featured" class="featured-advise">
+          <span>{{ !property.advise ? 'Destaque' : property.advise }}</span>
+        </div>
+        <div class="card-body pb-0 pt-1">
+          <a [routerLink]="['/imoveis', property._id]">
+            <p class="card-title">{{ property.title }}</p>
+          </a>
+          <div class="row">
+            <div class="property-indicator-value col-lg-12 col-md-12 col-sm-12">
+              <div class="property-indicator">
+                <i class="fas fa-dollar-sign"></i>
+                <p class="mb-0 ml-2">
+                  {{ property.priceNumber ? (property.priceNumber | currency:'BRL') : property.priceCustom }}</p>
               </div>
             </div>
-            <div *ngIf="property.featured" class="featured-advise">
-              <span>{{ !property.advise ? 'Destaque' : property.advise }}</span>
+            <div *ngIf="property.address" class="property-indicator-address col-lg-12 col-md-12 col-sm-12">
+              <div class="property-indicator property-indicator-small mt-2">
+                <i class="fas fa-map-marker-alt"></i>
+                <p class="mb-0 ml-2">{{ property.address }}</p>
+              </div>
             </div>
-            <div class="card-body pb-0 pt-1">
-              <a [routerLink]="['/imoveis', property._id]">
-                <p class="card-title">{{ property.title }}</p>
-              </a>
-              <div class="row">
-                <div class="property-indicator-value col-lg-12 col-md-12 col-sm-12">
-                  <div class="property-indicator">
-                    <i class="fas fa-dollar-sign"></i>
-                    <p class="mb-0 ml-2">
-                      {{ property.priceNumber ? (property.priceNumber | currency:'BRL') : property.priceCustom }}</p>
-                  </div>
-                </div>
-                <div *ngIf="property.address" class="property-indicator-address col-lg-12 col-md-12 col-sm-12">
-                  <div class="property-indicator property-indicator-small mt-2">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <p class="mb-0 ml-2">{{ property.address }}</p>
-                  </div>
-                </div>
-                <div class="property-indicator-address col-lg-12 col-md-12 col-sm-12">
-                  <div class="property-indicator property-indicator-small mt-2">
-                    <i class="fas fa-map-marked-alt"></i>
-                    <p class="mb-0 ml-2"><a href="javascript:;"
-                        [routerLink]="['/cidade', (property.city.description | normalizeString)]">{{ property.city.description }}</a>
-                    </p>
-                  </div>
+            <div class="property-indicator-address col-lg-12 col-md-12 col-sm-12">
+              <div class="property-indicator property-indicator-small mt-2">
+                <i class="fas fa-map-marked-alt"></i>
+                <p class="mb-0 ml-2"><a href="javascript:;"
+                    [routerLink]="['/cidade', (property.city.description | normalizeString)]">{{ property.city.description }}</a>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="row d-flex">
+            <div class="indicators">
+              <div *ngIf="property.bedrooms > 0" class="indicators-div">
+                <span class="property-indicator-text">Quartos</span>
+                <div class="property-indicator property-indicator-small">
+                  <i class="fas fa-bed"></i>
+                  <p class="mb-0 ml-1">{{ property.bedrooms }}</p>
                 </div>
               </div>
-              <div class="row d-flex">
-                <div class="indicators">
-                  <div *ngIf="property.bedrooms > 0" class="indicators-div">
-                    <span class="property-indicator-text">Quartos</span>
-                    <div class="property-indicator property-indicator-small">
-                      <i class="fas fa-bed"></i>
-                      <p class="mb-0 ml-1">{{ property.bedrooms }}</p>
-                    </div>
-                  </div>
-                  <div *ngIf="property.toilets > 0" class="indicators-div">
-                    <span class="property-indicator-text">Banheiros</span>
-                    <div class="property-indicator property-indicator-small">
-                      <i class="fas fa-shower"></i>
-                      <p class="mb-0 ml-1">{{ property.toilets }}</p>
-                    </div>
-                  </div>
-                  <div *ngIf="property.garage > 0" class="indicators-div">
-                    <span class="property-indicator-text">Garagem</span>
-                    <div class="property-indicator property-indicator-small">
-                      <i class="fas fa-car"></i>
-                      <p class="mb-0 ml-1">{{ property.garage }}</p>
-                    </div>
-                  </div>
-                  <div *ngIf="property.size" class="indicators-div">
-                    <span class="property-indicator-text">Tamanho</span>
-                    <div class="property-indicator property-indicator-small">
-                      <i class="fas fa-pencil-ruler"></i>
-                      <p class="mb-0 ml-1">{{ property.size }}</p>
-                    </div>
-                  </div>
+              <div *ngIf="property.toilets > 0" class="indicators-div">
+                <span class="property-indicator-text">Banheiros</span>
+                <div class="property-indicator property-indicator-small">
+                  <i class="fas fa-shower"></i>
+                  <p class="mb-0 ml-1">{{ property.toilets }}</p>
+                </div>
+              </div>
+              <div *ngIf="property.garage > 0" class="indicators-div">
+                <span class="property-indicator-text">Garagem</span>
+                <div class="property-indicator property-indicator-small">
+                  <i class="fas fa-car"></i>
+                  <p class="mb-0 ml-1">{{ property.garage }}</p>
+                </div>
+              </div>
+              <div *ngIf="property.size" class="indicators-div">
+                <span class="property-indicator-text">Tamanho</span>
+                <div class="property-indicator property-indicator-small">
+                  <i class="fas fa-pencil-ruler"></i>
+                  <p class="mb-0 ml-1">{{ property.size }}</p>
                 </div>
               </div>
             </div>
-            <!-- <div *ngIf="property.tags.length > 0" class="card-footer">
+          </div>
+        </div>
+        <!-- <div *ngIf="property.tags.length > 0" class="card-footer">
             <i class="fas fa-tags mr-2 text-primary"></i>
             <ng-container *ngFor="let tag of property.tags; let last = last; let first = first">
               <a href="javascript:;">{{ tag.description }}</a>{{ !last ? ', ' : '' }}
             </ng-container>
           </div> -->
-          </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+<div *ngIf="propertyList?.length == 0 && !loading" class="row">
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <div class="col d-flex justify-content-center align-items-center text-center mt-100 mb-100">
+          <h4 class="text-muted">Nenhum imóvel encontrado. Tente filtrar por outros valores.</h4>
         </div>
-      </ng-container>
-      <div *ngIf="propertyList?.length == 0 && !loading"
-        class="col d-flex justify-content-center align-items-center text-center mt-100 mb-100">
-        <h4 class="text-muted">Nenhum imóvel encontrado. Tente procurar por outra categoria.</h4>
       </div>
     </div>
-    <div class="row" *ngIf="propertyList?.length > 0 && !loading && !noMoreProperties">
-      <div class="col">
-        <button type="button" class="btn btn-primary btn-lg btn-block" (click)="seeMore()"><i
-            class="fas fa-caret-down mr-2"></i>Ver Mais</button>
-      </div>
-    </div>
-    <app-loading *ngIf="loading"></app-loading>
   </div>
 </div>
-<div class="d-flex justify-content-center my-3">
-  <div class="go-top" (click)="usefullService.scrollTop()">
-    <h4><i class="fas fa-arrow-up mr-3"></i>Voltar para o topo</h4>
+<div class="row" *ngIf="propertyList?.length > 0 && !loading && !noMoreProperties">
+  <div class="col">
+    <button type="button" class="btn btn-primary btn-lg btn-block" (click)="seeMore()"><i
+        class="fas fa-caret-down mr-2"></i>Ver Mais</button>
   </div>
 </div>
+<app-loading *ngIf="loading"></app-loading>

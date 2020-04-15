@@ -82,7 +82,7 @@
 
             <hr>
 
-            <label><i class="fa fa-map-signs mr-1"></i>Localizações</label><a *ngIf="filter.locations && filter.locations.length > 0" (click)="filter.locations = []; execFilter()" href="javascript:;" class="float-right"><i class="fas fa-eraser mr-1"></i>Limpar</a>
+            <label><i class="fas fa-map-signs mr-1"></i>Localizações</label><a *ngIf="filter.locations && filter.locations.length > 0" (click)="filter.locations = []; execFilter()" href="javascript:;" class="float-right"><i class="fas fa-eraser mr-1"></i>Limpar</a>
             <div *ngFor="let item of locationList; let index = index" class="form-check">
               <input (change)="onChangeLocations($event, item)" class="form-check-input" type="checkbox" [name]="item.description" [value]="item._id" [id]="item._id" [checked]="filter.locations.includes(item._id)">
               <label class="form-check-label" [for]="item._id" [class.font-weight-bold]="filter.locations.includes(item._id)">
@@ -92,7 +92,7 @@
 
             <hr>
 
-            <label><i class="fa fa-sticky-note mr-1"></i>Modalidades</label><a *ngIf="filter.types && filter.types.length > 0" (click)="filter.types = []; execFilter()" href="javascript:;" class="float-right"><i class="fas fa-eraser mr-1"></i>Limpar</a>
+            <label><i class="fas fa-sticky-note mr-1"></i>Modalidades</label><a *ngIf="filter.types && filter.types.length > 0" (click)="filter.types = []; execFilter()" href="javascript:;" class="float-right"><i class="fas fa-eraser mr-1"></i>Limpar</a>
             <div *ngFor="let item of typeList; let index = index" class="form-check">
               <input (change)="onChangeTypes($event, item)" class="form-check-input" type="checkbox" [name]="item.description" [value]="item._id" [id]="item._id" [checked]="filter.types.includes(item._id)">
               <label class="form-check-label" [for]="item._id" [class.font-weight-bold]="filter.types.includes(item._id)">

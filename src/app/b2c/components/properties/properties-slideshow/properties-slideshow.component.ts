@@ -11,6 +11,8 @@ import { PropertyService } from 'src/app/services/property.service';
 })
 export class PropertiesSlideshowComponent implements OnInit {
 
+  loading
+
   @Output() propertyFeaturedListEmitter = new EventEmitter()
   propertyFeaturedList
   propertyFeaturedImages: (string | IImage)[] = []

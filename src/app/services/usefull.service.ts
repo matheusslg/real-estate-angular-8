@@ -1,12 +1,23 @@
 import { Injectable } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { throwError } from 'rxjs/internal/observable/throwError';
-
+import { Subject } from 'rxjs/internal/Subject';
+import { Observable } from 'rxjs';
+import { retry } from 'rxjs/internal/operators/retry';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsefullService {
+
+  menuSubject: Subject<any> = new Subject();
+
+  dollarSubject: Subject<any> = new Subject();
+  dollarData
+
+  constructor(
+    private http: HttpClient
+  ) { }
 
   handleError(error) {
     let errorRes = {};
@@ -54,6 +65,13 @@ export class UsefullService {
         behavior: 'smooth',
       })
     }, 0);
+  }
+
+  getDollar(): Observable<any> {
+    return this.http.get<any>('https://economia.awesomeapi.com.br/json/USD-BRL')
+      .pipe(
+        retry(1)
+      )
   }
 
 }

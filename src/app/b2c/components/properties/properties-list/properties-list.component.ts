@@ -36,7 +36,7 @@ export class PropertiesListComponent implements OnInit {
         this.propertyList = this._filterData.data;
 
         if (this.propertiesPageNumber === 1 && !this._filterData.firstCall) {
-          this.usefullService.scrollTo('#cardBody');
+          this.usefullService.scrollTo('#topBody');
         }
 
         if ((this._filterData.noMoreProperties === true) || (this._filterData.data && this._filterData.data.length === 0)) {
