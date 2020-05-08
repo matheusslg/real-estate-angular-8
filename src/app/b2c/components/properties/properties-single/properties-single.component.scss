@@ -111,6 +111,17 @@
     text-align: justify !important;
 }
 
+.whatsapp-share {
+    &:active, 
+    &:focus, 
+    &:hover {
+        text-decoration: none;
+    }
+    i {
+        font-size: 30px;
+    }
+}
+
 agm-map {
     height: 400px;
 }

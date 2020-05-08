@@ -64,7 +64,7 @@ export class Globals {
                     }
                 }
             ],
-            "responsive": true,
+            "responsive": false,
             "language": {
                 "lengthMenu": "Mostrar _MENU_ resultados por página",
                 "zeroRecords": "Nenhum registro encontrado",
