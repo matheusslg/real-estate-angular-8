@@ -31,6 +31,7 @@ export class PropertiesSingleComponent implements OnInit {
   galleryImages: NgxGalleryImage[];
 
   whatsAppMessage
+  whatsAppShareUrl
 
   constructor(
     private GLOBALS: Globals,
@@ -64,12 +65,13 @@ export class PropertiesSingleComponent implements OnInit {
             this.titleTagService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - ' + this.property.title);
             this.titleTagService.setSocialMediaTags(environment.baseUri.website + '/imoveis/' + this.property._id, this.GLOBALS.SYSTEM_TITLE + ' - ' + this.property.title, this.property.description.replace(/<[^>]*>/g, '').split(',')[0], this.property.images[0].filePath);
             this.whatsAppMessage = encodeURIComponent('Olá, você poderia me passar mais informações sobre o imóvel "' + this.property.title + '" localizado em ' + (this.property.address ? this.property.address : this.property.city.description) + ' que vi no site? (' + environment.baseUri.website + '/imoveis/' + this.property._id + ')');
-
+            this.whatsAppShareUrl = this.sanitizer.bypassSecurityTrustUrl('whatsapp://send?text=' + encodeURIComponent('Dê uma olhada neste imóvel que esta no site do Cavallini, ' + environment.baseUri.website + '/imoveis/' + this.property._id));
+            
             if (this.deviceService.isDesktop()) {
               this.usefullService.scrollTop();
             } else {
               setTimeout(() => {
-                this.usefullService.scrollTo('#backButton');
+                this.usefullService.scrollTo('#scrollOnLoading');
               }, 0);
             }
 

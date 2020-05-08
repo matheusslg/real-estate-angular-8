@@ -1,14 +1,30 @@
 <app-loading *ngIf="loading"></app-loading>
 <ng-container *ngIf="!loading">
-  <div class="row d-flex">
-    <div id="backButton" class="col-md-12 d-sm-block d-md-block d-lg-none mb-2" (click)="location.back()">
-      <h5><i class="fas fa-arrow-left mr-2"></i>Voltar</h5>
+  <div class="row d-flex" id="scrollOnLoading">
+    <div class="col no-gutters align-items-center d-sm-flex d-md-flex d-lg-none mb-3">
+      <div class="col-sm-6" (click)="location.back()">
+        <h5 class="mb-0"><i class="fas fa-arrow-left mr-2"></i>Voltar</h5>
+      </div>
     </div>
     <div class="col-xxxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
       <div class="card h-100">
         <div class="card-body">
-          <h5 class="mb-3"><i class="fas fa-images mr-2"></i>Fotos</h5>
-          <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+          <div class="row d-flex mb-3">
+            <div class="col-md-6 col-sm-6 d-flex align-items-center">
+              <h5 class="mb-0"><i class="fas fa-images mr-2"></i>Fotos</h5>
+            </div>
+            <div class="col-sm-6">
+              <a class="whatsapp-share d-sm-flex d-md-flex d-lg-none align-items-center justify-content-end" 
+                [href]="whatsAppShareUrl" 
+                data-action="share/whatsapp/share">
+                <h5 class="mb-0">Compartilhar</h5>
+                <i class="fab fa-whatsapp-square ml-2"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-12 px-0">
+            <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+          </div>
         </div>
       </div>
     </div>
