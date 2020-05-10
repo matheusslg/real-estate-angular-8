@@ -4,14 +4,19 @@
     display: flex;
     align-items: center;
     background: palette(terciary, ter9light);
+    &-title {
+        h6 { font-size: 12px; }
+    }
     &-right {
         h5 {
-            color: palette(white);
-            padding: 15px;
-            background: palette(main);
-            border-radius: 5px;
+            color: rgba(255,255,255,.75);
+            padding: 15px 25px;
+            background: rgba(99, 157, 49, 0.75);
+            border-radius: 25px;
+            border: 1px solid rgba(99, 157, 49, 0.5);
+            box-shadow: 0 1px 2px 0 rgba(0,0,0,.2), 0 1px 6px 0 rgba(0,0,0,.17);
         }
-        h6 { font-style: italic; }
+        h6 { font-style: italic; font-size: 13px; }
     }
     .logo {
         height: 150px;
