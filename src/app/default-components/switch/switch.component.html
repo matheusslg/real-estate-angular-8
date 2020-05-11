@@ -1,5 +1,4 @@
 <div class="form-switch {{ class }}">
   <div *ngIf="!clickable" class="form-switch-overlap"></div>
-  <input [disabled]='disabled' type="checkbox" class="switch" (click)="changeValue();$event.stopPropagation()"
-    [checked]="value" id="switch-{{ id }}" />
+  <input [disabled]='disabled' type="checkbox" class="switch" (click)="changeValue();$event.stopPropagation()" [checked]="value" id="switch-{{ id }}" /><label for="switch-{{ id }}">Toggle</label>
 </div>

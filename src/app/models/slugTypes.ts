@@ -1,11 +1,10 @@
-export class Type {
-    data: Data = new Data();
+export class SlugTypes {
+    data: Data[] = [];
     count: number;
 }
 
 class Data {
     _id: string;
     description: string;
-    slugType: string;
     active: boolean;
 }

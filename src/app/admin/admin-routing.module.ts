@@ -18,6 +18,9 @@ import { LocationsPostComponent } from './components/locations/locations-post/lo
 import { TypesComponent } from './components/types/types.component';
 import { TypesListComponent } from './components/types/types-list/types-list.component';
 import { TypesPostComponent } from './components/types/types-post/types-post.component';
+import { SlugTypesComponent } from './components/slug-types/slug-types.component';
+import { SlugTypesListComponent } from './components/slug-types/slug-types-list/slug-types-list.component';
+import { SlugTypesPostComponent } from './components/slug-types/slug-types-post/slug-types-post.component';
 
 const routes: Routes = [
   { path: 'login', pathMatch: 'full', component: LoginComponent },
@@ -58,6 +61,15 @@ const routes: Routes = [
           { path: 'listagem', component: TypesListComponent },
           { path: 'cadastrar', component: TypesPostComponent },
           { path: 'editar/:id', component: TypesPostComponent },
+          { path: '', redirectTo: 'listagem', pathMatch: 'full' }
+        ]
+      },
+      {
+        path: 'slugs', component: SlugTypesComponent,
+        children: [
+          { path: 'listagem', component: SlugTypesListComponent },
+          { path: 'cadastrar', component: SlugTypesPostComponent },
+          { path: 'editar/:id', component: SlugTypesPostComponent },
           { path: '', redirectTo: 'listagem', pathMatch: 'full' }
         ]
       },

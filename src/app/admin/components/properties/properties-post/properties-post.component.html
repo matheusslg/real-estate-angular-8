@@ -51,7 +51,7 @@
               </div>
               <div class="form-row">
                 <div class="form-group col-6">
-                  <label for="cityMultiselect">Cidade *</label>
+                  <label for="citySelect">Cidade *</label>
                   <ng-select formControlName="city" [items]="cityList" [addTag]="addCity"
                     [loading]="loadingCity" [multiple]="false" [closeOnSelect]="true" [searchable]="true"
                     bindLabel="description" placeholder="Selecione uma cidade" name="city"
@@ -113,18 +113,24 @@
                   id="featuredCheckbox"></app-switch>
                 <label class="form-check-label" for="featuredCheckbox">Destaque <small class="text-muted">(Texto padrão: "Destaque")</small></label>
               </div>
-              <div *ngIf="property.data.featured" class="form-group">
-                <label for="adviseText">Palavra Destaque</label>
-                <input formControlName="advise" name="advise" type="text" class="form-control" id="adviseText"
-                  placeholder="Ex: Baixou!" />
+              <div class="row">
+                <div class="col-12">
+                  <div *ngIf="property.data.featured" class="form-group">
+                    <label for="adviseText">Palavra Destaque</label>
+                    <input formControlName="advise" name="advise" type="text" class="form-control" id="adviseText"
+                      placeholder="Ex: Baixou!" />
+                  </div>
+                </div>
               </div>
-              <div class="form-check form-check-inline mb-3">
-                <app-switch [value]="property.data.active"
-                  (clicked)="property.data.active = !property.data.active; f.active.setValue(this.property.data.active)"
-                  id="activeCheckbox"></app-switch>
-                <label class="form-check-label" for="activeCheckbox">Publicada <small class="text-muted">(Ao ativar este
-                    campo, o imóvel
-                    irá aparecer no site)</small></label>
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-check form-check-inline mb-3">
+                    <app-switch [value]="property.data.active"
+                      (clicked)="property.data.active = !property.data.active; f.active.setValue(this.property.data.active)"
+                      id="activeCheckbox"></app-switch>
+                    <label class="form-check-label" for="activeCheckbox">Publicada</label>
+                  </div>
+                </div>
               </div>
               <div class="form-group">
                 <label for="categoryMultiselect">Categoria *</label>

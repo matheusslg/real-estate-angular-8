@@ -10,6 +10,7 @@
             <th>#</th>
             <th>Título</th>
             <th>Imóveis</th>
+            <th>Slug</th>
             <th>Ativa</th>
             <th>Opções</th>
           </tr>
@@ -19,6 +20,7 @@
             <td>{{ i + 1 }}</td>
             <td>{{ location.description }}</td>
             <td>{{ locationPropertiesCount[location._id] }}</td>
+            <td>{{ location.slugType?.slug }}</td>
             <td>{{ location.active ? 'Sim' : 'Não' }}</td>
             <td>
               <button [routerLink]="['/area-logada/localizacoes/editar', location._id]" class="btn btn-sm btn-primary mr-2" title="Editar"><i class="fas fa-pencil-alt"></i></button>

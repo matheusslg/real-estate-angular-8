@@ -1,4 +1,4 @@
-export class Type {
+export class SlugType {
     data: Data = new Data();
     count: number;
 }
@@ -6,6 +6,5 @@ export class Type {
 class Data {
     _id: string;
     description: string;
-    slugType: string;
     active: boolean;
 }
