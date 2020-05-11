@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-navbar-admin',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarAdminComponent implements OnInit {
 
-  constructor() { }
+  websiteUrl
+
+  constructor() { 
+    this.websiteUrl = environment.baseUri.website;
+  }
 
   ngOnInit() {
   }

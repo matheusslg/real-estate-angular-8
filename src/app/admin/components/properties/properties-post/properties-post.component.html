@@ -52,12 +52,12 @@
               <div class="form-row">
                 <div class="form-group col-6">
                   <label for="citySelect">Cidade *</label>
-                  <ng-select formControlName="city" [items]="cityList" [addTag]="addCity"
+                  <ng-select formControlName="city" [items]="cityList"
                     [loading]="loadingCity" [multiple]="false" [closeOnSelect]="true" [searchable]="true"
                     bindLabel="description" placeholder="Selecione uma cidade" name="city"
                     class="ng-select-custom form-control" [ngClass]="{ 'is-invalid': submitted && f.city.errors }">
                     <ng-template ng-tag-tmp let-search="searchTerm">
-                      <b>Adicionar</b>: {{ search }}
+                      <b>Buscando</b>: {{ search }}
                     </ng-template>
                   </ng-select>
                   <div *ngIf="submitted && f.city.errors" class="invalid-feedback">

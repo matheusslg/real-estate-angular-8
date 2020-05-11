@@ -63,7 +63,7 @@ export class SlugTypesPostComponent implements OnInit {
           this.loading = false;
         }, (error) => {
           console.log('error', error);
-          this.toastr.error('Slug não encontrada no banco de dados!');
+          this.toastr.error('Slug não encontrado no banco de dados!');
           this.router.navigate(['/area-logada/slugs']);
         });
       }

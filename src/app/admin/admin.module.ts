@@ -23,6 +23,9 @@ import { LocationsPostComponent } from './components/locations/locations-post/lo
 import { TypesComponent } from './components/types/types.component';
 import { TypesListComponent } from './components/types/types-list/types-list.component';
 import { TypesPostComponent } from './components/types/types-post/types-post.component';
+import { CitiesComponent } from './components/cities/cities.component';
+import { CitiesListComponent } from './components/cities/cities-list/cities-list.component';
+import { CitiesPostComponent } from './components/cities/cities-post/cities-post.component';
 import { SlugTypesComponent } from './components/slug-types/slug-types.component';
 import { SlugTypesListComponent } from './components/slug-types/slug-types-list/slug-types-list.component';
 import { SlugTypesPostComponent } from './components/slug-types/slug-types-post/slug-types-post.component';
@@ -57,6 +60,9 @@ import { SlugTypesPostComponent } from './components/slug-types/slug-types-post/
     TypesComponent,
     TypesListComponent,
     TypesPostComponent,
+    CitiesComponent,
+    CitiesListComponent,
+    CitiesPostComponent,
     SlugTypesComponent,
     SlugTypesListComponent,
     SlugTypesPostComponent,

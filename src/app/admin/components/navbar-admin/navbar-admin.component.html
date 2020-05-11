@@ -59,6 +59,17 @@
       </li>
 
       <li class="nav-item dropdown d-sm-block d-md-none">
+        <a class="nav-link dropdown-toggle" href="javascript:;" id="citiesMenu" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          Cidades
+        </a>
+        <div class="dropdown-menu" aria-labelledby="citiesMenu">
+          <a class="dropdown-item" href="javascript:;" routerLink="/area-logada/cidades/cadastrar">Cadastrar</a>
+          <a class="dropdown-item" href="javascript:;" routerLink="/area-logada/cidades">Listagem</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown d-sm-block d-md-none">
         <a class="nav-link dropdown-toggle" href="javascript:;" id="slugsMenu" data-toggle="dropdown" aria-haspopup="true"
           aria-expanded="false">
           Slugs
@@ -78,6 +89,14 @@
           <a class="dropdown-item" href="javascript:;">Cadastrar</a>
           <a class="dropdown-item" href="javascript:;">Listagem</a>
         </div>
+      </li>
+
+      <li class="nav-item d-sm-block d-md-none">
+        <a class="nav-link" [href]="websiteUrl" target="_blank">Visualizar Site</a>
+      </li>
+
+      <li class="nav-item d-sm-block d-md-none">
+        <a class="nav-link" href="javascript:;" routerLink="/sair">Sair</a>
       </li>
 
     </ul>

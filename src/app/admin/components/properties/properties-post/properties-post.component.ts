@@ -273,7 +273,7 @@ export class PropertiesPostComponent implements OnInit {
     })
   }
 
-  addCity = (name) => {
+  /*addCity = (name) => {
     return new Promise((resolve) => {
       this.loadingCity = true;
       let city = new City();
@@ -291,7 +291,7 @@ export class PropertiesPostComponent implements OnInit {
         this.loadingCity = false;
       })
     })
-  }
+  }*/
 
   addImage(data) {
     if (data.success) {

@@ -2,19 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Globals } from 'src/app/globals';
 import { ToastrService } from 'ngx-toastr';
-import { SlugTypeService } from 'src/app/services/slugType.service';
+import { CityService } from 'src/app/services/city.service';
 import { UsefullService } from 'src/app/services/usefull.service';
 import { forkJoin } from 'rxjs/internal/observable/forkJoin';
 
 @Component({
-  selector: 'app-slug-types-list',
-  templateUrl: './slug-types-list.component.html',
-  styleUrls: ['./slug-types-list.component.scss']
+  selector: 'app-cities-list',
+  templateUrl: './cities-list.component.html',
+  styleUrls: ['./cities-list.component.scss']
 })
-export class SlugTypesListComponent implements OnInit {
+export class CitiesListComponent implements OnInit {
 
-  slugTypePropertiesCount = []
-  slugTypeList
+  cityPropertiesCount = []
+  cityList
   propertyList
   loadingData
   loadingToggle
@@ -24,14 +24,14 @@ export class SlugTypesListComponent implements OnInit {
     private GLOBALS: Globals,
     private titleService: Title,
     private toastr: ToastrService,
-    private slugTypeService: SlugTypeService,
+    private cityService: CityService,
     private usefullService: UsefullService
   ) {
-    this.titleService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - Listagem de Slugs');
+    this.titleService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - Listagem de Cidades');
   }
 
   ngOnInit() {
-    this.dtOptions = this.GLOBALS.DATATABLES_OPTIONS('Listagem de slugs cadastradas no sistema');
+    this.dtOptions = this.GLOBALS.DATATABLES_OPTIONS('Listagem de cidades cadastradas no sistema');
     this.dtOptions.buttons.forEach(element => {
       element.exportOptions.columns = [0, 1, 2];
     });
@@ -42,25 +42,25 @@ export class SlugTypesListComponent implements OnInit {
   refreshTable() {
     this.loadingData = true;
     forkJoin([
-      this.slugTypeService.getSlugTypes()
+      this.cityService.getCities()
     ]).subscribe(resolvedPromises => {
-      this.slugTypeList = this.usefullService.orderByLocale(resolvedPromises[0].data, 'description');
+      this.cityList = this.usefullService.orderByLocale(resolvedPromises[0].data, 'description');
       this.loadingData = false;
     }, (error) => {
       console.log(error);
     });
   }
 
-  toggleSlugType(slugType) {
-    console.log(slugType);
+  toggleCity(city) {
+    console.log(city);
     this.loadingToggle = true;
-    if (slugType.active) {
-      this.slugTypeService.disableSlugType(slugType._id).subscribe((resolvedPromise: any) => {
+    if (city.active) {
+      this.cityService.disableCity(city._id).subscribe((resolvedPromise: any) => {
         if (resolvedPromise.success) {
-          this.toastr.success('Slug desativado com sucesso!');
+          this.toastr.success('Cidade desativada com sucesso!');
           this.refreshTable();
         } else {
-          this.toastr.error('Ocorreu um erro ao desativar o slug. Contate um administrador para mais informações.');
+          this.toastr.error('Ocorreu um erro ao desativar a cidade. Contate um administrador para mais informações.');
         }
       }, (error) => {
         this.toastr.error(error.message);
@@ -69,12 +69,12 @@ export class SlugTypesListComponent implements OnInit {
         this.loadingToggle = false;
       });
     } else {
-      this.slugTypeService.enableSlugType(slugType._id).subscribe((resolvedPromise: any) => {
+      this.cityService.enableCity(city._id).subscribe((resolvedPromise: any) => {
         if (resolvedPromise.success) {
-          this.toastr.success('Slug ativado com sucesso!');
+          this.toastr.success('Cidade ativada com sucesso!');
           this.refreshTable();
         } else {
-          this.toastr.error('Ocorreu um erro ao ativar o slug. Contate um administrador para mais informações.');
+          this.toastr.error('Ocorreu um erro ao ativar a cidade. Contate um administrador para mais informações.');
         }
       }, (error) => {
         this.toastr.error(error.message);
