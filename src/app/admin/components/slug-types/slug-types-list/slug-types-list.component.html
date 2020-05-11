@@ -3,13 +3,15 @@
 <div class="card">
   <div class="card-body">
     <app-loading *ngIf="loadingData"></app-loading>
-    <div class="table-responsive" *ngIf="!loadingData">
+    <div class="table-responsive" *ngIf="!loadingData && !loadingToggle">
       <table datatable [dtOptions]="dtOptions" class="table">
         <thead>
           <tr>
             <th>#</th>
             <th>Título</th>
             <th>Slug</th>
+            <th>Tipo</th>
+            <th>Mostrar no App</th>
             <th>Ativa</th>
             <th>Opções</th>
           </tr>
@@ -19,6 +21,13 @@
             <td>{{ i + 1 }}</td>
             <td>{{ slugType.description }}</td>
             <td>{{ slugType.slug }}</td>
+            <td>{{ slugType.type }}</td>
+            <td>
+              <div class="form-check form-check-inline mb-3">
+                <app-switch [value]="slugType.showOnApp" (clicked)="toggleShowOnApp(slugType)" id="activeCheckbox-{{ i }}"></app-switch>
+                <label class="form-check-label" for="activeCheckbox-{{ i }}">{{ slugType.showOnApp ? 'Sim' : 'Não' }}</label>
+              </div>
+            </td>
             <td>{{ slugType.active ? 'Sim' : 'Não' }}</td>
             <td>
               <button [routerLink]="['/area-logada/slugs/editar', slugType._id]" class="btn btn-sm btn-primary mr-2" title="Editar"><i class="fas fa-pencil-alt"></i></button>

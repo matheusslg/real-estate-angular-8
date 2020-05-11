@@ -5,7 +5,6 @@ import { ToastrService } from 'ngx-toastr';
 import { SlugTypeService } from 'src/app/services/slugType.service';
 import { UsefullService } from 'src/app/services/usefull.service';
 import { forkJoin } from 'rxjs/internal/observable/forkJoin';
-
 @Component({
   selector: 'app-slug-types-list',
   templateUrl: './slug-types-list.component.html',
@@ -33,9 +32,9 @@ export class SlugTypesListComponent implements OnInit {
   ngOnInit() {
     this.dtOptions = this.GLOBALS.DATATABLES_OPTIONS('Listagem de slugs cadastradas no sistema');
     this.dtOptions.buttons.forEach(element => {
-      element.exportOptions.columns = [0, 1, 2];
+      element.exportOptions.columns = [0, 1, 2, 3, 4, 5];
     });
-    this.dtOptions.columnDefs = [{ "width": "10%", "targets": [3, 4] }, { "width": "5%", "targets": 0 }];
+    this.dtOptions.columnDefs = [{ "width": "10%", "targets": [6] }, { "width": "5%", "targets": 0 }];
     this.refreshTable();
   }
 
@@ -48,6 +47,26 @@ export class SlugTypesListComponent implements OnInit {
       this.loadingData = false;
     }, (error) => {
       console.log(error);
+    });
+  }
+
+  toggleShowOnApp(slugType) {
+    console.log(slugType);
+    this.loadingToggle = true;
+    this.slugTypeService.updateSlugType(slugType._id, { ...slugType, showOnApp: !slugType.showOnApp }).subscribe((resolvedPromise: any) => {
+      if (resolvedPromise.success) {
+        this.toastr.success('Slug alterado com sucesso!');
+        this.slugTypeService.getSlugTypes().subscribe(resolvedPromise => {
+          this.slugTypeList = this.usefullService.orderByLocale(resolvedPromise.data, 'description');
+        })
+      } else {
+        this.toastr.error('Ocorreu um erro ao alterar o slug. Contate um administrador para mais informações.');
+      }
+    }, (error) => {
+      this.toastr.error(error.message);
+      this.loadingToggle = false;
+    }, () => {
+      this.loadingToggle = false;
     });
   }
 

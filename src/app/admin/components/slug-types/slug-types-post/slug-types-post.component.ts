@@ -26,6 +26,7 @@ export class SlugTypesPostComponent implements OnInit {
 
   isChange
   slugTypeChangeData
+  typeList
 
   constructor(
     private GLOBALS: Globals,
@@ -39,6 +40,7 @@ export class SlugTypesPostComponent implements OnInit {
     this.titleService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - Cadastrar Slug');
     this.slugType = new SlugType();
     this.slugTypeChangeData = new SlugType();
+    this.typeList = GLOBALS.SLUG_TYPES();
   }
 
   get f() { return this.slugTypeForm.controls; }
@@ -59,6 +61,7 @@ export class SlugTypesPostComponent implements OnInit {
           this.slugTypeChangeData._id = params['id'];
           this.slugTypeForm.controls['description'].setValue(this.slugTypeChangeData.description);
           this.slugTypeForm.controls['slug'].setValue(this.slugTypeChangeData.slug);
+          this.slugTypeForm.controls['type'].setValue(this.slugTypeChangeData.type);
           this.slugTypeForm.controls['active'].setValue(this.slugTypeChangeData.active);
           this.loading = false;
         }, (error) => {
@@ -73,6 +76,7 @@ export class SlugTypesPostComponent implements OnInit {
   setValidationForm() {
     this.slugTypeForm = new FormGroup({
       'description': new FormControl(this.slugType.data.description, [Validators.required]),
+      'type': new FormControl(this.slugType.data.type, [Validators.required]),
       'slug': new FormControl(this.slugType.data.slug, [Validators.required]),
       'active': new FormControl(this.slugType.data.active)
     });
