@@ -258,3 +258,11 @@ html body {
     }
   }
 }
+
+.custom-slideshow {
+  border-radius: 5px;
+  box-shadow: 0px 15px 43px -14px rgba(102,102,102,1);
+  .slick-dots {
+    bottom: initial !important;
+  }
+}
