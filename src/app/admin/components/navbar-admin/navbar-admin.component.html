@@ -1,13 +1,12 @@
-<!-- Bootstrap NavBar -->
 <nav class="navbar navbar-expand-md navbar-dark bg-primary">
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
     data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Abrir Menu">
     <span class="navbar-toggler-icon"></span>
   </button>
   <a class="navbar-brand" href="javascript:;" routerLink="/area-logada">
-    <!-- <img src="https://v4-alpha.getbootstrap.com/assets/brand/bootstrap-solid.svg" width="30" height="30"
-      class="d-inline-block align-top" alt=""> -->
-    <span class="menu-collapsed">Painel Administrativo</span>
+    <img src="../../../../assets/images/logo.png" width="30" height="30"
+      class="d-inline-block align-top" alt="">
+    <span class="menu-collapsed ml-15">Painel Administrativo</span>
   </a>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mt-2">
@@ -27,6 +26,61 @@
       </li>
 
       <li class="nav-item dropdown d-sm-block d-md-none">
+        <a class="nav-link dropdown-toggle" href="javascript:;" id="categoriesMenu" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          Categorias
+        </a>
+        <div class="dropdown-menu" aria-labelledby="categoriesMenu">
+          <a class="dropdown-item" href="javascript:;" routerLink="/area-logada/categorias/cadastrar">Cadastrar</a>
+          <a class="dropdown-item" href="javascript:;" routerLink="/area-logada/categorias">Listagem</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown d-sm-block d-md-none">
+        <a class="nav-link dropdown-toggle" href="javascript:;" id="locationsMenu" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          Localizações
+        </a>
+        <div class="dropdown-menu" aria-labelledby="locationsMenu">
+          <a class="dropdown-item" href="javascript:;" routerLink="/area-logada/localizacoes/cadastrar">Cadastrar</a>
+          <a class="dropdown-item" href="javascript:;" routerLink="/area-logada/localizacoes">Listagem</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown d-sm-block d-md-none">
+        <a class="nav-link dropdown-toggle" href="javascript:;" id="modalitiesMenu" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          Modalidades
+        </a>
+        <div class="dropdown-menu" aria-labelledby="modalitiesMenu">
+          <a class="dropdown-item" href="javascript:;" routerLink="/area-logada/modalidades/cadastrar">Cadastrar</a>
+          <a class="dropdown-item" href="javascript:;" routerLink="/area-logada/modalidades">Listagem</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown d-sm-block d-md-none">
+        <a class="nav-link dropdown-toggle" href="javascript:;" id="citiesMenu" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          Cidades
+        </a>
+        <div class="dropdown-menu" aria-labelledby="citiesMenu">
+          <a class="dropdown-item" href="javascript:;" routerLink="/area-logada/cidades/cadastrar">Cadastrar</a>
+          <a class="dropdown-item" href="javascript:;" routerLink="/area-logada/cidades">Listagem</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown d-sm-block d-md-none">
+        <a class="nav-link dropdown-toggle" href="javascript:;" id="slugsMenu" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          Slugs
+        </a>
+        <div class="dropdown-menu" aria-labelledby="slugsMenu">
+          <a class="dropdown-item" href="javascript:;" routerLink="/area-logada/slugs/cadastrar">Cadastrar</a>
+          <a class="dropdown-item" href="javascript:;" routerLink="/area-logada/slugs">Listagem</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown d-sm-block d-md-none">
         <a class="nav-link dropdown-toggle" href="javascript:;" id="usersMenu" data-toggle="dropdown" aria-haspopup="true"
           aria-expanded="false">
           Usuários
@@ -35,6 +89,14 @@
           <a class="dropdown-item" href="javascript:;">Cadastrar</a>
           <a class="dropdown-item" href="javascript:;">Listagem</a>
         </div>
+      </li>
+
+      <li class="nav-item d-sm-block d-md-none">
+        <a class="nav-link" [href]="websiteUrl" target="_blank">Visualizar Site</a>
+      </li>
+
+      <li class="nav-item d-sm-block d-md-none">
+        <a class="nav-link" href="javascript:;" routerLink="/sair">Sair</a>
       </li>
 
     </ul>

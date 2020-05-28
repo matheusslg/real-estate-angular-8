@@ -18,6 +18,12 @@ import { LocationsPostComponent } from './components/locations/locations-post/lo
 import { TypesComponent } from './components/types/types.component';
 import { TypesListComponent } from './components/types/types-list/types-list.component';
 import { TypesPostComponent } from './components/types/types-post/types-post.component';
+import { SlugTypesComponent } from './components/slug-types/slug-types.component';
+import { SlugTypesListComponent } from './components/slug-types/slug-types-list/slug-types-list.component';
+import { SlugTypesPostComponent } from './components/slug-types/slug-types-post/slug-types-post.component';
+import { CitiesComponent } from './components/cities/cities.component';
+import { CitiesListComponent } from './components/cities/cities-list/cities-list.component';
+import { CitiesPostComponent } from './components/cities/cities-post/cities-post.component';
 
 const routes: Routes = [
   { path: 'login', pathMatch: 'full', component: LoginComponent },
@@ -58,6 +64,24 @@ const routes: Routes = [
           { path: 'listagem', component: TypesListComponent },
           { path: 'cadastrar', component: TypesPostComponent },
           { path: 'editar/:id', component: TypesPostComponent },
+          { path: '', redirectTo: 'listagem', pathMatch: 'full' }
+        ]
+      },
+      {
+        path: 'cidades', component: CitiesComponent,
+        children: [
+          { path: 'listagem', component: CitiesListComponent },
+          { path: 'cadastrar', component: CitiesPostComponent },
+          { path: 'editar/:id', component: CitiesPostComponent },
+          { path: '', redirectTo: 'listagem', pathMatch: 'full' }
+        ]
+      },
+      {
+        path: 'slugs', component: SlugTypesComponent,
+        children: [
+          { path: 'listagem', component: SlugTypesListComponent },
+          { path: 'cadastrar', component: SlugTypesPostComponent },
+          { path: 'editar/:id', component: SlugTypesPostComponent },
           { path: '', redirectTo: 'listagem', pathMatch: 'full' }
         ]
       },

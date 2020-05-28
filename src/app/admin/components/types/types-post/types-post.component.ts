@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/admin/services/auth.service';
 import { TypeService } from 'src/app/services/type.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { SlugTypeService } from 'src/app/services/slugType.service';
 
 @Component({
   selector: 'app-types-post',
@@ -27,6 +28,8 @@ export class TypesPostComponent implements OnInit {
   isChange
   typeChangeData
 
+  slugList
+
   constructor(
     private GLOBALS: Globals,
     private titleService: Title,
@@ -34,6 +37,7 @@ export class TypesPostComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private typeService: TypeService,
+    private slugTypeService: SlugTypeService,
     private activatedRoute: ActivatedRoute
   ) {
     this.titleService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - Cadastrar Modalidade');
@@ -44,6 +48,7 @@ export class TypesPostComponent implements OnInit {
   get f() { return this.typeForm.controls; }
 
   ngOnInit() {
+    this.getSlugs();
     this.setValidationForm();
     this.checkIfIsChange();
   }
@@ -58,6 +63,7 @@ export class TypesPostComponent implements OnInit {
           this.typeChangeData = resolvedPromise.data;
           this.typeChangeData._id = params['id'];
           this.typeForm.controls['description'].setValue(this.typeChangeData.description);
+          this.typeForm.controls['slugType'].setValue(this.typeChangeData.slugType);
           this.typeForm.controls['active'].setValue(this.typeChangeData.active);
           this.loading = false;
         }, (error) => {
@@ -69,9 +75,22 @@ export class TypesPostComponent implements OnInit {
     });
   }
 
+  getSlugs() {
+    this.loading = true;
+    this.slugTypeService.getSlugTypes().subscribe(resolvedPromise => {
+      this.slugList = resolvedPromise.data;
+      this.loading = false;
+    }, (error) => {
+      console.log('error', error);
+      this.toastr.error('Ocorreu um erro ao trazer a listagem de slugs!');
+      this.router.navigate(['/area-logada/localizacoes']);
+    });
+  }
+
   setValidationForm() {
     this.typeForm = new FormGroup({
       'description': new FormControl(this.type.data.description, [Validators.required]),
+      'slugType': new FormControl(this.type.data.slugType),
       'active': new FormControl(this.type.data.active)
     });
   }

@@ -35,7 +35,7 @@ export class PropertiesSlideshowComponent implements OnInit {
         });
         this.propertyFeaturedListEmitter.emit(this.propertyFeaturedList);
         setTimeout(() => {
-          $('.slideshow-container .slick-dots').css('bottom', 'initial');
+          $('.slideshow-container').addClass('custom-slideshow');
         }, 0)
       }
     }, (error) => {

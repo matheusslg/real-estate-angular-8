@@ -71,6 +71,10 @@
   font-weight: 900;
 }
 
+.list-group-item {
+  border: none;
+}
+
 .list-group-item-action:focus {
   background-color: initial;
 }

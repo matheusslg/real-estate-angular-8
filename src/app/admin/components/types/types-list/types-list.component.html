@@ -10,6 +10,7 @@
             <th>#</th>
             <th>Título</th>
             <th>Imóveis</th>
+            <th>Slug</th>
             <th>Ativa</th>
             <th>Opções</th>
           </tr>
@@ -19,6 +20,7 @@
             <td>{{ i + 1 }}</td>
             <td>{{ type.description }}</td>
             <td>{{ typePropertiesCount[type._id] }}</td>
+            <td>{{ type.slugType?.slug }}</td>
             <td>{{ type.active ? 'Sim' : 'Não' }}</td>
             <td>
               <button [routerLink]="['/area-logada/modalidades/editar', type._id]" class="btn btn-sm btn-primary mr-2" title="Editar"><i class="fas fa-pencil-alt"></i></button>

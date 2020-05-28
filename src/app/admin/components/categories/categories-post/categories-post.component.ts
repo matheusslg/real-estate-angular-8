@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/admin/services/auth.service';
 import { CategoryService } from 'src/app/services/category.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { SlugTypeService } from 'src/app/services/slugType.service';
 
 @Component({
   selector: 'app-categories-post',
@@ -27,6 +28,8 @@ export class CategoriesPostComponent implements OnInit {
   isChange
   categoryChangeData
 
+  slugList
+
   constructor(
     private GLOBALS: Globals,
     private titleService: Title,
@@ -34,6 +37,7 @@ export class CategoriesPostComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private categoryService: CategoryService,
+    private slugTypeService: SlugTypeService,
     private activatedRoute: ActivatedRoute
   ) {
     this.titleService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - Cadastrar Categoria');
@@ -44,6 +48,7 @@ export class CategoriesPostComponent implements OnInit {
   get f() { return this.categoryForm.controls; }
 
   ngOnInit() {
+    this.getSlugs();
     this.setValidationForm();
     this.checkIfIsChange();
   }
@@ -58,6 +63,7 @@ export class CategoriesPostComponent implements OnInit {
           this.categoryChangeData = resolvedPromise.data;
           this.categoryChangeData._id = params['id'];
           this.categoryForm.controls['description'].setValue(this.categoryChangeData.description);
+          this.categoryForm.controls['slugType'].setValue(this.categoryChangeData.slugType);
           this.categoryForm.controls['active'].setValue(this.categoryChangeData.active);
           this.loading = false;
         }, (error) => {
@@ -69,9 +75,22 @@ export class CategoriesPostComponent implements OnInit {
     });
   }
 
+  getSlugs() {
+    this.loading = true;
+    this.slugTypeService.getSlugTypes().subscribe(resolvedPromise => {
+      this.slugList = resolvedPromise.data;
+      this.loading = false;
+    }, (error) => {
+      console.log('error', error);
+      this.toastr.error('Ocorreu um erro ao trazer a listagem de slugs!');
+      this.router.navigate(['/area-logada/categorias']);
+    });
+  }
+
   setValidationForm() {
     this.categoryForm = new FormGroup({
       'description': new FormControl(this.category.data.description, [Validators.required]),
+      'slugType': new FormControl(this.category.data.slugType),
       'active': new FormControl(this.category.data.active)
     });
   }
@@ -82,6 +101,7 @@ export class CategoriesPostComponent implements OnInit {
       return;
     }
     this.categoryData = this.categoryForm.value;
+    console.log('category', this.categoryData);
     this.categoryData.user = this.authService.getUserId(this.authService.getToken());
     if (!this.isChange) {
         this.loadingFullscreen = true;

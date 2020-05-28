@@ -6,5 +6,6 @@ export class Type {
 class Data {
     _id: string;
     description: string;
+    slugType: string;
     active: boolean;
 }

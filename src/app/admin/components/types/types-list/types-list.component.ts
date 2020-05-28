@@ -37,7 +37,7 @@ export class TypesListComponent implements OnInit {
     this.dtOptions.buttons.forEach(element => {
       element.exportOptions.columns = [0, 1, 2];
     });
-    this.dtOptions.columnDefs = [{ "width": "10%", "targets": [3, 4] }, { "width": "5%", "targets": 0 }];
+    this.dtOptions.columnDefs = [{ "width": "10%", "targets": [4, 5] }, { "width": "5%", "targets": 0 }];
     this.refreshTable();
   }
 

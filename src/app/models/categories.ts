@@ -6,5 +6,6 @@ export class Categories {
 class Data {
     _id: string;
     description: string;
+    slugType: string;
     active: boolean;
 }

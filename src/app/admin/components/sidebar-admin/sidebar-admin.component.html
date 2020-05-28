@@ -95,8 +95,48 @@
         </a>
       </div>
 
-      <!-- Usuários -->
+      <!-- Cidades -->
       <a appSidebarAdminMenuActive href="#submenu5" data-toggle="collapse" aria-expanded="false"
+        class="main-item list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span class="fas fa-city fa-fw mr-3"></span>
+          <span class="menu-collapsed">Cidades</span>
+          <span class="submenu-icon ml-auto"></span>
+        </div>
+      </a>
+      <div id='submenu5' class="collapse sidebar-submenu" data-parent="#sidebar-container">
+        <a appSidebarAdminMenuActive href="javascript:;" routerLink="/area-logada/cidades/cadastrar"
+          class="sub-item list-group-item list-group-item-action text-white">
+          <span class="menu-collapsed">Cadastrar</span>
+        </a>
+        <a appSidebarAdminMenuActive href="javascript:;" routerLink="/area-logada/cidades"
+          class="sub-item list-group-item list-group-item-action text-white">
+          <span class="menu-collapsed">Listagem</span>
+        </a>
+      </div>
+
+      <!-- Slugs -->
+      <a appSidebarAdminMenuActive href="#submenu6" data-toggle="collapse" aria-expanded="false"
+        class="main-item list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span class="fas fa-tag fa-fw mr-3"></span>
+          <span class="menu-collapsed">Slugs</span>
+          <span class="submenu-icon ml-auto"></span>
+        </div>
+      </a>
+      <div id='submenu6' class="collapse sidebar-submenu" data-parent="#sidebar-container">
+        <a appSidebarAdminMenuActive href="javascript:;" routerLink="/area-logada/slugs/cadastrar"
+          class="sub-item list-group-item list-group-item-action text-white">
+          <span class="menu-collapsed">Cadastrar</span>
+        </a>
+        <a appSidebarAdminMenuActive href="javascript:;" routerLink="/area-logada/slugs"
+          class="sub-item list-group-item list-group-item-action text-white">
+          <span class="menu-collapsed">Listagem</span>
+        </a>
+      </div>
+
+      <!-- Usuários -->
+      <a appSidebarAdminMenuActive href="#submenu7" data-toggle="collapse" aria-expanded="false"
         class="main-item list-group-item list-group-item-action flex-column align-items-start">
         <div class="d-flex w-100 justify-content-start align-items-center">
           <span class="fa fa-users fa-fw mr-3"></span>
@@ -104,7 +144,7 @@
           <span class="submenu-icon ml-auto"></span>
         </div>
       </a>
-      <div id='submenu5' class="collapse sidebar-submenu" data-parent="#sidebar-container">
+      <div id='submenu7' class="collapse sidebar-submenu" data-parent="#sidebar-container">
         <a appSidebarAdminMenuActive href="javascript:;"
           class="sub-item list-group-item list-group-item-action text-white">
           <span class="menu-collapsed">Cadastrar</span>
@@ -114,6 +154,15 @@
           <span class="menu-collapsed">Listagem</span>
         </a>
       </div>
+
+      <!-- Site -->
+      <a appSidebarAdminMenuActive [href]="websiteUrl" target="_blank"
+        class="main-item main-item-single list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span class="fas fa-external-link-alt fa-fw mr-3"></span>
+          <span class="menu-collapsed">Visualizar Site</span>
+        </div>
+      </a>
 
       <!-- Sair -->
       <a appSidebarAdminMenuActive href="javascript:;" routerLink="/sair"

@@ -6,5 +6,6 @@ export class Location {
 class Data {
     _id: string;
     description: string;
+    slugType: string;
     active: boolean;
 }

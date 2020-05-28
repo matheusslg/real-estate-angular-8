@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/admin/services/auth.service';
 import { LocationService } from 'src/app/services/location.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { SlugTypeService } from 'src/app/services/slugType.service';
 
 @Component({
   selector: 'app-locations-post',
@@ -27,6 +28,8 @@ export class LocationsPostComponent implements OnInit {
   isChange
   locationChangeData
 
+  slugList
+
   constructor(
     private GLOBALS: Globals,
     private titleService: Title,
@@ -34,6 +37,7 @@ export class LocationsPostComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private locationService: LocationService,
+    private slugTypeService: SlugTypeService,
     private activatedRoute: ActivatedRoute
   ) {
     this.titleService.setTitle(this.GLOBALS.SYSTEM_TITLE + ' - Cadastrar Localização');
@@ -44,6 +48,7 @@ export class LocationsPostComponent implements OnInit {
   get f() { return this.locationForm.controls; }
 
   ngOnInit() {
+    this.getSlugs();
     this.setValidationForm();
     this.checkIfIsChange();
   }
@@ -58,6 +63,7 @@ export class LocationsPostComponent implements OnInit {
           this.locationChangeData = resolvedPromise.data;
           this.locationChangeData._id = params['id'];
           this.locationForm.controls['description'].setValue(this.locationChangeData.description);
+          this.locationForm.controls['slugType'].setValue(this.locationChangeData.slugType);
           this.locationForm.controls['active'].setValue(this.locationChangeData.active);
           this.loading = false;
         }, (error) => {
@@ -69,9 +75,22 @@ export class LocationsPostComponent implements OnInit {
     });
   }
 
+  getSlugs() {
+    this.loading = true;
+    this.slugTypeService.getSlugTypes().subscribe(resolvedPromise => {
+      this.slugList = resolvedPromise.data;
+      this.loading = false;
+    }, (error) => {
+      console.log('error', error);
+      this.toastr.error('Ocorreu um erro ao trazer a listagem de slugs!');
+      this.router.navigate(['/area-logada/localizacoes']);
+    });
+  }
+
   setValidationForm() {
     this.locationForm = new FormGroup({
       'description': new FormControl(this.location.data.description, [Validators.required]),
+      'slugType': new FormControl(this.location.data.slugType),
       'active': new FormControl(this.location.data.active)
     });
   }

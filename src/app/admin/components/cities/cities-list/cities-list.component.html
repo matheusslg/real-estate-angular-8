@@ -1,0 +1,35 @@
+<app-loading *ngIf="loadingToggle" type="fullscreen"></app-loading>
+<p>Listagem de cidades cadastradas no sistema.</p>
+<div class="card">
+  <div class="card-body">
+    <app-loading *ngIf="loadingData"></app-loading>
+    <div class="table-responsive" *ngIf="!loadingData">
+      <table datatable [dtOptions]="dtOptions" class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Título</th>
+            <th>UF</th>
+            <th>Ativa</th>
+            <th>Opções</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let city of cityList; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ city.description }}</td>
+            <td>{{ city.uf }}</td>
+            <td>{{ city.active ? 'Sim' : 'Não' }}</td>
+            <td>
+              <button [routerLink]="['/area-logada/cidades/editar', city._id]" class="btn btn-sm btn-primary mr-2" title="Editar"><i class="fas fa-pencil-alt"></i></button>
+              <button (click)="toggleCity(city)" class="btn btn-sm btn-danger" [ngClass]="{ 'btn-danger': city.active, 'btn-primary': !city.active }" [title]="city.active ? 'Desativar' : 'Ativar'">
+                <i *ngIf="!city.active" class="fas fa-toggle-on"></i>
+                <i *ngIf="city.active" class="fas fa-toggle-off"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -97,4 +97,21 @@ export class Globals {
             }
         }
     }
+
+    SLUG_TYPES = function() {
+        return [
+            {
+                'description': 'Categoria',
+                'value': 'category'
+            },
+            {
+                'description': 'Modalidade',
+                'value': 'modality'
+            },
+            {
+                'description': 'Localização',
+                'value': 'location'
+            },
+        ]
+    }
 }

@@ -5,17 +5,28 @@
       <div class="card">
         <div class="card-body">
           <app-loading *ngIf="loading"></app-loading>
-          <div class="row">
-            <div *ngIf="!loading" class="col-12">
+          <div class="row" *ngIf="!loading">
+            <div class="col-6">
               <div class="form-group">
                 <label for="descriptionText">Nome *</label>
-                <input formControlName="description" name="description" type="text" class="form-control" id="descriptionText"
-                  placeholder="Ex: Urbano"
+                <input formControlName="description" name="description" type="text" class="form-control"
+                  id="descriptionText" placeholder="Ex: Urbano"
                   [ngClass]="{ 'is-invalid': submitted && f.description.errors }" />
                 <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
                   <div *ngIf="f.description.errors.required">Este campo é obrigatório</div>
                 </div>
               </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label for="slugSelect">Slug</label>
+                <ng-select formControlName="slugType" [items]="slugList" [multiple]="false" [closeOnSelect]="true"
+                  bindLabel="slug" placeholder="Selecione um slug para a localização" name="slugType"
+                  class="ng-select-custom form-control" [ngClass]="{ 'is-invalid': submitted && f.slugType.errors }">
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-12">
               <button *ngIf="!isChange" class="btn btn-primary" type="submit">Publicar Localização</button>
               <button *ngIf="isChange" class="btn btn-primary" type="submit">Editar Localização</button>
             </div>
