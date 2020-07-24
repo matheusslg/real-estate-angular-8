@@ -31,7 +31,7 @@
           <a [routerLink]="['/imoveis', property._id]">
             <p class="card-title">{{ property.title }}</p>
           </a>
-          <div class="row d-flex">
+          <div *ngIf="property.bedrooms > 0 || property.toilets > 0 || property.garage > 0 || property.size" class="row d-flex">
             <div class="indicators">
               <div *ngIf="property.bedrooms > 0" class="indicators-div">
                 <div class="property-indicator property-indicator-small property-indicator-small-bold">
@@ -59,7 +59,7 @@
               </div>
             </div>
           </div>
-          <div class="row">
+          <div class="row mt-15">
             <div class="property-indicator-value col-lg-12 col-md-12 col-sm-12">
               <div class="property-indicator">
                 <i class="fas fa-dollar-sign"></i>
