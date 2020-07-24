@@ -77,4 +77,8 @@ $enable-print-styles: true;
   }
 }
 
+.card {
+  border-radius: 17px !important;
+}
+
 @import "node_modules/bootstrap/scss/bootstrap";

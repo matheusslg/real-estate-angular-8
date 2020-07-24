@@ -31,18 +31,40 @@
           <a [routerLink]="['/imoveis', property._id]">
             <p class="card-title">{{ property.title }}</p>
           </a>
+          <div class="row d-flex">
+            <div class="indicators">
+              <div *ngIf="property.bedrooms > 0" class="indicators-div">
+                <div class="property-indicator property-indicator-small property-indicator-small-bold">
+                  <i class="fas fa-bed"></i>
+                  <p class="mb-0 ml-1">{{ property.bedrooms }}</p>
+                </div>
+              </div>
+              <div *ngIf="property.toilets > 0" class="indicators-div">
+                <div class="property-indicator property-indicator-small property-indicator-small-bold">
+                  <i class="fas fa-shower"></i>
+                  <p class="mb-0 ml-1">{{ property.toilets }}</p>
+                </div>
+              </div>
+              <div *ngIf="property.garage > 0" class="indicators-div">
+                <div class="property-indicator property-indicator-small property-indicator-small-bold">
+                  <i class="fas fa-car"></i>
+                  <p class="mb-0 ml-1">{{ property.garage }}</p>
+                </div>
+              </div>
+              <div *ngIf="property.size" class="indicators-div">
+                <div class="property-indicator property-indicator-small property-indicator-small-bold">
+                  <i class="fas fa-ruler-combined"></i>
+                  <p class="mb-0 ml-1">{{ property.size }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="row">
             <div class="property-indicator-value col-lg-12 col-md-12 col-sm-12">
               <div class="property-indicator">
                 <i class="fas fa-dollar-sign"></i>
                 <p class="mb-0 ml-2">
                   {{ property.priceNumber ? (property.priceNumber | currency:'BRL') : property.priceCustom }}</p>
-              </div>
-            </div>
-            <div *ngIf="property.address" class="property-indicator-address col-lg-12 col-md-12 col-sm-12">
-              <div class="property-indicator property-indicator-small mt-2">
-                <i class="fas fa-map-marker-alt"></i>
-                <p class="mb-0 ml-2">{{ property.address }}</p>
               </div>
             </div>
             <div class="property-indicator-address col-lg-12 col-md-12 col-sm-12">
@@ -53,36 +75,10 @@
                 </p>
               </div>
             </div>
-          </div>
-          <div class="row d-flex">
-            <div class="indicators">
-              <div *ngIf="property.bedrooms > 0" class="indicators-div">
-                <span class="property-indicator-text">Quartos</span>
-                <div class="property-indicator property-indicator-small">
-                  <i class="fas fa-bed"></i>
-                  <p class="mb-0 ml-1">{{ property.bedrooms }}</p>
-                </div>
-              </div>
-              <div *ngIf="property.toilets > 0" class="indicators-div">
-                <span class="property-indicator-text">Banheiros</span>
-                <div class="property-indicator property-indicator-small">
-                  <i class="fas fa-shower"></i>
-                  <p class="mb-0 ml-1">{{ property.toilets }}</p>
-                </div>
-              </div>
-              <div *ngIf="property.garage > 0" class="indicators-div">
-                <span class="property-indicator-text">Garagem</span>
-                <div class="property-indicator property-indicator-small">
-                  <i class="fas fa-car"></i>
-                  <p class="mb-0 ml-1">{{ property.garage }}</p>
-                </div>
-              </div>
-              <div *ngIf="property.size" class="indicators-div">
-                <span class="property-indicator-text">Tamanho</span>
-                <div class="property-indicator property-indicator-small">
-                  <i class="fas fa-pencil-ruler"></i>
-                  <p class="mb-0 ml-1">{{ property.size }}</p>
-                </div>
+            <div *ngIf="property.address" class="property-indicator-address col-lg-12 col-md-12 col-sm-12">
+              <div class="property-indicator property-indicator-small mt-2">
+                <i class="fas fa-map-marker-alt"></i>
+                <p class="mb-0 ml-2">{{ property.address }}</p>
               </div>
             </div>
           </div>
