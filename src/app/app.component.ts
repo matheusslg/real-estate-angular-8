@@ -52,15 +52,13 @@ export class AppComponent implements OnInit {
       this.locationService.getLocationsActive(),
       this.typeService.getTypesActive(),
       this.tagService.getTagsActive(),
-      this.cityService.getCitiesActive(),
-      this.usefullService.getDollar()
+      this.cityService.getCitiesActive()
     ]).subscribe(resolvedPromises => {
       this.categoryService.categorySubject.next(resolvedPromises[0].data);
       this.locationService.locationSubject.next(resolvedPromises[1].data);
       this.typeService.typeSubject.next(resolvedPromises[2].data);
       this.tagService.tagSubject.next(resolvedPromises[3].data);
       this.cityService.citySubject.next(resolvedPromises[4].data);
-      this.usefullService.dollarSubject.next(resolvedPromises[5][0]);
 
       // Store data on service
       this.categoryService.categoryList = resolvedPromises[0].data;
@@ -68,7 +66,6 @@ export class AppComponent implements OnInit {
       this.typeService.typeList = resolvedPromises[2].data;
       this.tagService.tagList = resolvedPromises[3].data;
       this.cityService.cityList = resolvedPromises[4].data;
-      this.usefullService.dollarData = resolvedPromises[5][0];
 
       this.setActiveMenu();
     }, (error) => {
