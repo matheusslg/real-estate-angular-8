@@ -42,7 +42,7 @@
     "jquery": "^3.4.1",
     "jquery.easing": "^1.4.1",
     "jsonwebtoken": "^8.5.1",
-    "jszip": "^3.2.2",
+    "jszip": "^3.7.0",
     "jwt-decode": "^2.2.0",
     "ng-simple-slideshow": "^1.2.9",
     "ng2-currency-mask": "^5.3.1",
