@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryService } from 'src/app/services/category.service';
-import { Property } from "src/app/models/Property";
+import { Property } from "src/app/models/property";
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NgSelectConfig } from '@ng-select/ng-select';
 import { Globals } from 'src/app/globals';

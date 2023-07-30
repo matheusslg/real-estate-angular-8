@@ -1,9 +1,28 @@
-<!-- Slideshow -->
-<app-properties-slideshow 
-  (propertyFeaturedListEmitter)="propertyFeaturedList = $event">
-</app-properties-slideshow>
+<div class="row">
+  <div class="col col-xxxl-9 col-xxl-9 col-xl-8 col-lg-7 col-md-12 col-sm-12 col-xs-12">
+    <!-- Slideshow -->
+    <div class="d-sm-flex d-md-flex d-lg-none">
+      <h5 class="text-primary font-secondary"><i class="fa fa-home" aria-hidden="true"></i> Imóveis em destaque</h5>
+    </div>
+    <app-properties-slideshow 
+      (propertyFeaturedListEmitter)="propertyFeaturedList = $event">
+    </app-properties-slideshow>
+  </div>
+  <div class="col col-xxxl-3 col-xxl-3 col-xl-4 col-lg-5 col-md-12 col-sm-12 col-xs-12">
+    <a href="javascript:;" data-toggle="modal" data-target="#contactModal">
+      <div class="promocional">
+        <img class="promocional-image" src="assets/images/drone-promocional.png" id="icon" alt="Logo" />
+      </div>
+    </a>
+  </div>
+</div>
 
 <div class="row" [class.mt-4]="propertyFeaturedList?.length > 0">
+  <div class="col col-xxxl-12 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="alert alert-primary" role="alert">
+      Aumente suas chances de venda, mais de 27 mil exibições nos últimos 12 meses, anuncie seu imóvel conosco! <a href="javascript:;" data-toggle="modal" data-target="#contactModal" class="alert-link">Entre em contato clicando aqui</a>
+    </div>
+  </div>
   <div class="col col-xxxl-2 col-xxl-2 col-xl-3 col-lg-3 col-md-12 col-sm-12 col-xs-12">
     <app-properties-filter
       [propertyList]="propertyList"

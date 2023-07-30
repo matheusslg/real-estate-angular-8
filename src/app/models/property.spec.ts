@@ -1,4 +1,4 @@
-import { Property } from "./Property";
+import { Property } from "./property";
 
 describe('Property', () => {
   it('should create an instance', () => {

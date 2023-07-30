@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Globals } from 'src/app/globals';
-import { Title, DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
-import { Router, ActivatedRoute, RoutesRecognized } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { PropertyService } from 'src/app/services/property.service';
-import { Property } from 'src/app/models/Property';
+import { Property } from 'src/app/models/property';
 import { environment } from 'src/environments/environment';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
 import { UsefullService } from 'src/app/services/usefull.service';

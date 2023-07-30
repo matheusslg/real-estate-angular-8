@@ -45,6 +45,7 @@ export class PropertiesListComponent implements OnInit {
           this.noMoreProperties = false;
         }
 
+        this.isFiltering = this._filterData.isFiltering;
       }
 
     }
@@ -72,6 +73,8 @@ export class PropertiesListComponent implements OnInit {
   propertiesLimitNumber
   propertiesPageNumber
   noMoreProperties = false
+  isFiltering = false
+  isHomePage = false
 
   categoryList
   locationList
@@ -89,6 +92,7 @@ export class PropertiesListComponent implements OnInit {
     public usefullService: UsefullService
   ) {
     this.preUrlImages = environment.baseUri.mongo;
+    this.isHomePage = this.usefullService.isHomePage();
   }
 
   ngOnInit() {
@@ -163,6 +167,10 @@ export class PropertiesListComponent implements OnInit {
       });
 
     }
+  }
+
+  resetFilter() {
+    this.filterCall.emit({ page: 1, params: { type: 'reset' } });
   }
 
   resetSeeMoreData() {

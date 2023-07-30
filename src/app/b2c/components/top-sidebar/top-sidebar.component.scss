@@ -1,5 +1,9 @@
 @import '../../../../assets/scss/utils';
 
+.container-fluid {
+    max-width: 1680px;
+}  
+
 .topbar {
     display: flex;
     align-items: center;
@@ -9,12 +13,11 @@
     }
     &-right {
         h5 {
-            color: rgba(255,255,255,.75);
+            color: palette(white);
             padding: 15px 25px;
-            background: rgba(99, 157, 49, 0.85);
-            border-radius: 25px;
-            border: 1px solid rgba(99, 157, 49, 0.5);
-            box-shadow: 0 1px 2px 0 rgba(0,0,0,.2), 0 1px 6px 0 rgba(0,0,0,.17);
+            background: rgba(99, 157, 49, 1);
+            border-radius: 4px;
+            cursor: pointer;
         }
         h6 { font-style: italic; font-size: 13px; }
     }
@@ -25,10 +28,8 @@
         background: url(../../../../assets/images/bgtop.png) no-repeat left;
     }
     @media screen and (min-width: 991px) {
-        background: url(../../../../assets/images/bgtop.png) no-repeat right;
-    }
-    @media screen and (min-width: 1921px) {
-        background: palette(terciary, ter9);
+        background: url(../../../../assets/images/bgtop.png) no-repeat center;
+        background-color: palette(terciary, ter9);
     }
 }
 
@@ -58,6 +59,11 @@
     box-shadow: 0px 4px 5px 1px rgba(0,0,0,0.2);
     @media screen and (min-width: 991px) {
         margin-bottom: 20px;
+
+        &-collapse {
+            margin: 0 auto;
+            max-width: 1650px;
+        }
     }
 }
 
@@ -86,6 +92,12 @@
         margin-bottom: 0;
         padding-inline-start: 15px;
         transition: all 0.5s ease;
+
+        @media screen and (min-width: 991px) {
+            margin: 0 auto;
+            max-width: 1680px;
+        }
+
         li {
             display: inline-block;
             zoom: 1;

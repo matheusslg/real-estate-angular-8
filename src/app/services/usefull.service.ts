@@ -74,4 +74,7 @@ export class UsefullService {
       )
   }
 
+  isHomePage() {
+    return window.location.pathname === '/';
+  }
 }

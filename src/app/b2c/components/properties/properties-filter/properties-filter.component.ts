@@ -62,6 +62,10 @@ export class PropertiesFilterComponent implements OnInit, AfterViewInit {
             this.filter.cities.push(this._filterCall.params.data._id);
             this.callFilter();
             break;
+          case 'reset':
+            this.filter = new Filter();
+            this.callFilter();
+            break;
         }
       }
 
@@ -73,6 +77,7 @@ export class PropertiesFilterComponent implements OnInit, AfterViewInit {
   filterCache
   filterChanged: Subject<string> = new Subject();
   canResetAgain = true
+  isFiltering = false
 
   loading
 
@@ -281,7 +286,7 @@ export class PropertiesFilterComponent implements OnInit, AfterViewInit {
     this.dataEmitter.emit({ loading: true });
 
     this.propertyService.getPropertiesFilter(
-      limit ? limit : 12,
+      limit ? limit : 16,
       page ? page : 1,
       this.filter.title,
       this.filter.address,
@@ -306,6 +311,12 @@ export class PropertiesFilterComponent implements OnInit, AfterViewInit {
 
       this.filterCache = JSON.parse(JSON.stringify(this.filter));
 
+      this.isFiltering = 
+        this.filterCache.categories.length > 0 || 
+        this.filterCache.locations.length > 0 || 
+        this.filterCache.types.length > 0 || 
+        this.filterCache.cities.length > 0;
+
       this.filterCounters = resolvedPromise.counters;
       let newProperties = resolvedPromise.data;
 
@@ -320,19 +331,19 @@ export class PropertiesFilterComponent implements OnInit, AfterViewInit {
           this._propertyList.push(_new);
         });
         if (newProperties.length < 12) {
-          this.dataEmitter.emit({ data: this._propertyList, loading: false, noMoreProperties: true });
+          this.dataEmitter.emit({ data: this._propertyList, loading: false, noMoreProperties: true, isFiltering: this.isFiltering });
         } else {
-          this.dataEmitter.emit({ data: this._propertyList, loading: false, noMoreProperties: false });
+          this.dataEmitter.emit({ data: this._propertyList, loading: false, noMoreProperties: false, isFiltering: this.isFiltering });
         }
       } else if (!page) { // first call filter or new parameters
         this._propertyList = newProperties;
         if (newProperties.length < 12) {
-          this.dataEmitter.emit({ data: this._propertyList, loading: false, noMoreProperties: true, firstCall: firstCall });
+          this.dataEmitter.emit({ data: this._propertyList, loading: false, noMoreProperties: true, firstCall: firstCall, isFiltering: this.isFiltering });
         } else {
-          this.dataEmitter.emit({ data: this._propertyList, loading: false, noMoreProperties: false, firstCall: firstCall });
+          this.dataEmitter.emit({ data: this._propertyList, loading: false, noMoreProperties: false, firstCall: firstCall, isFiltering: this.isFiltering });
         }
       } else if (page && loadMore && newProperties.length === 0) { // no more properties to show
-        this.dataEmitter.emit({ data: this._propertyList, loading: false, noMoreProperties: true });
+        this.dataEmitter.emit({ data: this._propertyList, loading: false, noMoreProperties: true, isFiltering: this.isFiltering });
       }
 
       this.handleCounters();
