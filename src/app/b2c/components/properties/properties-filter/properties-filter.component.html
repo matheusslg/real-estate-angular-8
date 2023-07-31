@@ -74,10 +74,12 @@
 
             <label><i class="fa fa-tags mr-1"></i>Categorias</label><a *ngIf="filter.categories && filter.categories.length > 0" (click)="filter.categories = []; execFilter()" href="javascript:;" class="float-right"><i class="fas fa-eraser mr-1"></i>Limpar</a>
             <div *ngFor="let item of categoryList; let index = index" class="form-check">
-              <input (change)="onChangeCategories($event, item)" class="form-check-input" type="checkbox" [name]="item.description" [value]="item._id" [id]="item._id" [checked]="filter.categories.includes(item._id)">
-              <label class="form-check-label" [for]="item._id" [class.font-weight-bold]="filter.categories.includes(item._id)">
-                {{ item.description }} <span class="text-primary">({{ filterCounters?.categories[item._id]?.count || 0 }})</span>
-              </label>
+              <div *ngIf="filterCounters?.categories[item._id]?.count > 0">
+                <input (change)="onChangeCategories($event, item)" class="form-check-input" type="checkbox" [name]="item.description" [value]="item._id" [id]="item._id" [checked]="filter.categories.includes(item._id)">
+                <label class="form-check-label" [for]="item._id" [class.font-weight-bold]="filter.categories.includes(item._id)">
+                  {{ item.description }} <span class="text-primary">({{ filterCounters?.categories[item._id]?.count || 0 }})</span>
+                </label>
+              </div>
             </div>
 
             <hr>
@@ -104,10 +106,12 @@
 
             <label><i class="fas fa-city mr-1"></i>Cidades</label><a *ngIf="filter.cities && filter.cities.length > 0" (click)="filter.cities = []; execFilter()" href="javascript:;" class="float-right"><i class="fas fa-eraser mr-1"></i>Limpar</a>
             <div *ngFor="let item of cityList; let index = index" class="form-check">
-              <input (change)="onChangeCities($event, item)" class="form-check-input" type="checkbox" [name]="item.description" [value]="item._id" [id]="item._id" [checked]="filter.cities.includes(item._id)">
-              <label class="form-check-label" [for]="item._id" [class.font-weight-bold]="filter.cities.includes(item._id)">
-                {{ item.description }} <span class="text-primary" class="text-primary">({{ filterCounters?.cities[item._id]?.count || 0 }})</span>
-              </label>
+              <div *ngIf="filterCounters?.cities[item._id]?.count > 0">
+                <input (change)="onChangeCities($event, item)" class="form-check-input" type="checkbox" [name]="item.description" [value]="item._id" [id]="item._id" [checked]="filter.cities.includes(item._id)">
+                <label class="form-check-label" [for]="item._id" [class.font-weight-bold]="filter.cities.includes(item._id)">
+                  {{ item.description }} <span class="text-primary" class="text-primary">({{ filterCounters?.cities[item._id]?.count || 0 }})</span>
+                </label>
+              </div>
             </div>
 
             <hr>
