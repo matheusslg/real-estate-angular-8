@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { UsefullService } from "src/app/services/usefull.service";
 
 @Component({
   selector: "app-footer",
@@ -8,7 +9,7 @@ import { Component, OnInit } from "@angular/core";
 export class FooterComponent implements OnInit {
   currentYear: number;
 
-  constructor() {
+  constructor(public usefullService: UsefullService) {
     this.currentYear = new Date().getFullYear();
   }
 
