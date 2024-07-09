@@ -7,6 +7,7 @@ import { PropertiesHomeComponent } from './b2c/components/properties/properties-
 import { PropertiesSingleComponent } from './b2c/components/properties/properties-single/properties-single.component';
 import { PropertiesSearchComponent } from './b2c/components/properties/properties-search/properties-search.component';
 import { PropertiesFilteringComponent } from './b2c/components/properties/properties-filtering/properties-filtering.component';
+import { AboutUsPage } from './b2c/pages/about-us/about-us.page';
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
       { path: 'localizacao/:description', component: PropertiesFilteringComponent },
       { path: 'modalidade/:description', component: PropertiesFilteringComponent },
       { path: 'cidade/:description', component: PropertiesFilteringComponent },
+      { path: 'quem-somos', component: AboutUsPage },
       { path: '', pathMatch: 'full', redirectTo: '' },
     ]
   },

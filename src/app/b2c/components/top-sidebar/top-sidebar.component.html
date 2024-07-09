@@ -96,6 +96,10 @@
         <li class="nav-item">
           <a class="nav-link" href="javascript:;" data-toggle="modal" data-target="#contactModal" ><i class="far fa-comments mr-2"></i>Contato</a>
         </li>
+
+        <li class="nav-item" routerLinkActive="active">
+          <a (click)="selectedSubNav = null" class="nav-link" routerLink="/quem-somos"><i class="fas fa-info mr-2"></i>Quem Somos</a>
+        </li>
       </div>
 
       <!-- For Mobile -->
@@ -171,6 +175,10 @@
 
         <li class="nav-item">
           <a class="nav-link" href="javascript:;" data-toggle="modal" data-target="#contactModal" ><i class="far fa-comments mr-2"></i>Contato</a>
+        </li>
+
+        <li class="nav-item" routerLinkActive="active">
+          <a (click)="selectedSubNav = null" class="nav-link" routerLink="/quem-somos"><i class="fas fa-info mr-2"></i>Quem Somos</a>
         </li>
       </div>
 

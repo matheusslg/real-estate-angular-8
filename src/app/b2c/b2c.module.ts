@@ -18,6 +18,7 @@ import { PropertiesSlideshowComponent } from './components/properties/properties
 import { PropertiesHomeComponent } from './components/properties/properties-home/properties-home.component';
 import { PropertiesFilterComponent } from './components/properties/properties-filter/properties-filter.component';
 import { PropertiesFilteringComponent } from './components/properties/properties-filtering/properties-filtering.component';
+import { AboutUsPage } from 'src/app/b2c/pages/about-us/about-us.page';
 
 @NgModule({
   imports: [
@@ -44,7 +45,8 @@ import { PropertiesFilteringComponent } from './components/properties/properties
     PropertiesSlideshowComponent,
     PropertiesHomeComponent,
     PropertiesFilterComponent,
-    PropertiesFilteringComponent
+    PropertiesFilteringComponent,
+    AboutUsPage,
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
   exports: [
