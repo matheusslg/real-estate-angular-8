@@ -127,7 +127,7 @@ export class PropertiesSingleComponent implements OnInit {
 
   trackWhatsApp() {
     gtag('event', 'conversion', {
-      'send_to': 'AW-1026588755/-QfXCOOThMQBENOAwukD',
+      'send_to': 'AW-1026588755/kT3TCNTcpMMZENOAwukD',
       'value': this.property.priceNumber > 0 ? this.property.priceNumber : this.property.priceCustom,
       'currency': 'BRL'
     });
@@ -136,7 +136,7 @@ export class PropertiesSingleComponent implements OnInit {
 
   trackChat() {
     gtag('event', 'conversion', {
-      'send_to': 'AW-1026588755/-QfXCOOThMQBENOAwukD',
+      'send_to': 'AW-1026588755/kT3TCNTcpMMZENOAwukD',
       'value': this.property.priceNumber > 0 ? this.property.priceNumber : this.property.priceCustom,
       'currency': 'BRL'
     });
@@ -145,7 +145,7 @@ export class PropertiesSingleComponent implements OnInit {
 
   trackMessenger() {
     gtag('event', 'conversion', {
-      'send_to': 'AW-1026588755/-QfXCOOThMQBENOAwukD',
+      'send_to': 'AW-1026588755/kT3TCNTcpMMZENOAwukD',
       'value': this.property.priceNumber > 0 ? this.property.priceNumber : this.property.priceCustom,
       'currency': 'BRL'
     });

@@ -85,7 +85,7 @@ export class TopSidebarComponent implements OnInit {
 
   trackWhatsApp() {
     gtag('event', 'conversion', {
-      'send_to': 'AW-1026588755/-QfXCOOThMQBENOAwukD',
+      'send_to': 'AW-1026588755/kT3TCNTcpMMZENOAwukD',
       'currency': 'BRL'
     });
     fbq('track', 'WhatsAppClick');
@@ -93,7 +93,7 @@ export class TopSidebarComponent implements OnInit {
 
   trackChat() {
     gtag('event', 'conversion', {
-      'send_to': 'AW-1026588755/-QfXCOOThMQBENOAwukD',
+      'send_to': 'AW-1026588755/kT3TCNTcpMMZENOAwukD',
       'currency': 'BRL'
     });
     fbq('track', 'ChatClick');
@@ -101,7 +101,7 @@ export class TopSidebarComponent implements OnInit {
 
   trackMessenger() {
     gtag('event', 'conversion', {
-      'send_to': 'AW-1026588755/-QfXCOOThMQBENOAwukD',
+      'send_to': 'AW-1026588755/kT3TCNTcpMMZENOAwukD',
       'currency': 'BRL'
     });
     fbq('track', 'MessengerClick');
