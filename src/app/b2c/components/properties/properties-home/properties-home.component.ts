@@ -14,6 +14,8 @@ export class PropertiesHomeComponent implements OnInit, AfterViewInit {
 
   routerParams
 
+  formUrl = "https://forms.gle/2Z2R4MFaY4CFZmPB7"
+
   constructor(
     private cdr: ChangeDetectorRef
   ) { }

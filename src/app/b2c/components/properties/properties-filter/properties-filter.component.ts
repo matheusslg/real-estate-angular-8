@@ -7,7 +7,7 @@ import { CityService } from 'src/app/services/city.service';
 import { PropertyService } from 'src/app/services/property.service';
 import { forkJoin } from 'rxjs/internal/observable/forkJoin';
 import { ToastrService } from 'ngx-toastr';
-import { DeviceDetectorService } from 'ngx-device-detector';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { Subject } from 'rxjs/internal/Subject';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
@@ -101,6 +101,8 @@ export class PropertiesFilterComponent implements OnInit, AfterViewInit {
   locationCount = []
   typeCount = []
 
+  isMobile: boolean = false;
+
   constructor(
     private propertyService: PropertyService,
     private locationService: LocationService,
@@ -109,17 +111,19 @@ export class PropertiesFilterComponent implements OnInit, AfterViewInit {
     private cityService: CityService,
     private toastr: ToastrService,
     private cdr: ChangeDetectorRef,
-    private deviceDetector: DeviceDetectorService
+    private breakpointObserver: BreakpointObserver
   ) {
     this.filter = new Filter();
     this._propertyList = [];
   }
 
   ngAfterViewInit() { // Executes every time that user goes back to a component with PropertiesFilterComponent to get all needed data
-    
-    if (this.deviceDetector.isMobile()) {
-      (<any>$('.collapse')).collapse('hide');
-    }
+    this.breakpointObserver
+      .observe(['(max-width: 990px)'])
+      .subscribe((state: BreakpointState) => {
+        this.isMobile = state.matches;
+        this.toggleCollapse();
+      });
 
     if (!this.loading) { // Prevent to exec with ngOnInit
       this.categoryList = this.categoryService.categoryList;
@@ -162,6 +166,14 @@ export class PropertiesFilterComponent implements OnInit, AfterViewInit {
       debounceTime(750),
       distinctUntilChanged()
     ).subscribe(x => this.execFilter());
+  }
+
+  toggleCollapse(): void {
+    if (this.isMobile) {
+      (<any>$('.collapse')).collapse('hide');
+    } else {
+      (<any>$('.collapse')).collapse('show');
+    }
   }
 
   handleCounters() {
